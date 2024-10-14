@@ -1,8 +1,32 @@
 # RP2040開発(C++)
-RP2040 Firmeware C++ Develop by Chimi
+RP2040 Firmeware C++ Develop by Chimi\
 RP2040のF/WのC++での個人開発リポジトリ🥳
 
-# 実装済み
+# RP2040とは？
+Raspberry Piのデュアルコア（ARM Cortex-M0+ x2コア)のマイコン🥳
+
+
+[公式URL]
+- https://www.raspberrypi.com/products/rp2040/
+
+[データシート]
+- https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf
+
+## スペック
+- プロセス ... 40nm
+- クロック ... 133MHz
+- CPU ... x2コア ARM Cortex-M0+
+- SRAM ... 264KB
+- FPU ... 単精度
+- UART ... x2ch
+- SPI ... x2ch
+- I2C ... x2ch
+- ADC ... 12bit SAR x4ch
+- GPIO ... 30本
+- PWM ... 16本
+- PIO ... x8基
+
+# 実装した機能
 
 - CPU x2コア
   - Core0 ... ドライバコア
