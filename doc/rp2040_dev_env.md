@@ -1,4 +1,4 @@
-# Pico SDK(C++)構築マニュアル
+# 開発環境構築 by ちみ
 [Pico SDK 公式URL](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
 [公式マニュアル（英語）※最新](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf?_gl=1*anhnfe*_ga*MTE3MTIyMDMzMS4xNzI4OTQ5MzU2*_ga_22FD70LWDS*MTcyODk2NTE2OC42LjAuMTcyODk2NTE3MS4wLjAuMA..)
 [公式マニュアル（日本語）※更新が2021年で止まっている](https://datasheets.raspberrypi.com/pico/getting-started-with-pico-JP.pdf)
