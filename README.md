@@ -3,27 +3,41 @@
 RP2040 Firmeware C++ Develop by Chimi\
 RP2040のF/WのC++での個人開発リポジトリ🥳
 
-# 実装した機能
+## 開発環境構築
+[開発環境構築マニュアル](/開発環境構築/rp2040_dev_env.md)
 
-- CPU x2コア
-  - Core0 ... ドライバコア
+## ✅実装した機能
+
+- ARM Cortex-M0+ x2コア
+  - ✅Core0 ... ドライバコア
     - Neopixcelのアプリ
-  - Core1 ... アプリコア
-    - OLEDのアプリ
-    - モニタプログラム(UART)
-    - 数学アプリ
+  - ✅Core1 ... アプリコア
+    - ✅OLEDのアプリ
+    - ✅モニタプログラム(UART)
+    - ✅数学アプリ
       - 円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
+- PIO x2基
+    - ✅PIO0 ... TBD
+    - ✅PIO1 ... TBD
 
-# 実装予定
-- FreeRTOS ... CPU x2コア分を搭載
-- アプリ追加 ... I2C、SPI、PIO、スリープ機能
 
-# RP2040とは？
+## TBD🛠️
+- ARM Cortex-M0+
+    - 🛠️割込み（IRQ） ... ボタンやPIOからIRQがほしい
+    - 🛠️FreeRTOS ... CPU x2コア分を搭載
+    - 🛠️アプリ追加 ... I2C、SPI、PIO、スリープ機能
+
+- PIO
+    - 🛠️GPIO ... PIOでGPIOをパタパタさせたい
+    - 🛠️VGA ... モニターで描画したい
+    - 🛠️SDIO ... SDカードを使いたい
+
+## 🔰RP2040とは？🔰
 <div align="center">
 <img width="200" src="https://assets.raspberrypi.com/static/chips-a126ba53c50bb160d65210696edf8ad9.png">
 </div>
 
-Raspberry Piのデュアルコア（ARM Cortex-M0+ x2コア)のマイコン🥳
+Raspberry Piの **デュアルコア(ARM Cortex-M0+ x2コア)** のマイコン🥳
 
 [公式URL]
 - https://www.raspberrypi.com/products/rp2040/
@@ -31,10 +45,11 @@ Raspberry Piのデュアルコア（ARM Cortex-M0+ x2コア)のマイコン🥳
 [データシート]
 - https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf
 
-## スペック
+### スペック
 - プロセス ... 40nm
 - クロック ... 133MHz
-- CPU ... x2コア ARM Cortex-M0+
+- CPU ... ARM Cortex-M0+ x2コア
+- ROM ... 2MB、4MB、8MB、16MB
 - SRAM ... 264KB
 - FPU ... 単精度
 - UART ... x2ch
