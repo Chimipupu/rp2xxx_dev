@@ -1,3 +1,13 @@
+/**
+ * @file cpm.hpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief 評価モニタプログラム
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #ifndef CPM_H
 #define CPM_H
 

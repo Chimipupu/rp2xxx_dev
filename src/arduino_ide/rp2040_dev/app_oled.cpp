@@ -1,3 +1,14 @@
+/**
+ * @file app_oled.cpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief OLEDアプリ
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+#if 0
 #include "app_oled.hpp"
 #include "math_uc.hpp"
 
@@ -56,7 +67,7 @@ void app_oled_test(void)
     sprite.setTextColor(OLED_TXT_COLOR);
     sprite.setCursor(0, 0);
     sprite.setFont(&fonts::Font0);
-    sprite.printf("RP2040 Dual Core uC\n");
+    sprite.printf(" Dual Core uC\n");
     sprite.printf("133MHz ARM Cortex-M0+\n");
     sprite.printf("ROM 2MB, RAM 264KB\n");
     sprite.printf("Very Good! ARM uC!\n");
@@ -126,3 +137,4 @@ void app_oled_test(void)
     delay(3000);
 #endif
 }
+#endif

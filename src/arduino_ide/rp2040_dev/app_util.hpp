@@ -1,9 +1,9 @@
 /**
  * @file app_util.cpp
- * @author Chimipupu
- * @brief YD-RP2040の評価プログラム用  アプリユーティリティ
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief RP2040の評価プログラム用  アプリユーティリティ
  * @version 0.1
- * @date 2024-10-07
+ * @date 2024-10-16
  * 
  * @copyright Copyright (c) 2024
  * 

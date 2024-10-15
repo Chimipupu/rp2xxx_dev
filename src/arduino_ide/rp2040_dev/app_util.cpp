@@ -1,9 +1,9 @@
 /**
  * @file app_util.cpp
- * @author Chimipupu
- * @brief YD-RP2040の評価プログラム用  アプリユーティリティ
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief RP2040の評価プログラム用  アプリユーティリティ
  * @version 0.1
- * @date 2024-10-07
+ * @date 2024-10-16
  * 
  * @copyright Copyright (c) 2024
  * 
@@ -20,7 +20,7 @@ void app_util_system_reg_read(void)
     uint32_t cpu_core = 0xFF;
     M0PLUS_CPUID M0PLUS_CPUID_REG; // CPUIDレジスタ
 
-    // どっちコアかチェック(@SIO CPUID REG)
+    // どっちのコアかチェック(@SIO CPUID REG)
     cpu_core = DRV_REG_READ_U32(SIO_CPUID_REG_ADDR);
     DEBUG_PRINTF("[Core%X] ... SIO CPUID Reg(0x%02X)\n" ,cpu_core, SIO_CPUID_REG_ADDR);
     DEBUG_PRINTF("[Core%X] ... SIO CPUID Reg Val = 0x%08X\n" ,cpu_core, cpu_core);

@@ -1,9 +1,9 @@
 /**
  * @file common.hpp
- * @author Chimipupu
- * @brief YD-RP2040の評価プログラム用 共通ヘッダー
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief RP2040の評価プログラム用 共通ヘッダー
  * @version 0.1
- * @date 2024-10-07
+ * @date 2024-10-16
  * 
  * @copyright Copyright (c) 2024
  * 

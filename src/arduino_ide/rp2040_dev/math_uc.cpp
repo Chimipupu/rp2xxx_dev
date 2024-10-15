@@ -1,3 +1,13 @@
+/**
+ * @file math_uc.cpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief 数学計算アプリ
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "math_uc.hpp"
 
 // 計算精度の表示（期待値:-7497258.185...）

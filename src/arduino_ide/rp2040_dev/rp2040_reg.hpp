@@ -1,9 +1,9 @@
 /**
- * @file rp2040_reg.hpp
- * @author Chimipupu
- * @brief RP2040レジスタ定義
+ * @file _reg.hpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief レジスタ定義
  * @version 0.1
- * @date 2024-10-07
+ * @date 2024-10-16
  * 
  * @copyright Copyright (c) 2024
  * 

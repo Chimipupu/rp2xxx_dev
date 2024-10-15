@@ -1,3 +1,13 @@
+/**
+ * @file app_neopixel.cpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief NeoPixelアプリ
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "app_neopixel.hpp"
 
 #define MAX_LIGHT               32 // NEOPIEXLの最大輝度

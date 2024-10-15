@@ -1,3 +1,14 @@
+/**
+ * @file app_oled.hpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief OLEDアプリ
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+#if 0
 #ifndef APP_OLED_HPP
 #define APP_OLED_HPP
 
@@ -37,8 +48,8 @@ class LGFX_SSD1306 : public lgfx::LGFX_Device
             {
                 auto cfg = _bus_instance.config();
                 cfg.i2c_port    = 1;                // 使用するI2C (0 or 1)
-                cfg.freq_write  = I2C_FREQ;    // Write @100KHz or 400KHz
-                cfg.freq_read   = I2C_FREQ;    // read  @100KHz or 400KHz
+                cfg.freq_write  = I2C_FREQ;         // Write @100KHz or 400KHz
+                cfg.freq_read   = I2C_FREQ;         // read  @100KHz or 400KHz
                 cfg.pin_sda     = I2C_SDA;          // SDAピン
                 cfg.pin_scl     = I2C_SCL;          // SCLピン
                 cfg.i2c_addr    = OLED_I2C_ADDR;    // スレーブアドレス
@@ -71,8 +82,8 @@ class LGFX_SH110x : public lgfx::LGFX_Device
             {
                 auto cfg = _bus_instance.config();
                 cfg.i2c_port    = 1;                // 使用するI2C (0 or 1)
-                cfg.freq_write  = I2C_FREQ;    // Write @100KHz or 400KHz
-                cfg.freq_read   = I2C_FREQ;    // read  @100KHz or 400KHz
+                cfg.freq_write  = I2C_FREQ;         // Write @100KHz or 400KHz
+                cfg.freq_read   = I2C_FREQ;         // read  @100KHz or 400KHz
                 cfg.pin_sda     = I2C_SDA;          // SDAピン
                 cfg.pin_scl     = I2C_SCL;          // SCLピン
                 cfg.i2c_addr    = OLED_I2C_ADDR;    // スレーブアドレス
@@ -96,3 +107,4 @@ void app_oled_init(void);
 void app_oled_test(void);
 
 #endif /* APP_OLED_HPP */
+#endif

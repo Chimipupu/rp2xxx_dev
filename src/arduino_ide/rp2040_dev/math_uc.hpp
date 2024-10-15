@@ -1,3 +1,13 @@
+/**
+ * @file math_uc.hpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief 数学計算アプリ
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #ifndef MATH_UC_H
 #define MATH_UC_H
 

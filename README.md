@@ -1,12 +1,21 @@
-# RP2040開発(C++)
+# RP2040評価プログラム by ちみ
 
 RP2040 Firmeware C++ Develop by Chimi\
-RP2040のF/WのC++での個人開発リポジトリ🥳
+RP2040のC++ 個人開発リポジトリ🥳
 
 ## 開発環境構築
+### VSCode
 Zenn『Pico SDKの開発環境構築の最適解 📝』 by ちみ
 - https://zenn.dev/chimipupu/articles/039597a904849f
 
+### Arduino IED
+- `基本設定`から👇下記URLを追加
+
+```shell
+https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+```
+
+- `ボードマネージャ`から`Raspberry Pi Pico/RP2040 by Earle F Philhower, III`をダウンロード or 更新
 
 ## ✅実装した機能
 
@@ -17,7 +26,7 @@ Zenn『Pico SDKの開発環境構築の最適解 📝』 by ちみ
     - ✅OLEDのアプリ
     - ✅モニタプログラム(UART)
     - ✅数学アプリ
-      - 円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
+      - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
 - PIO x2基
     - ✅PIO0 ... TBD
     - ✅PIO1 ... TBD
@@ -39,7 +48,7 @@ Zenn『Pico SDKの開発環境構築の最適解 📝』 by ちみ
 <img width="200" src="https://assets.raspberrypi.com/static/chips-a126ba53c50bb160d65210696edf8ad9.png">
 </div>
 
-Raspberry Piの **デュアルコア(ARM Cortex-M0+ x2コア)** のマイコン🥳
+Raspberry Piの **ARM Cortex-M0+ x2コア** CPU搭載のマイコン🥳
 
 [公式URL]
 - https://www.raspberrypi.com/products/rp2040/

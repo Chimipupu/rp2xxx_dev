@@ -1,3 +1,13 @@
+/**
+ * @file app_main_core0.hpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief  Core0 アプリ
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #ifndef APP_MAIN_CORE0_HPP
 #define APP_MAIN_CORE0_HPP
 

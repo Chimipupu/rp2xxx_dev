@@ -1,3 +1,13 @@
+/**
+ * @file app_main_core0.cpp
+ * @author Chimipupu（https://github.com/Chimipupu）
+ * @brief  Core0 アプリ
+ * @version 0.1
+ * @date 2024-10-16
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "app_main_core0.hpp"
 #include "app_neopixel.hpp"
 // #include "app_oled.hpp"
