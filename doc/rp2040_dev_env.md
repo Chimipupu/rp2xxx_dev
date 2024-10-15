@@ -1,7 +1,7 @@
 # 開発環境構築 by ちみ
-[Pico SDK 公式URL](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
-[公式マニュアル（英語）※最新](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf?_gl=1*anhnfe*_ga*MTE3MTIyMDMzMS4xNzI4OTQ5MzU2*_ga_22FD70LWDS*MTcyODk2NTE2OC42LjAuMTcyODk2NTE3MS4wLjAuMA..)
-[公式マニュアル（日本語）※更新が2021年で止まっている](https://datasheets.raspberrypi.com/pico/getting-started-with-pico-JP.pdf)
+- [Pico SDK 公式URL](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
+- [公式マニュアル（英語）※最新](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf?_gl=1*anhnfe*_ga*MTE3MTIyMDMzMS4xNzI4OTQ5MzU2*_ga_22FD70LWDS*MTcyODk2NTE2OC42LjAuMTcyODk2NTE3MS4wLjAuMA..)
+- [公式マニュアル（日本語）※更新が2021年で止まっている](https://datasheets.raspberrypi.com/pico/getting-started-with-pico-JP.pdf)
 
 ## 開発環境構築(Windows)
 
@@ -33,8 +33,8 @@
 - F/Wを書き込む ... `Run Project`でPicoにF/Wを書き込む
 - `デバッグ` ... `Debug Project`でデバッグ開始（※）
 
-※Picoでデバッグをするには`デバッガ`が必要です🥲
-➡ 下記の`デバッガの準備`を参考にご準備ください
+※Picoでデバッグをするには`デバッガ`が必要🥲
+- 下記の`デバッガの準備`を参考にご準備ください
 
 <div align="center">
 <img width="600" src="https://cdn.discordapp.com/attachments/1295531991789211719/1295652162327810049/image.png?ex=670f6d9b&is=670e1c1b&hm=aa73cb36f5d61442a230e1c1e06c6b9065b390af2b25f9aba9c8a49904e85e50&">
@@ -43,11 +43,11 @@
 
 ### デバッガの準備
 
-Picoでデバッグするためには`デバッガ`がつくります💁‍♀️
-➡ Picoをもう一つ用意 ... `debugprobe`のF/Wを書き込む
+Picoでデバッグするためには`デバッガ`がつくる💁‍♀️
+- Picoをもう一つ用意 ... `debugprobe`のF/Wを書き込む
 
 まず、デバッガ`debugprobe`の最新F/W(`debugprobe_on_pico.uf2`)をダウンロード
-➡ https://github.com/raspberrypi/debugprobe/releases/latest
+- https://github.com/raspberrypi/debugprobe/releases/latest
 
 [F/Wの書き込む]
 - Picoの **`BOOTSEL`ボタンを押しながら** USBをPCに接続する
@@ -68,7 +68,7 @@ Pico(A) GP5/UART1 RX -> Pico(B) GP0/UART0 TX
 
 ## 開発環境構築(Linux)
 PICO SDKはLinux環境が必須
-➡ UbuntuやWindowsのWSL2で構築する方法を記載します
+- UbuntuやWindowsのWSL2で構築する方法を記載する
 
 ### pico_setup.sh
 `pico_setup.sh`でPICO SDKの構築を自動化
@@ -81,6 +81,3 @@ wget https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.
 chmod +x ./pico_setup.sh
 ./pico_setup.sh
 ```
-
-## 参考文献
-[ラズベリー・パイPico/Pico W攻略本](https://interface.cqpub.co.jp/magazine/2023pico/)
