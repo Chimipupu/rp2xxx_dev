@@ -214,22 +214,24 @@ static void math_test(void)
 
     // tan(355/226)の計算（※期待値:-7497258.185...）
     result = math_calc_accuracy();
-    DEBUG_PRINTF("tan(355/226)=%.3f\n", result);
+    DEBUG_PRINTF("tan(355/226) = %.3f\n", result);
 
+#if 1
     // 円周率π
     for(i=1; i<=MATH_PI_CALC_TIME; i++)
     {
         pi = math_pi_calc(i);
     }
-    DEBUG_PRINTF("pi=%.15f\n", pi);
+    DEBUG_PRINTF("pi = %.15f\n", pi);
+
 
     // ネイピアe
     napier = math_napier_calc();
-    DEBUG_PRINTF("e=%.15f\n", napier);
+    DEBUG_PRINTF("e = %.15f\n", napier);
 
     // 黄金比φ
     phi = math_goldenratio_calc();
-    DEBUG_PRINTF("phi=%.15f\n", phi);
+    DEBUG_PRINTF("phi = %.15f\n", phi);
 
     // フィボナッチ数列
     DEBUG_PRINTF("Fn = ");
@@ -247,27 +249,25 @@ static void math_test(void)
         DEBUG_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
     }
     DEBUG_PRINTF("\n");
+#endif
 }
 
 #ifdef DEBUG_CMD
 void dbg_cmd(char *p_cmd)
 {
-    DEBUG_PRINTF("DEBUG Command\r\n");
+    DEBUG_PRINTF("DEBUG Command\n");
     app_util_system_reg_read();
-
-    // NOP
 }
 #endif
 
 void cpm_op_msg(void)
 {
-    DEBUG_PRINTF("Loading CPM.SYS...\r\n");
+    // DEBUG_PRINTF("rebooting ...\n");
+    // DEBUG_PRINTF("Loading CPM.SYS...\n");
 
-    DEBUG_PRINTF("RP2040 Monitor Program by Chimi\r\n");
-    DEBUG_PRINTF("Version 1.0.0\r\n");
-    DEBUG_PRINTF("Copyright(C) 2024, Chimi\r\n");
-
-    // DEBUG_PRINTF("Type HELP for a list of commands\r\n");
+    DEBUG_PRINTF("RP2040 Monitor Program by Chimi\n");
+    DEBUG_PRINTF("Version 1.0.0\n");
+    DEBUG_PRINTF("Copyright(C) 2024, Chimi\n");
 }
 
 void cpm_main(void)
@@ -276,16 +276,20 @@ void cpm_main(void)
     uint32_t idx = 0;
 
     // Serial.begin(115200);
-    while (!Serial)
-        ;
+    while (!Serial){
+        WDT_TOGGLE;
+    }
 
     cpm_op_msg();
+    // DEBUG_PRINTF("Maximum Priorities: %d\n", configMAX_PRIORITIES);
     help();
 
     while (1)
     {
         DEBUG_PRINTF("\n> ");
+
         idx = 0; // 入力インデックスの初期化
+
         while (true)
         {
             if (Serial.available())
@@ -302,6 +306,7 @@ void cpm_main(void)
                     command[idx++] = ch; // 文字をコマンドに追加
                 }
             }
+            WDT_TOGGLE;
         }
 
         // コマンドの処理
@@ -366,6 +371,7 @@ void cpm_main(void)
         {
             DEBUG_PRINTF("Bad command: %s\n", command);
         }
+        WDT_TOGGLE;
     }
 
     DEBUG_PRINTF("rebooting ...\n");

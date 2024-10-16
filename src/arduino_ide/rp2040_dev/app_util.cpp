@@ -35,3 +35,54 @@ void app_util_system_reg_read(void)
     DEBUG_PRINTF("[Core%X] ... M0PLUS CPUID Reg PARTNO[15:4] = 0x%02X\n" ,cpu_core, M0PLUS_CPUID_REG.BIT.PARTNO);
     DEBUG_PRINTF("[Core%X] ... M0PLUS CPUID Reg REVISION[3:0] = 0x%02X\n" ,cpu_core, M0PLUS_CPUID_REG.BIT.REVISION);
 }
+
+# if 0
+void app_util_i2c_scan(void)
+{
+    uint8_t res;
+    uint8_t addr;
+    uint8_t nDevices;
+    uint8_t cnt;
+    uint8_t addr_buf[128] = {0};
+    uint8_t *p_buf;
+
+    nDevices = 0;
+    p_buf = &addr_buf[0];
+    Serial.println("Scanning...");
+
+    for(addr = 1; addr < 127; addr++ )
+    {
+        Wire1.beginTransmission(addr);
+        res = Wire1.endTransmission();
+
+        if (res == SLAVE_FOUNED)
+        {
+            *p_buf = addr;
+            p_buf++;
+            nDevices++;
+        }else{
+            // NOP
+        }
+    }
+
+    if (nDevices == 0){
+        Serial.println("No I2C Slave Found\n");
+    }else{
+        Serial.print("I2C Slave = ");
+        Serial.print(nDevices);
+        Serial.print("\n");
+
+        for(cnt = 0; cnt < nDevices; cnt++)
+        {
+            Serial.print("0x");
+            if (addr_buf[cnt] < 16)
+            {
+                Serial.print("0");
+            }
+            Serial.print(addr_buf[cnt],HEX);
+            Serial.print(" ");
+        }
+        Serial.print("\n");
+    }
+}
+#endif

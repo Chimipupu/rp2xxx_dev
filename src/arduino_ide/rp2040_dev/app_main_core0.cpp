@@ -19,15 +19,40 @@ static void gpio_init(void);
 
 static void gpio_init(void)
 {
-    // UART Init
-    Serial.begin(115200);
-    // delay(1000);
-
     // GPIO Init
     pinMode(BUTTON_PIN, INPUT_PULLUP);
     pinMode(OB_LED_PIN, OUTPUT);
     digitalWrite(OB_LED_PIN, LOW);
 }
+
+#ifdef __FREERTOS_USE__
+void vTaskCore0LED(void *param)
+{
+    static uint8_t val = 0;
+
+    while (1)
+    {
+        // DEBUG_PRINT("[Core0]vTaskCore0LED\n");
+        // __DI;
+        digitalWrite(OB_LED_PIN, val);
+        // __EI;
+        val = !val;
+        WDT_TOGGLE;
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+}
+
+void vTaskCore0Neopixel(void *param)
+{
+    while (1)
+    {
+        // DEBUG_PRINT("[Core0]vTaskCore0Neopixel\n");
+        app_neopixel_main();
+        WDT_TOGGLE;
+        vTaskDelay(200 / portTICK_PERIOD_MS);
+    }
+}
+#endif /* __FREERTOS_USE__ */
 
 void app_main_init_core0(void)
 {
@@ -43,7 +68,25 @@ void app_main_init_core0(void)
     // OLED 初期化
     // app_oled_init();
 
-    DEBUG_PRINTF("[Core0] ... Init\n");
+    // DEBUG_PRINTF("[Core0] ... Init\n");
+
+#ifdef __FREERTOS_USE__
+    xTaskCreate(vTaskCore0LED,    //
+                "vTaskCore0LED",  //
+                128,                 //
+                nullptr,             //
+                2,                   // 優先度
+                nullptr              //
+                );
+
+    xTaskCreate(vTaskCore0Neopixel,    //
+                "vTaskCore0Neopixel",  //
+                128,                 //
+                nullptr,             //
+                2,                   // 優先度
+                nullptr              //
+                );
+#endif /* __FREERTOS_USE__ */
 }
 
 void app_main_core0(void)

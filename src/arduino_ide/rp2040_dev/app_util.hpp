@@ -14,6 +14,8 @@
 
 #include "common.hpp"
 
+#define SLAVE_FOUNED        0x00
+
 /**
  * @brief レジスタ読み出し(32bit)
  * 
@@ -37,5 +39,5 @@ static inline void DRV_REG_WRITE_U32(uint32_t reg_addr, uint32_t reg_val)
 }
 
 void app_util_system_reg_read(void);
-
+void app_util_i2c_scan(void);
 #endif /* APP_UTIL_HPP */

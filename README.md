@@ -1,7 +1,7 @@
 # RP2040評価プログラム by ちみ
 
 RP2040 Firmeware C++ Develop by Chimi\
-RP2040のC++ 個人開発リポジトリ🥳
+C++でのRP2040 F/W 個人開発リポジトリ🥳
 
 ## 開発環境構築
 ### VSCode
@@ -18,15 +18,21 @@ https://github.com/earlephilhower/arduino-pico/releases/download/global/package_
 - `ボードマネージャ`から`Raspberry Pi Pico/RP2040 by Earle F Philhower, III`をダウンロード or 更新
 
 ## ✅実装した機能
+ ✅CPU2コア、CPUそれぞれにFreeRTOS
 
 - ARM Cortex-M0+ x2コア
   - ✅Core0 ... ドライバコア
-    - Neopixcelのアプリ
+    - ✅FreeRTOSタスク『vTaskCore0LED』
+      - LEDのアプリ
+    - ✅FreeRTOSタスク『vTaskCore0Neopixel』
+      - Neopixcelのアプリ
   - ✅Core1 ... アプリコア
-    - ✅OLEDのアプリ
-    - ✅モニタプログラム(UART)
-    - ✅数学アプリ
-      - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
+    - ✅FreeRTOSタスク『vTaskCore1monitor』
+      - ✅モニタプログラム(UART)
+        - ✅レジスタ
+          - M0PLUS CPUIDレジスタ、SIOレジスタの読み出し
+        - ✅数学アプリ
+          - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
 - PIO x2基
     - ✅PIO0 ... TBD
     - ✅PIO1 ... TBD
@@ -35,8 +41,9 @@ https://github.com/earlephilhower/arduino-pico/releases/download/global/package_
 ## TBD🛠️
 - ARM Cortex-M0+
     - 🛠️割込み（IRQ） ... ボタンやPIOからIRQがほしい
-    - 🛠️FreeRTOS ... CPU x2コア分を搭載
+    - ⏰タイマ ... インターバル⏰とワンショットタイマ⏰ほしい
     - 🛠️アプリ追加 ... I2C、SPI、PIO、スリープ機能
+    - 🐶WDT🐶 ... 最後にWDTで番犬わんわんさせる
 
 - PIO
     - 🛠️GPIO ... PIOでGPIOをパタパタさせたい
