@@ -17,12 +17,11 @@
 
 #define MAIN_DELAY          300
 
-#ifdef __FREERTOS_USE__
 void vTaskCore1monitor(void *param)
 {
+    DEBUG_PRINTLN("[Core1] vTaskCore1monitor");
     while (1)
     {
-        // DEBUG_PRINT("[Core1]vTaskCore1monitor\n");
 
         // モニタプログラム
         WDT_TOGGLE;
@@ -32,13 +31,11 @@ void vTaskCore1monitor(void *param)
         vTaskDelay(200 / portTICK_PERIOD_MS);
     }
 }
-#endif /* __FREERTOS_USE__ */
 
 void app_main_init_core1(void)
 {
     DEBUG_PRINTF("[Core1] ... Init\n");
 
-#ifdef __FREERTOS_USE__
     xTaskCreate(vTaskCore1monitor,    // コールバック関数
                 "vTaskCore1monitor",  // タスク名
                 2048,                 // スタック
@@ -46,33 +43,10 @@ void app_main_init_core1(void)
                 5,                    // 優先度(MAX8)
                 nullptr               //
                 );
-#endif
 }
 
 void app_main_core1(void)
 {
-#ifdef __FREERTOS_USE__
-    // DEBUG_PRINTF("[Core0]app_main_core0\n");
-    // SW_DELAY_MS(MAIN_DELAY);
+    // DEBUG_PRINTF("[Core1]Core1 Loop Task\n");
     vTaskSuspend(NULL);
-#else
-    # if 0
-    static uint8_t s_val = 0;
-
-    DEBUG_PRINTF("[Core1] ... This is Application Core\n");
-
-    i2c_scan();
-
-    // LEDのトグル
-    digitalWrite(OB_LED_PIN, s_val);
-    s_val = !s_val;
-
-    //(TBD) OLED メイン
-    app_oled_test();
-    #endif
-    // モニタプログラム
-    cpm_main();
-
-    // SW_DELAY_MS(MAIN_DELAY);
-#endif
 }

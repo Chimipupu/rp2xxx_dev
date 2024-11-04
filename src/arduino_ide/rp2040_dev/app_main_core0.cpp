@@ -10,6 +10,7 @@
  */
 #include "app_main_core0.hpp"
 #include "app_timer.hpp"
+#include "app_btn.hpp"
 #include "app_neopixel.hpp"
 // #include "app_oled.hpp"
 // #include "app_util.hpp"
@@ -21,21 +22,32 @@ static void gpio_init(void);
 static void gpio_init(void)
 {
     // GPIO Init
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
+    app_btn_init();
     pinMode(OB_LED_PIN, OUTPUT);
     digitalWrite(OB_LED_PIN, LOW);
 }
 
-#ifdef __FREERTOS_USE__
-void vTaskCore0LED(void *param)
+void vTaskCore0Btn(void *p_parameter)
 {
-    static uint8_t val = 0;
+    ButtonState btnstate;
+    DEBUG_PRINTLN("[Core0] vTaskCore0Btn");
 
     while (1)
     {
-        // DEBUG_PRINT("[Core0]vTaskCore0LED\n");
-        // digitalWrite(OB_LED_PIN, val);
-        // val = !val;
+        app_btn_polling(btnstate);
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+    }
+}
+
+void vTaskCore0LED(void *param)
+{
+    static uint8_t val = 0;
+    Serial.println("[Core0] vTaskCore0LED");
+
+    while (1)
+    {
+        digitalWrite(OB_LED_PIN, val);
+        val = !val;
         WDT_TOGGLE;
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
@@ -43,15 +55,15 @@ void vTaskCore0LED(void *param)
 
 void vTaskCore0Neopixel(void *param)
 {
+    Serial.println("[Core0] vTaskCore0Neopixel");
+
     while (1)
     {
-        // DEBUG_PRINT("[Core0]vTaskCore0Neopixel\n");
         app_neopixel_main();
         WDT_TOGGLE;
         vTaskDelay(200 / portTICK_PERIOD_MS);
     }
 }
-#endif /* __FREERTOS_USE__ */
 
 void app_main_init_core0(void)
 {
@@ -72,35 +84,33 @@ void app_main_init_core0(void)
 
     DEBUG_PRINTF("[Core0] ... Init\n");
 
-#ifdef __FREERTOS_USE__
-    xTaskCreate(vTaskCore0LED,    //
-                "vTaskCore0LED",  //
-                128,                 //
-                nullptr,             //
-                2,                   // 優先度
-                nullptr              //
+    // xTaskCreate(vTaskCore0LED,          // コールバック関数ポインタ
+    //             "vTaskCore0LED",        // タスク名
+    //             128,                    // スタック
+    //             nullptr,                // パラメータ
+    //             2,                      // 優先度(0～7、7が最優先)
+    //             nullptr                 // タスクハンドル
+    //             );
+
+    xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
+                "vTaskCore0Btn",        // タスク名
+                512,                    // スタック
+                nullptr,                // パラメータ
+                2,                      // 優先度(0～7、7が最優先)
+                nullptr                 // タスクハンドル
                 );
 
-    xTaskCreate(vTaskCore0Neopixel,    //
-                "vTaskCore0Neopixel",  //
-                128,                 //
-                nullptr,             //
-                2,                   // 優先度
-                nullptr              //
+    xTaskCreate(vTaskCore0Neopixel,     // コールバック関数ポインタ
+                "vTaskCore0Neopixel",   // タスク名
+                256,                    // スタック
+                nullptr,                // パラメータ
+                1,                      // 優先度(0～7、7が最優先)
+                nullptr                 // タスクハンドル
                 );
-#endif /* __FREERTOS_USE__ */
 }
 
 void app_main_core0(void)
 {
-    // DEBUG_PRINTF("[Core0] ... This is Driver Core\n");
-
-    // NeoPixel メイン
-    app_neopixel_main();
-
-    // OLED メイン
-    // (TBD)
-    // app_oled_test();
-
-    SW_DELAY_MS(MAIN_DELAY);
+    // DEBUG_PRINTF("[Core0]Core0 Loop Task\n");
+    vTaskSuspend(NULL);
 }

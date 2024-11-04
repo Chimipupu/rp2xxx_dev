@@ -1,7 +1,8 @@
 # RP2040評価プログラム by ちみ
-
-RP2040 Firmeware C++ Develop by Chimi\
 C++でのRP2040 F/W 個人開発リポジトリ🥳
+
+- CPU ... RP2040
+- OS ... FreeRTOS
 
 ## 開発環境構築
 - [RP2040 開発環境構築(Windows)](doc/rp2040_dev_env.md)
@@ -10,18 +11,31 @@ C++でのRP2040 F/W 個人開発リポジトリ🥳
 - CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
   - ✅Core0 ... ドライバCPU
     - ✅FreeRTOS
+      - ✅ボタンタスク
+        - ボタン処理
+          - ボタン単押し ... TODO
+          - ボタン複数押し判定 ... TODO
+          - ボタン長押し判定 ... TODO
+          - ボタン超長押し判定 ... TODO
       - ✅LEDタスク
-      - ✅Neopixcelのアプリ
+        - LEDのアプリ処理
+      - ✅Neopixcelタスク
+        - Neopixcelのアプリ処理
   - ✅Core1 ... アプリCPU
     - ✅FreeRTOS
       - ✅モニタプログラムタスク
-        - ✅レジスタ操作アプリ
-          - M0PLUS CPUIDレジスタ、SIOレジスタの読み出し
-        - ✅計算アプリ
+        - ✅レジスタ
+          - M0PLUS CPUIDレジスタ、SIOレジスタのRead
+        - ✅計算
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
 
 - 割込み(IRQ)
-  - ✅タイマー(64bit)⏰(clk_ref = 12MHz)
+    - ✅ボタンIRQ
+      - `ボタン単押し判定` ... ボタン一回押しを検知
+      - `ボタン複数押し判定` ... 短時間に複数回ボタン押しを検知
+      - `ボタン長押し判定` ... ボタン長押しを検知（1000ms = 1s）
+      - `ボタン超長押し判定` ... ボタン長押しを検知（3000ms = 2s）
+  - ✅タイマーIRQ⏰(clk_ref = 12MHz)
     - ✅アラーム 0 ⏰(TIMER_IRQ_0) ... TODO
     - ✅アラーム 1 ⏰(TIMER_IRQ_1) ... TODO
     - ✅アラーム 2 ⏰(TIMER_IRQ_2) ... TODO
@@ -44,7 +58,7 @@ C++でのRP2040 F/W 個人開発リポジトリ🥳
 CPUに ARM Cortex-M0+を2つ搭載のRP2040の開発基板🥳
 
 
-![yd_rp2040_pin_out](doc\YD-RP2040\YD-2040-PIN.png)
+![yd_rp2040_pin_out](doc/YD-RP2040\YD-2040-PIN.png)
 
 ### スペック (CPU)
 [RP2040のメーカーHP](https://www.raspberrypi.com/products/rp2040/)

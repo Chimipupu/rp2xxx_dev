@@ -37,16 +37,13 @@ extern "C"
 /***********************************/
 //          FreeRTOS関連
 /***********************************/
-#define __FREERTOS_USE__
-#ifdef __FREERTOS_USE__
-
 #include <FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
 
 // 割込みマスク・許可
-#define __DI            vTaskEnterCritical
-#define __EI            vTaskExitCritical
+#define __DI            taskENTER_CRITICAL
+#define __EI            taskEXIT_CRITICAL
 #define __DI_ISR        taskENTER_CRITICAL_FROM_ISR
 #define __EI_ISR        taskEXIT_CRITICAL_FROM_ISR
 
@@ -127,7 +124,6 @@ extern "C"
         }
     }
 }
-#endif /* __FREERTOS_USE__ */
 /***********************************/
 
 // typedef enum {
@@ -138,12 +134,12 @@ extern "C"
 
 #define DUAL_CORE_BUILD
 
-// Use Pin Define
-#define RGBLED_PIN          23   // GPIO 23
-#define BUTTON_PIN          24   // GPIO 24
-#define OB_LED_PIN          25   // GPIO 25
-#define I2C_SDA             6    // GPIO 6
-#define I2C_SCL             7    // GPIO 7
+// YD-RP2040の使用ピン
+#define RGBLED_PIN          23   // Neopixel (GPIO 23)
+#define BUTTON_PIN          24   // ボタン (GPIO 24)
+#define OB_LED_PIN          25   // 青色LED (GPIO 25)
+#define I2C_SDA             6    // I2C SDA (GPIO 6)
+#define I2C_SCL             7    // I2C SCL (GPIO 7)
 
 #define core0_init          setup
 #define core0_main          loop
@@ -151,11 +147,7 @@ extern "C"
 #define core1_main          loop1
 #define DEBUG_PRINT         Serial.print
 #define DEBUG_PRINTLN       Serial.println
-#ifdef __FREERTOS_USE__
 #define DEBUG_PRINTF        safeSerialPrintf
-#else
-#define DEBUG_PRINTF        Serial.printf
-#endif /* __FREERTOS_USE__ */
 #define DEBUG_PRINT_INIT    Serial.begin
 
 #define SW_DELAY_MS         delay

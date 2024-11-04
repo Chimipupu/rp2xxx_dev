@@ -253,9 +253,9 @@ static void math_test(void)
 
 void timer_test(void)
 {
-    __DI;
+    __DI();
     uint32_t start_time = time_us_32();
-    __EI;
+    __EI();
 
     // // 約99.20ms
     // for (uint32_t i = 0; i < 2325000; i++) {
@@ -264,9 +264,9 @@ void timer_test(void)
 
     delay(300);
 
-    __DI;
+    __DI();
     uint32_t end_time = time_us_32();
-    __EI;
+    __EI();
 
     DEBUG_PRINTF("proc time : %d usec(%d, %d)\n", end_time - start_time, start_time, end_time);
 }
