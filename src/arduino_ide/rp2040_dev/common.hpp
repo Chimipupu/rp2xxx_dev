@@ -44,10 +44,13 @@ extern "C"
 #include <task.h>
 #include <semphr.h>
 
-#define __DI        vTaskEnterCritical
-#define __EI        vTaskExitCritical
-#define __DI_ISR    taskENTER_CRITICAL_FROM_ISR
-#define __EI_ISR    taskEXIT_CRITICAL_FROM_ISR
+// 割込みマスク・許可
+#define __DI            vTaskEnterCritical
+#define __EI            vTaskExitCritical
+#define __DI_ISR        taskENTER_CRITICAL_FROM_ISR
+#define __EI_ISR        taskEXIT_CRITICAL_FROM_ISR
+
+// FreeRTOS用のprintf
 #define DEBUG_PRINTF_RTOS   safeSerialPrintf
 
 extern SemaphoreHandle_t xSerialMutex;

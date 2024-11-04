@@ -4,10 +4,10 @@ RP2040 Firmeware C++ Develop by Chimi\
 C++でのRP2040 F/W 個人開発リポジトリ🥳
 
 ## 開発環境構築
-- [RP2040 開発環境構築(Windows)](doc\rp2040_dev_env.md)
+- [RP2040 開発環境構築(Windows)](doc/rp2040_dev_env.md)
 
 ## ✅実装機能
-- CPU (ARM Cortex-M0+)
+- CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
   - ✅Core0 ... ドライバCPU
     - ✅FreeRTOS
       - ✅LEDタスク
@@ -21,7 +21,7 @@ C++でのRP2040 F/W 個人開発リポジトリ🥳
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
 
 - 割込み(IRQ)
-  - ✅タイマー(64bit)⏰
+  - ✅タイマー(64bit)⏰(clk_ref = 12MHz)
     - ✅アラーム 0 ⏰(TIMER_IRQ_0) ... TODO
     - ✅アラーム 1 ⏰(TIMER_IRQ_1) ... TODO
     - ✅アラーム 2 ⏰(TIMER_IRQ_2) ... TODO
@@ -39,20 +39,18 @@ C++でのRP2040 F/W 個人開発リポジトリ🥳
   - VGA ... モニターに描画したい
   - SDIO ... SDカード
 
-## 🔰RP2040とは？🔰
-<div align="center">
-<img width="200" src="https://assets.raspberrypi.com/static/chips-a126ba53c50bb160d65210696edf8ad9.png">
-</div>
+## 開発基板
+## VCC GND YD-RP2040
+CPUに ARM Cortex-M0+を2つ搭載のRP2040の開発基板🥳
 
-Raspberry Piの **ARM Cortex-M0+ x2コア** CPU搭載のマイコン🥳
 
-[公式URL]
-- https://www.raspberrypi.com/products/rp2040/
+![yd_rp2040_pin_out](doc\YD-RP2040\YD-2040-PIN.png)
 
-[データシート]
-- https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf
+### スペック (CPU)
+[RP2040のメーカーHP](https://www.raspberrypi.com/products/rp2040/)
+[RP2040のメーカー公式ドキュメントHP](https://www.raspberrypi.com/documentation/microcontrollers/silicon.html)
+[データシート(RP2040)](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf)
 
-### スペック
 - プロセス ... 40nm
 - クロック ... 133MHz
 - CPU ... ARM Cortex-M0+ x2コア

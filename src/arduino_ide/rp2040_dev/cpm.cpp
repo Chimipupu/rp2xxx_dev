@@ -253,11 +253,22 @@ static void math_test(void)
 
 void timer_test(void)
 {
-    uint64_t start_time = time_us_64();
-    delay(100);
-    uint64_t end_time = time_us_64();
+    __DI;
+    uint32_t start_time = time_us_32();
+    __EI;
 
-    printf("処理時間: %llu usec\n", start_time - end_time);
+    // // 約99.20ms
+    // for (uint32_t i = 0; i < 2325000; i++) {
+    //     asm volatile("nop");
+    // }
+
+    delay(300);
+
+    __DI;
+    uint32_t end_time = time_us_32();
+    __EI;
+
+    DEBUG_PRINTF("proc time : %d usec(%d, %d)\n", end_time - start_time, start_time, end_time);
 }
 
 #ifdef DEBUG_CMD
@@ -273,9 +284,9 @@ void cpm_op_msg(void)
     // DEBUG_PRINTF("rebooting ...\n");
     // DEBUG_PRINTF("Loading CPM.SYS...\n");
 
-    DEBUG_PRINTF("RP2040 Monitor Program by Chimi\n");
+    DEBUG_PRINTF("RP2040 Monitor Program by Chimi（https://github.com/Chimipupu）\n");
     DEBUG_PRINTF("Version 1.0.0\n");
-    DEBUG_PRINTF("Copyright(C) 2024, Chimi\n");
+    DEBUG_PRINTF("Copyright(C) 2024, Chimi（https://github.com/Chimipupu）\n");
 }
 
 void cpm_main(void)

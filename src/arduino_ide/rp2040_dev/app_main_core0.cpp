@@ -9,6 +9,7 @@
  * 
  */
 #include "app_main_core0.hpp"
+#include "app_timer.hpp"
 #include "app_neopixel.hpp"
 // #include "app_oled.hpp"
 // #include "app_util.hpp"
@@ -33,10 +34,8 @@ void vTaskCore0LED(void *param)
     while (1)
     {
         // DEBUG_PRINT("[Core0]vTaskCore0LED\n");
-        // __DI;
-        digitalWrite(OB_LED_PIN, val);
-        // __EI;
-        val = !val;
+        // digitalWrite(OB_LED_PIN, val);
+        // val = !val;
         WDT_TOGGLE;
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
@@ -62,13 +61,16 @@ void app_main_init_core0(void)
     // GPIO 初期化
     gpio_init();
 
+    // タイマー初期化
+    app_timer_set_alarm(0, 20000); // アラーム0, 20msec
+
     // NeoPicel 初期化
     app_neopixel_init();
 
     // OLED 初期化
     // app_oled_init();
 
-    // DEBUG_PRINTF("[Core0] ... Init\n");
+    DEBUG_PRINTF("[Core0] ... Init\n");
 
 #ifdef __FREERTOS_USE__
     xTaskCreate(vTaskCore0LED,    //

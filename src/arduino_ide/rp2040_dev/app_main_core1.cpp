@@ -36,10 +36,8 @@ void vTaskCore1monitor(void *param)
 
 void app_main_init_core1(void)
 {
-    // OLED 初期化
-    // app_oled_init();
-    // app_oled_test();
-    // DEBUG_PRINTF("[Core1] ... Init\n");
+    DEBUG_PRINTF("[Core1] ... Init\n");
+
 #ifdef __FREERTOS_USE__
     xTaskCreate(vTaskCore1monitor,    // コールバック関数
                 "vTaskCore1monitor",  // タスク名

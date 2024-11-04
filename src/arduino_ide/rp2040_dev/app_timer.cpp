@@ -22,7 +22,7 @@ static struct repeating_timer s_repeating_timer_t;
  */
 bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
 {
-    DEBUG_PRINTF("alarm 0 ISR\n");
+    // DEBUG_PRINTF("alarm 0 ISR\n");
     return true;
 }
 
@@ -35,7 +35,7 @@ bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
 {
-    DEBUG_PRINTF("alarm 0 ISR\n");
+    // DEBUG_PRINTF("alarm 0 ISR\n");
     return true;
 }
 
@@ -48,10 +48,9 @@ bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
 {
-    DEBUG_PRINTF("alarm 0 ISR\n");
+    // DEBUG_PRINTF("alarm 0 ISR\n");
     return true;
 }
-
 
 /**
  * @brief タイマーアラーム3割込み ISR
@@ -62,7 +61,7 @@ bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_3_ISR(repeating_timer_t *p_rt)
 {
-    DEBUG_PRINTF("alarm 0 ISR\n");
+    // DEBUG_PRINTF("alarm 0 ISR\n");
     return true;
 }
 
@@ -99,9 +98,9 @@ void app_timer_set_alarm(uint8_t alarm_num, uint32_t time_us)
 /**
  * @brief 指定アラームのタイマーカウントを取得
  * 
- * @return uint32_t 64bitタイマーカウント（usec単位）
+ * @return uint32_t 32bitタイマーカウント（usec単位）
  */
-uint64_t app_timer_get_time(void)
+uint32_t app_timer_get_time(void)
 {
     return time_us_64();
 }
