@@ -19,8 +19,8 @@
 
 #include "math_uc.hpp"
 #define MATH_PI_CALC_TIME   3
-#define FIBONACCI_N         23
-#define INVSQRT_N           9
+#define FIBONACCI_N         20
+#define INVSQRT_N           7
 
 #define MAX_CMD_LEN 100
 #define CALC_CMD_ARG 4
@@ -40,7 +40,7 @@ void help()
     DEBUG_PRINTF("  CALC   - Perform basic arithmetic (e.g., CALC 3 + 4, CALC 2 ^ 3)\n");
     DEBUG_PRINTF("  FIB    - Display Fibonacci series (e.g., FIB 10)\n");
     DEBUG_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
-    DEBUG_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI <terms>)\n");
+    DEBUG_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)\n");
     DEBUG_PRINTF("  MANDEL - Display Mandelbrot set (e.g., MANDEL)\n");
     DEBUG_PRINTF("  TIMER  - Timer Test\n");
     DEBUG_PRINTF("  REGR   - Register Read (e.g., REGR <Address>)\n");
@@ -109,40 +109,26 @@ void calculate(char *p_cmd)
     }
 }
 
-void fibonacci(int n)
+void fibonacci(uint32_t n)
 {
-    int t1 = 0, t2 = 1, nextTerm;
-    DEBUG_PRINTF("Fibonacci Series: ");
+    uint32_t i,fib;
 
-    for (int i = 1; i <= n; ++i)
+    DEBUG_PRINTF("Fibonacci : ");
+    for(uint8_t i = 1; i < n; i++)
     {
-        DEBUG_PRINTF("%d ", t1);
-        nextTerm = t1 + t2;
-        t1 = t2;
-        t2 = nextTerm;
+        fib = math_fibonacci_calc(i);
+        DEBUG_PRINTF("%d ", fib);
     }
     DEBUG_PRINTF("\n");
 }
 
-int isPrime(int num)
-{
-    if (num <= 1)
-        return 0; // 1以下は素数ではない
-    for (int i = 2; i <= sqrt(num); i++)
-    {
-        if (num % i == 0)
-            return 0; // 割り切れる数があれば素数ではない
-    }
-    return 1; // 素数
-}
-
-void prime(int n)
+void prime(uint32_t n)
 {
     DEBUG_PRINTF("Prime Numbers: ");
-    int count = 0;
+    uint32_t count = 0;
     for (int i = 2; count < n; i++)
     {
-        if (isPrime(i))
+        if (math_is_prime_num(i))
         {
             DEBUG_PRINTF("%d ", i);
             count++;
@@ -151,27 +137,16 @@ void prime(int n)
     DEBUG_PRINTF("\n");
 }
 
-void calculatePi(int terms)
+void calculatePi(uint32_t n)
 {
     // ガウス・ルジャンドル法で円周率を計算
-    double a = 1.0;
-    double b = 1.0 / sqrt(2.0);
-    double t = 0.25;
-    double p = 1.0;
-    double pi;
-
-    for (int i = 0; i < terms; i++)
-    {
-        double a_next = (a + b) / 2.0;
-        double b_next = sqrt(a * b);
-        t -= p * (a - a_next) * (a - a_next);
-        a = a_next;
-        b = b_next;
-        p *= 2.0;
-    }
-
-    pi = (a + b) * (a + b) / (4.0 * t);
-    DEBUG_PRINTF("Pi calculated to %d terms: %.15f\n", terms, pi);
+    __DI();
+    uint32_t start_time = time_us_32();
+    double pi = math_pi_calc(n);
+    uint32_t end_time = time_us_32();
+    __EI();
+    DEBUG_PRINTF("pi = %.15f\n", pi);
+    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
 }
 
 void mandelbrot()
@@ -214,33 +189,31 @@ static void math_test(void)
     volatile double result;
 
     // tan(355/226)の計算（※期待値:-7497258.185...）
+    __DI();
+    uint32_t start_time = time_us_32();
     result = math_calc_accuracy();
+    uint32_t end_time = time_us_32();
+    __EI();
     DEBUG_PRINTF("tan(355/226) = %.3f\n", result);
+    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
 
     // 円周率π
-    for(i=1; i<=MATH_PI_CALC_TIME; i++)
-    {
-        pi = math_pi_calc(i);
-    }
-    DEBUG_PRINTF("pi = %.15f\n", pi);
-
+    calculatePi(MATH_PI_CALC_TIME);
 
     // ネイピアe
     napier = math_napier_calc();
     DEBUG_PRINTF("e = %.15f\n", napier);
 
     // 黄金比φ
+    __DI();
+    start_time = time_us_32();
     phi = math_goldenratio_calc();
+    end_time = time_us_32();
+    __EI();
     DEBUG_PRINTF("phi = %.15f\n", phi);
 
     // フィボナッチ数列
-    DEBUG_PRINTF("Fn = ");
-    for(i = 1; i < FIBONACCI_N; i++)
-    {
-        fib = math_fibonacci_calc(i);
-        DEBUG_PRINTF("%d ", fib);
-    }
-    DEBUG_PRINTF("\n");
+    fibonacci(FIBONACCI_N);
 
     // 高速逆平方根
     for(i = 1; i < INVSQRT_N; i++)
@@ -248,6 +221,7 @@ static void math_test(void)
         invsqrt = math_fast_inv_sqrt(i);
         DEBUG_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
     }
+
     DEBUG_PRINTF("\n");
 }
 
@@ -255,20 +229,16 @@ void timer_test(void)
 {
     __DI();
     uint32_t start_time = time_us_32();
-    __EI();
 
-    // // 約99.20ms
-    // for (uint32_t i = 0; i < 2325000; i++) {
-    //     asm volatile("nop");
-    // }
+    for (uint32_t i = 0; i < 2325000; i++) {
+        asm volatile("nop");
+    }
 
-    delay(300);
-
-    __DI();
     uint32_t end_time = time_us_32();
     __EI();
 
-    DEBUG_PRINTF("proc time : %d usec(%d, %d)\n", end_time - start_time, start_time, end_time);
+    // 処理時間 約97.38ms
+    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
 }
 
 #ifdef DEBUG_CMD
@@ -365,8 +335,8 @@ void cpm_main(void)
         }
         else if (strstr(command, "PI") == command)
         {
-            int terms = atoi(command + 3);
-            calculatePi(terms);
+            uint32_t num = atoi(command + 3);
+            calculatePi(num);
         }
         else if (strcmp(command, "MANDEL") == 0)
         {
