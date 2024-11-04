@@ -14,8 +14,8 @@
 
 #include <Arduino.h>
 #include <stdint.h>
-#include "rp2040_reg.hpp"
 #include "pico/stdlib.h"
+#include "rp2040_reg.hpp"
 
 extern "C"
 {

@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2024
  * 
  */
-#ifndef CPM_H
-#define CPM_H
+#ifndef CPM_HPP
+#define CPM_HPP
 
 #include "common.hpp"
 
@@ -26,5 +26,4 @@ void cpm_main(void);
 }
 #endif
 
-#endif /* CPM_H */
-
+#endif /* CPM_HPP */

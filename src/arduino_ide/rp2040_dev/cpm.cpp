@@ -9,6 +9,7 @@
  * 
  */
 #include "cpm.hpp"
+#include "app_timer.hpp"
 #include "app_util.hpp"
 
 #define DEBUG_CMD
@@ -41,6 +42,7 @@ void help()
     DEBUG_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
     DEBUG_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI <terms>)\n");
     DEBUG_PRINTF("  MANDEL - Display Mandelbrot set (e.g., MANDEL)\n");
+    DEBUG_PRINTF("  TIMER  - Timer Test\n");
     DEBUG_PRINTF("  REGR   - Register Read (e.g., REGR <Address>)\n");
     DEBUG_PRINTF("  REGW   - Register Write (e.g., REGW <Address> <Val>)\n");
     DEBUG_PRINTF("  TEST   - Performance test cmd\n");
@@ -151,10 +153,11 @@ void prime(int n)
 
 void calculatePi(int terms)
 {
-    double a = 1.0;             // 初期値
-    double b = 1.0 / sqrt(2.0); // 初期値
-    double t = 0.25;            // 初期値
-    double p = 1.0;             // 初期値
+    // ガウス・ルジャンドル法で円周率を計算
+    double a = 1.0;
+    double b = 1.0 / sqrt(2.0);
+    double t = 0.25;
+    double p = 1.0;
     double pi;
 
     for (int i = 0; i < terms; i++)
@@ -189,13 +192,11 @@ void mandelbrot()
                 if (z_re * z_re + z_im * z_im > 4.0)
                     break; // 発散判定
 
-                // zの更新
                 double z_re_new = z_re * z_re - z_im * z_im + c_re;
                 z_im = 2.0 * z_re * z_im + c_im;
                 z_re = z_re_new;
             }
 
-            // 文字を使った出力
             char symbol = (iteration == MAX_ITER) ? '#' : ' ';
             DEBUG_PRINTF("%c", symbol);
         }
@@ -216,7 +217,6 @@ static void math_test(void)
     result = math_calc_accuracy();
     DEBUG_PRINTF("tan(355/226) = %.3f\n", result);
 
-#if 1
     // 円周率π
     for(i=1; i<=MATH_PI_CALC_TIME; i++)
     {
@@ -249,7 +249,15 @@ static void math_test(void)
         DEBUG_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
     }
     DEBUG_PRINTF("\n");
-#endif
+}
+
+void timer_test(void)
+{
+    uint64_t start_time = time_us_64();
+    delay(100);
+    uint64_t end_time = time_us_64();
+
+    printf("処理時間: %llu usec\n", start_time - end_time);
 }
 
 #ifdef DEBUG_CMD
@@ -352,6 +360,10 @@ void cpm_main(void)
         else if (strcmp(command, "MANDEL") == 0)
         {
             mandelbrot();
+        }
+        else if (strcmp(command, "TIMER") == 0)
+        {
+            timer_test();
         }
         else if (strcmp(command, "TEST") == 0)
         {

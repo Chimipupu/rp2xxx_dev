@@ -7,37 +7,37 @@ C++でのRP2040 F/W 個人開発リポジトリ🥳
 - [RP2040 開発環境構築(Windows)](doc\rp2040_dev_env.md)
 
 ## ✅実装機能
- ✅CPU2コア、CPUそれぞれにFreeRTOS
-
-- ARM Cortex-M0+ x2コア
-  - ✅Core0 ... ドライバコア
-    - ✅FreeRTOSタスク『vTaskCore0LED』
-      - LEDのアプリ
-    - ✅FreeRTOSタスク『vTaskCore0Neopixel』
-      - Neopixcelのアプリ
-  - ✅Core1 ... アプリコア
-    - ✅FreeRTOSタスク『vTaskCore1monitor』
-      - ✅モニタプログラム(UART)
-        - ✅レジスタ
+- CPU (ARM Cortex-M0+)
+  - ✅Core0 ... ドライバCPU
+    - ✅FreeRTOS
+      - ✅LEDタスク
+      - ✅Neopixcelのアプリ
+  - ✅Core1 ... アプリCPU
+    - ✅FreeRTOS
+      - ✅モニタプログラムタスク
+        - ✅レジスタ操作アプリ
           - M0PLUS CPUIDレジスタ、SIOレジスタの読み出し
-        - ✅数学アプリ
+        - ✅計算アプリ
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
-- PIO x2基
-    - ✅PIO0 ... TBD
-    - ✅PIO1 ... TBD
 
+- 割込み(IRQ)
+  - ✅タイマー(64bit)⏰
+    - ✅アラーム 0 ⏰(TIMER_IRQ_0) ... TODO
+    - ✅アラーム 1 ⏰(TIMER_IRQ_1) ... TODO
+    - ✅アラーム 2 ⏰(TIMER_IRQ_2) ... TODO
+    - ✅アラーム 3 ⏰(TIMER_IRQ_3) ... TODO
 
-## TBD🛠️
+## TBD
 - ARM Cortex-M0+
-    - 🛠️割込み（IRQ） ... ボタンやPIOからIRQがほしい
-    - ⏰タイマ ... インターバル⏰とワンショットタイマ⏰ほしい
-    - 🛠️アプリ追加 ... I2C、SPI、PIO、スリープ機能
-    - 🐶WDT🐶 ... 最後にWDTで番犬わんわんさせる
+  - 割込み（IRQ） ... ボタン、タイマー、PIOからIRQがほしい
+  - タイマー ... インターバルとワンショットタイマとIRQの生成
+  - ADC & DMA ... ADCをDMAでとりたい
+  - アプリ追加 ... I2C、SPI、PIO、スリープ機能
 
 - PIO
-    - 🛠️GPIO ... PIOでGPIOをパタパタさせたい
-    - 🛠️VGA ... モニターで描画したい
-    - 🛠️SDIO ... SDカードを使いたい
+  - GPIO ... PIOにGPIO任せる
+  - VGA ... モニターに描画したい
+  - SDIO ... SDカード
 
 ## 🔰RP2040とは？🔰
 <div align="center">
@@ -65,4 +65,8 @@ Raspberry Piの **ARM Cortex-M0+ x2コア** CPU搭載のマイコン🥳
 - ADC ... 12bit SAR x4ch
 - GPIO ... 30本
 - PWM ... 16本
+- タイマー(64bit)
+  - アラーム ... x4 (IRQ生成)
+- RTC
+- WDT
 - PIO ... x8基
