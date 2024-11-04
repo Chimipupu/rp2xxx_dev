@@ -1,16 +1,18 @@
-# 開発環境構築 by ちみ
-- [Pico SDK 公式URL](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
-- [公式マニュアル（英語）※最新](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf?_gl=1*anhnfe*_ga*MTE3MTIyMDMzMS4xNzI4OTQ5MzU2*_ga_22FD70LWDS*MTcyODk2NTE2OC42LjAuMTcyODk2NTE3MS4wLjAuMA..)
-- [公式マニュアル（日本語）※更新が2021年で止まっている](https://datasheets.raspberrypi.com/pico/getting-started-with-pico-JP.pdf)
+# 開発環境構築(Windows)
+## Arduino IED
+- `基本設定`から👇下記URLを追加
+- `ボードマネージャ`から`Raspberry Pi Pico/RP2040 by Earle F Philhower, III`をダウンロード or 更新
 
-## 開発環境構築(Windows)
+```shell
+https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+```
 
-## VSCode
+#s# VSCode
 ### `Raspberry Pi Pico`をインストール
 - VSCodeの拡張機能で`Raspberry Pi Pico`をインストール
 
 <div align="center">
-<img width="600" src="https://cdn.discordapp.com/attachments/1295531991789211719/1295543688759480441/image.png?ex=670f0895&is=670db715&hm=b2931d0cb730ffca71a144f64aac359a66d15b1d57f66cdbea507bc5407658fa&">
+<img width="600" src="https://storage.googleapis.com/zenn-user-upload/3fb53d261f08-20241015.png">
 </div>
 
 ### プロジェクトを作成
@@ -24,7 +26,7 @@
 - `Debbugger` ... `DebugProbe(CMSIS-DAP)[Default]`を選択する
 
 <div align="center">
-<img width="600" src="https://cdn.discordapp.com/attachments/1295531991789211719/1295554669493485649/image.png?ex=670f12cf&is=670dc14f&hm=97681773e397ca89060a20c9f48b7ff44e4b85c86826f5b15000f124ca8c5ef9&">
+<img width="600" src="https://storage.googleapis.com/zenn-user-upload/93e5a68afb64-20241015.png">
 </div>
 
 ### ビルド＆デバッグ
@@ -37,7 +39,7 @@
 - 下記の`デバッガの準備`を参考にご準備ください
 
 <div align="center">
-<img width="600" src="https://cdn.discordapp.com/attachments/1295531991789211719/1295652162327810049/image.png?ex=670f6d9b&is=670e1c1b&hm=aa73cb36f5d61442a230e1c1e06c6b9065b390af2b25f9aba9c8a49904e85e50&">
+<img width="600" src="https://storage.googleapis.com/zenn-user-upload/7b86d616bf51-20241015.png">
 </div>
 
 
@@ -63,7 +65,7 @@ Pico(A) GP5/UART1 RX -> Pico(B) GP0/UART0 TX
 ```
 
 <div align="center">
-<img width="600" src="https://cdn.discordapp.com/attachments/1295531991789211719/1295650923040739338/image.png?ex=670f6c74&is=670e1af4&hm=698b2f28c9b70c741e4017532d650bd640c36a54b7dae886a9e64074adced50f&">
+<img width="600" src="https://storage.googleapis.com/zenn-user-upload/4e1aedab768d-20241015.png">
 </div>
 
 ## 開発環境構築(Linux)
@@ -81,3 +83,11 @@ wget https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.
 chmod +x ./pico_setup.sh
 ./pico_setup.sh
 ```
+
+# 参考文献
+- [Pico SDK 公式URL](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
+- [公式マニュアル（英語）※最新](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf?_gl=1*anhnfe*_ga*MTE3MTIyMDMzMS4xNzI4OTQ5MzU2*_ga_22FD70LWDS*MTcyODk2NTE2OC42LjAuMTcyODk2NTE3MS4wLjAuMA..)
+- [公式マニュアル（日本語）※更新が2021年で止まっている](https://datasheets.raspberrypi.com/pico/getting-started-with-pico-JP.pdf)
+
+- Zenn『Pico SDKの開発環境構築の最適解 📝』 by ちみ
+  - https://zenn.dev/chimipupu/articles/039597a904849f

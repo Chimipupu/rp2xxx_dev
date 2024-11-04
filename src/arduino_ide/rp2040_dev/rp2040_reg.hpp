@@ -1,6 +1,6 @@
 /**
  * @file _reg.hpp
- * @author Chimipupu（https://github.com/Chimipupu）
+ * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief レジスタ定義
  * @version 0.1
  * @date 2024-10-16

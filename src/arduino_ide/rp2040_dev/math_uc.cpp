@@ -1,6 +1,6 @@
 /**
  * @file math_uc.cpp
- * @author Chimipupu（https://github.com/Chimipupu）
+ * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief 数学計算アプリ
  * @version 0.1
  * @date 2024-10-16

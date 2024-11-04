@@ -1,6 +1,6 @@
 /**
  * @file app_neopixel.cpp
- * @author Chimipupu（https://github.com/Chimipupu）
+ * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief NeoPixelアプリ
  * @version 0.1
  * @date 2024-10-16

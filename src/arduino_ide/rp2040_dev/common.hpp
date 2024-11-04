@@ -1,6 +1,6 @@
 /**
  * @file common.hpp
- * @author Chimipupu（https://github.com/Chimipupu）
+ * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief RP2040の評価プログラム用 共通ヘッダー
  * @version 0.1
  * @date 2024-10-16
@@ -24,6 +24,7 @@ extern "C"
         asm volatile("nop");
     }
 }
+
 // WDT ウォッチドックタイマ関連
 // #define __WDT_ENABLE__
 #define WDT_TIME_OUT        6 * 1000 // WDT OVFで番犬わんわん🐶

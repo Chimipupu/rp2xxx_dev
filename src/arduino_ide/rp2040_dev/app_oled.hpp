@@ -1,6 +1,6 @@
 /**
  * @file app_oled.hpp
- * @author Chimipupu（https://github.com/Chimipupu）
+ * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief OLEDアプリ
  * @version 0.1
  * @date 2024-10-16

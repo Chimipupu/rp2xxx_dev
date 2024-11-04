@@ -4,20 +4,9 @@ RP2040 Firmeware C++ Develop by Chimi\
 C++でのRP2040 F/W 個人開発リポジトリ🥳
 
 ## 開発環境構築
-### VSCode
-Zenn『Pico SDKの開発環境構築の最適解 📝』 by ちみ
-- https://zenn.dev/chimipupu/articles/039597a904849f
+- [RP2040 開発環境構築(Windows)](doc\rp2040_dev_env.md)
 
-### Arduino IED
-- `基本設定`から👇下記URLを追加
-
-```shell
-https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
-```
-
-- `ボードマネージャ`から`Raspberry Pi Pico/RP2040 by Earle F Philhower, III`をダウンロード or 更新
-
-## ✅実装した機能
+## ✅実装機能
  ✅CPU2コア、CPUそれぞれにFreeRTOS
 
 - ARM Cortex-M0+ x2コア
