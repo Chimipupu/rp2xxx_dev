@@ -17,6 +17,9 @@
 #include "pico/stdlib.h"
 #include "rp2040_reg.hpp"
 
+// #define __WDT_ENABLE__
+#include "app_wdt.hpp"
+
 extern "C"
 {
     static inline void NOP(void)
@@ -25,14 +28,7 @@ extern "C"
     }
 }
 
-// WDT ウォッチドックタイマ関連
-// #define __WDT_ENABLE__
-#define WDT_TIME_OUT        6 * 1000 // WDT OVFで番犬わんわん🐶
-#ifdef __WDT_ENABLE__
-#define WDT_TOGGLE          watchdog_update
-#else
-#define WDT_TOGGLE          NOP
-#endif /* __WDT_ENABLE__ */
+// #define OLED_USE
 
 /***********************************/
 //          FreeRTOS関連
@@ -47,11 +43,11 @@ extern "C"
 #define __DI_ISR        taskENTER_CRITICAL_FROM_ISR
 #define __EI_ISR        taskEXIT_CRITICAL_FROM_ISR
 
-// FreeRTOS用のprintf
-#define DEBUG_PRINTF_RTOS   safeSerialPrintf
-
 extern SemaphoreHandle_t xSerialMutex;
 
+// FreeRTOS用のprintf
+#define DEBUG_PRINTF_RTOS   safeSerialPrintf
+#ifdef DEBUG_PRINTF_RTOS
 extern "C"
 {
     static inline void safeSerialPrintf(const char *format, ...)
@@ -70,7 +66,6 @@ extern "C"
                     while (*p >= '0' && *p <= '9') {
                         width = width * 10 + (*p - '0');
                         p++;
-                        WDT_TOGGLE;
                     }
 
                     // 精度の取得
@@ -114,16 +109,15 @@ extern "C"
                     // '%'でない文字はそのまま表示
                     Serial.print(*p);
                 }
-                WDT_TOGGLE;
             }
             va_end(args);
             xSemaphoreGive(xSerialMutex);
         } else {
             Serial.println("Failed to acquire mutex!");
-            WDT_TOGGLE;
         }
     }
 }
+#endif /* DEBUG_PRINTF_RTOS */
 /***********************************/
 
 // typedef enum {

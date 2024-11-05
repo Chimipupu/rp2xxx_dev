@@ -14,6 +14,10 @@
 #include "common.hpp"
 #include <Adafruit_NeoPixel.h>
 
+#define RGBLED_NUM              1   // NEOPIEXLの数
+#define MAX_BRIGHTNESS          16  // NEOPIEXLの最大輝度
+#define LED_COLOR_ON_TIMER      100
+
 void app_neopixel_init(void);
 void app_neopixel_main(void);
 

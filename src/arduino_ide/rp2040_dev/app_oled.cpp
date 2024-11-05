@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2024
  * 
  */
-#if 0
+#ifdef OLED_USE
 #include "app_oled.hpp"
 #include "math_uc.hpp"
 
@@ -137,4 +137,4 @@ void app_oled_test(void)
     delay(3000);
 #endif
 }
-#endif
+#endif /* OLED_USE */

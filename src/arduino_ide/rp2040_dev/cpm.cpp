@@ -43,8 +43,10 @@ void help()
     DEBUG_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)\n");
     DEBUG_PRINTF("  MANDEL - Display Mandelbrot set (e.g., MANDEL)\n");
     DEBUG_PRINTF("  TIMER  - Timer Test\n");
+#if 0
     DEBUG_PRINTF("  REGR   - Register Read (e.g., REGR <Address>)\n");
     DEBUG_PRINTF("  REGW   - Register Write (e.g., REGW <Address> <Val>)\n");
+#endif
     DEBUG_PRINTF("  TEST   - Performance test cmd\n");
 #ifdef DEBUG_CMD
     DEBUG_PRINTF("  DBG    - Develop cmd\n");
@@ -221,8 +223,6 @@ static void math_test(void)
         invsqrt = math_fast_inv_sqrt(i);
         DEBUG_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
     }
-
-    DEBUG_PRINTF("\n");
 }
 
 void timer_test(void)
@@ -251,11 +251,7 @@ void dbg_cmd(char *p_cmd)
 
 void cpm_op_msg(void)
 {
-    // DEBUG_PRINTF("rebooting ...\n");
-    // DEBUG_PRINTF("Loading CPM.SYS...\n");
-
-    DEBUG_PRINTF("RP2040 Monitor Program by Chimi（https://github.com/Chimipupu）\n");
-    DEBUG_PRINTF("Version 1.0.0\n");
+    DEBUG_PRINTF("RP2040 Monitor Program Ver1.0.0\n");
     DEBUG_PRINTF("Copyright(C) 2024, Chimi（https://github.com/Chimipupu）\n");
 }
 
@@ -264,13 +260,11 @@ void cpm_main(void)
     char command[MAX_CMD_LEN];
     uint32_t idx = 0;
 
-    // Serial.begin(115200);
-    while (!Serial){
+    while (!Serial) {
         WDT_TOGGLE;
     }
 
     cpm_op_msg();
-    // DEBUG_PRINTF("Maximum Priorities: %d\n", configMAX_PRIORITIES);
     help();
 
     while (1)
@@ -318,8 +312,10 @@ void cpm_main(void)
         else if (strstr(command, "CALC") == command)
         {
             char *p_cmd = command + CALC_CMD_ARG;
-            while (*p_cmd == ' ')
+            while (*p_cmd == ' '){
                 p_cmd++;
+                WDT_TOGGLE;
+            }
             // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
             calculate(p_cmd);
         }
@@ -355,7 +351,10 @@ void cpm_main(void)
         {
             char *p_cmd = command + DBG_CMD_ARG;
             while (*p_cmd == ' ')
+            {
                 p_cmd++;
+                WDT_TOGGLE;
+            }
             // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
             dbg_cmd(p_cmd);
         }
@@ -368,4 +367,9 @@ void cpm_main(void)
     }
 
     DEBUG_PRINTF("rebooting ...\n");
+    while (1)
+    {
+        // WDTが泣くのを待つ
+        NOP;
+    }
 }

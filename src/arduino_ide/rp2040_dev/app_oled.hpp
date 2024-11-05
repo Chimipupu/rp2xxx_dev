@@ -8,11 +8,11 @@
  * @copyright Copyright (c) 2024
  * 
  */
-#if 0
 #ifndef APP_OLED_HPP
 #define APP_OLED_HPP
 
 #include "common.hpp"
+#ifdef OLED_USE
 #include <Wire.h>
 
 #define LGFX_USE_V1
@@ -106,5 +106,5 @@ class LGFX_SH110x : public lgfx::LGFX_Device
 void app_oled_init(void);
 void app_oled_test(void);
 
+#endif /* OLED_USE */
 #endif /* APP_OLED_HPP */
-#endif

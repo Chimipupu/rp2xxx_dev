@@ -1,6 +1,6 @@
 /**
  * @file app_timer.hpp
- * @author your name (you@domain.com)
+ * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief RP2040 タイマーヘッダー
  * @version 0.1
  * @date 2024-11-05

@@ -10,11 +10,6 @@
  */
 #include "app_neopixel.hpp"
 
-#define MAX_LIGHT               32 // NEOPIEXLの最大輝度
-#define MAX_BRIGHTNESS          32
-#define LED_COLOR_ON_TIMER      100
-#define RGBLED_NUM      1
-
 Adafruit_NeoPixel pixels(RGBLED_NUM,
                         RGBLED_PIN,
                         NEO_GRB + NEO_KHZ800);

@@ -12,10 +12,10 @@
 #include "app_timer.hpp"
 #include "app_btn.hpp"
 #include "app_neopixel.hpp"
-// #include "app_oled.hpp"
-// #include "app_util.hpp"
+#include "app_util.hpp"
 
 #define MAIN_DELAY      200
+static uint8_t s_cpu_core = 0;
 
 static void gpio_init(void);
 
@@ -30,43 +30,36 @@ static void gpio_init(void)
 void vTaskCore0Btn(void *p_parameter)
 {
     ButtonState btnstate;
-    DEBUG_PRINTLN("[Core0] vTaskCore0Btn");
+    DEBUG_PRINTF("[Core%X] vTaskCore0Btn\n", s_cpu_core);
 
     while (1)
     {
-        app_btn_polling(btnstate);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-    }
-}
-
-void vTaskCore0LED(void *param)
-{
-    static uint8_t val = 0;
-    Serial.println("[Core0] vTaskCore0LED");
-
-    while (1)
-    {
-        digitalWrite(OB_LED_PIN, val);
-        val = !val;
         WDT_TOGGLE;
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        app_btn_polling(btnstate);
+        WDT_TOGGLE;
+        vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 }
 
 void vTaskCore0Neopixel(void *param)
 {
-    Serial.println("[Core0] vTaskCore0Neopixel");
+    DEBUG_PRINTF("[Core%X] vTaskCore0Neopixel\n", s_cpu_core);
 
     while (1)
     {
+        WDT_TOGGLE;
         app_neopixel_main();
         WDT_TOGGLE;
-        vTaskDelay(200 / portTICK_PERIOD_MS);
+        vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 }
 
 void app_main_init_core0(void)
 {
+    // WDT初期化
+    app_wdt_init();
+    WDT_TOGGLE;
+
     // UART 初期化
     DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
 
@@ -79,19 +72,11 @@ void app_main_init_core0(void)
     // NeoPicel 初期化
     app_neopixel_init();
 
-    // OLED 初期化
-    // app_oled_init();
+    s_cpu_core = app_util_get_cpu_core_num();
+    WDT_TOGGLE;
+    DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
-    DEBUG_PRINTF("[Core0] ... Init\n");
-
-    // xTaskCreate(vTaskCore0LED,          // コールバック関数ポインタ
-    //             "vTaskCore0LED",        // タスク名
-    //             128,                    // スタック
-    //             nullptr,                // パラメータ
-    //             2,                      // 優先度(0～7、7が最優先)
-    //             nullptr                 // タスクハンドル
-    //             );
-
+#if 1
     xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
                 "vTaskCore0Btn",        // タスク名
                 512,                    // スタック
@@ -107,10 +92,12 @@ void app_main_init_core0(void)
                 1,                      // 優先度(0～7、7が最優先)
                 nullptr                 // タスクハンドル
                 );
+#endif
 }
 
 void app_main_core0(void)
 {
     // DEBUG_PRINTF("[Core0]Core0 Loop Task\n");
+    WDT_TOGGLE;
     vTaskSuspend(NULL);
 }

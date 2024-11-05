@@ -26,13 +26,6 @@ SemaphoreHandle_t xSerialMutex;
 void core0_init(void)
 {
     app_main_init_core0();
-#ifdef __WDT_ENABLE__
-    // WDTの初期化
-    if (watchdog_caused_reboot()) {
-        DEBUG_PRINTF("Rebooted by WDT wanwan\n");
-    }
-    watchdog_enable(WDT_TIME_OUT, false);
-#endif
 }
 
 void core1_init(void)
@@ -45,6 +38,7 @@ void core0_main(void)
 {
     // DEBUG_PRINT("[Core0]app_main_core0\n");
     // SW_DELAY_MS(MAIN_DELAY);
+    WDT_TOGGLE;
     vTaskSuspend(NULL);
 }
 
@@ -52,5 +46,6 @@ void core1_main(void)
 {
     // DEBUG_PRINT("[Core1]app_main_core1\n");
     // SW_DELAY_MS(MAIN_DELAY);
+    WDT_TOGGLE;
     vTaskSuspend(NULL);
 }
