@@ -1,16 +1,20 @@
 # RP2040評価プログラム by ちみ
-C++でのRP2040 F/W 個人開発リポジトリ🥳
+RP2040評価プログラムのF/W 個人開発リポジトリ🥳
 
-- CPU ... RP2040
-- OS ... FreeRTOS
+- 📍CPU ... RP2040
+  - 📍CPU0 ... ARM Cortex-M0+
+  - 📍CPU1 ... ARM Cortex-M0+
+- 📍OS ... FreeRTOS
+  - 📍CPU0 ... ✅FreeRTOSを搭載済み
+  - 📍CPU1 ... ✅FreeRTOSを搭載済み
 
 ## 開発環境構築
 - [RP2040 開発環境構築(Windows)](doc/rp2040_dev_env.md)
 
 ## ✅実装機能
-- CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
-  - ✅Core0 ... ドライバCPU
-    - ✅FreeRTOS
+- 📍CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
+  - 📍Core0 ... ドライバCPU
+    - 📍OS ... FreeRTOS
       - ✅ボタンタスク
         - ボタン処理
           - ボタン単押し ... TODO
@@ -21,16 +25,16 @@ C++でのRP2040 F/W 個人開発リポジトリ🥳
         - LEDのアプリ処理
       - ✅Neopixcelタスク
         - Neopixcelのアプリ処理
-  - ✅Core1 ... アプリCPU
-    - ✅FreeRTOS
+  - 📍Core1 ... アプリCPU
+    - 📍OS ... FreeRTOS
       - ✅モニタプログラムタスク
         - ✅レジスタ
           - M0PLUS CPUIDレジスタ、SIOレジスタのRead
         - ✅計算
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
 
-- 割込み(IRQ)
-    - ✅ボタンIRQ
+- 📍割込み(IRQ)
+    - ✅ボタンIRQ (@GPIO24)
       - ✅`ボタン単押し判定` ... ボタン一回押しを検知
       - ✅`ボタン複数押し判定` ... 短時間に複数回ボタン押しを検知
       - ✅`ボタン長押し判定` ... ボタン長押しを検知（1000ms = 1s）
@@ -55,28 +59,31 @@ C++でのRP2040 F/W 個人開発リポジトリ🥳
 ## VCC GND YD-RP2040
 CPUに ARM Cortex-M0+を2つ搭載のRP2040の開発基板🥳
 
+![yd_rp2040_pin_out](doc/YD-RP2040/YD-2040-PIN.png)
 
-![yd_rp2040_pin_out](doc/YD-RP2040\YD-2040-PIN.png)
+- YD-RP2040
+  - 📍NeoPixel ... GPIO23
+  - 📍ボタン ... GPIO24
+  - 📍LED ... GPIO25
+  - 📍MCU(マイコン) ... RP2040
+    - 📍CPU ... ARM Cortex-M0+ x2コア
+    - 📍プロセス ... 40nm
+    - 📍クロック ... 133MHz
+    - 📍ROM ... 2MB、4MB、8MB、16MB
+    - 📍SRAM ... 264KB
+    - 📍FPU ... 単精度
+    - 📍UART ... x2ch
+    - 📍SPI ... x2ch
+    - 📍I2C ... x2ch
+    - 📍ADC ... 12bit SAR x4ch
+    - 📍GPIO ... 30本
+    - 📍PWM ... 16本
+    - 📍タイマー(64bit) ... アラーム x4 (IRQ生成)
+    - 📍RTC
+    - 📍WDT
+    - 📍PIO ... x8基
 
-### スペック (CPU)
+## 参考文献
 [RP2040のメーカーHP](https://www.raspberrypi.com/products/rp2040/)
 [RP2040のメーカー公式ドキュメントHP](https://www.raspberrypi.com/documentation/microcontrollers/silicon.html)
 [データシート(RP2040)](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf)
-
-- プロセス ... 40nm
-- クロック ... 133MHz
-- CPU ... ARM Cortex-M0+ x2コア
-- ROM ... 2MB、4MB、8MB、16MB
-- SRAM ... 264KB
-- FPU ... 単精度
-- UART ... x2ch
-- SPI ... x2ch
-- I2C ... x2ch
-- ADC ... 12bit SAR x4ch
-- GPIO ... 30本
-- PWM ... 16本
-- タイマー(64bit)
-  - アラーム ... x4 (IRQ生成)
-- RTC
-- WDT
-- PIO ... x8基

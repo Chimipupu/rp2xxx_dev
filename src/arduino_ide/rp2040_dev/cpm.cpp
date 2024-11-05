@@ -14,7 +14,7 @@
 
 #define DEBUG_CMD
 #ifdef DEBUG_CMD
-#define DBG_CMD_ARG 4
+#define DBG_CMD_ARG         4
 #endif
 
 #include "math_uc.hpp"
@@ -22,33 +22,31 @@
 #define FIBONACCI_N         20
 #define INVSQRT_N           7
 
-#define MAX_CMD_LEN 100
-#define CALC_CMD_ARG 4
-#define WIDTH 80
-#define HEIGHT 40
-#define MAX_ITER 1000
+#define MAX_CMD_LEN         100
+#define CALC_CMD_ARG        4
+#define WIDTH               80
+#define HEIGHT              40
+#define MAX_ITER            1000
 
 static void math_test(void);
 
 void help()
 {
-    DEBUG_PRINTF("Available commands:\n");
-    DEBUG_PRINTF("  DIR    - List directory\n");
-    DEBUG_PRINTF("  CLS    - Clear screen\n");
-    DEBUG_PRINTF("  EXIT   - Exit the monitor\n");
-    DEBUG_PRINTF("  HELP   - Show this help message\n");
-    DEBUG_PRINTF("  CALC   - Perform basic arithmetic (e.g., CALC 3 + 4, CALC 2 ^ 3)\n");
-    DEBUG_PRINTF("  FIB    - Display Fibonacci series (e.g., FIB 10)\n");
-    DEBUG_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
+    DEBUG_PRINTF("Command List:\n");
+    DEBUG_PRINTF("  HELP   - This Command. Show Command List\n");
+    DEBUG_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
+    DEBUG_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
     DEBUG_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)\n");
-    DEBUG_PRINTF("  MANDEL - Display Mandelbrot set (e.g., MANDEL)\n");
+    DEBUG_PRINTF("  FIB    - Display Fibonacci (e.g., FIB 10)\n");
+    DEBUG_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
+    DEBUG_PRINTF("  MANDEL - Display Mandelbrot (e.g., MANDEL)\n");
     DEBUG_PRINTF("  TIMER  - Timer Test\n");
+    DEBUG_PRINTF("  TEST   - Performance test cmd\n");
+#ifdef DEBUG_CMD
 #if 0
     DEBUG_PRINTF("  REGR   - Register Read (e.g., REGR <Address>)\n");
     DEBUG_PRINTF("  REGW   - Register Write (e.g., REGW <Address> <Val>)\n");
 #endif
-    DEBUG_PRINTF("  TEST   - Performance test cmd\n");
-#ifdef DEBUG_CMD
     DEBUG_PRINTF("  DBG    - Develop cmd\n");
 #endif
 }
@@ -57,12 +55,6 @@ void dir()
 {
     DEBUG_PRINTF("Directory listing:\n");
     DEBUG_PRINTF("File1.txt\nFile2.txt\nFile3.txt\n");
-}
-
-void cls()
-{
-    // system("clear"); // UNIX/Linux系の場合
-    // // system("cls");  // Windowsの場合
 }
 
 void calculate(char *p_cmd)
@@ -293,21 +285,13 @@ void cpm_main(void)
         }
 
         // コマンドの処理
-        if (strcmp(command, "EXIT") == 0)
+        if (strcmp(command, "HELP") == 0)
         {
-            break;
+            help();
         }
         else if (strcmp(command, "DIR") == 0)
         {
             dir();
-        }
-        else if (strcmp(command, "CLS") == 0)
-        {
-            cls();
-        }
-        else if (strcmp(command, "HELP") == 0)
-        {
-            help();
         }
         else if (strstr(command, "CALC") == command)
         {
