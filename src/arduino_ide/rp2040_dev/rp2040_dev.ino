@@ -22,6 +22,7 @@
 #include "app_main_core1.hpp"
 
 SemaphoreHandle_t xSerialMutex;
+// portMUX_TYPE g_mux = portMUX_INITIALIZER_UNLOCKED;
 
 void core0_init(void)
 {

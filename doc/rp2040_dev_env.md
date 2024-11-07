@@ -44,6 +44,12 @@ CPUに ARM Cortex-M0+を2つ搭載のRP2040の開発基板🥳
 https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 ```
 
+### ビルド構成
+
+<div align="center">
+<img width="500" img height="550" img src="/doc/arduino_ide_build_info.png">
+</div>
+
 ## VSCode
 ### `Raspberry Pi Pico`をインストール
 - VSCodeの拡張機能で`Raspberry Pi Pico`をインストール

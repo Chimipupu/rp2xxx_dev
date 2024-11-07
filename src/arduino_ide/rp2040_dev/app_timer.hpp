@@ -16,7 +16,7 @@
 #include "hardware/timer.h"
 #include "common.hpp"
 
-void app_timer_set_alarm(uint8_t alarm_num, uint32_t time_us);
-uint32_t app_timer_get_time(void);
+void app_timer_set_alarm(uint8_t alarm_num, uint32_t time_ms);
+uint32_t app_get_time_us(void);
 
 #endif /* APP_TIMER_HPP */

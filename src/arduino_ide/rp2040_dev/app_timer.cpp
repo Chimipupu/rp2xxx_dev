@@ -10,8 +10,12 @@
  */
 
 #include "common.hpp"
+#include "app_neopixel.hpp"
 
-static struct repeating_timer s_repeating_timer_t;
+static repeating_timer s_rs_timer_0;
+static repeating_timer s_rs_timer_1;
+static repeating_timer s_rs_timer_2;
+static repeating_timer s_rs_timer_3;
 
 /**
  * @brief タイマーアラーム0割込み ISR
@@ -22,7 +26,7 @@ static struct repeating_timer s_repeating_timer_t;
  */
 bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
 {
-    // DEBUG_PRINTF("alarm 0 ISR\n");
+    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
     return true;
 }
 
@@ -35,7 +39,7 @@ bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
 {
-    // DEBUG_PRINTF("alarm 0 ISR\n");
+    app_neopixel_ctrl(0, 16, 0, 0, true, false); // 青
     return true;
 }
 
@@ -48,7 +52,7 @@ bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
 {
-    // DEBUG_PRINTF("alarm 0 ISR\n");
+    app_neopixel_ctrl(0, 0, 16, 0, true, false); // 緑
     return true;
 }
 
@@ -61,7 +65,7 @@ bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_3_ISR(repeating_timer_t *p_rt)
 {
-    // DEBUG_PRINTF("alarm 0 ISR\n");
+    app_neopixel_ctrl(16, 16, 16, 0, true, false); // 白
     return true;
 }
 
@@ -69,28 +73,28 @@ bool TIMER_ALARM_3_ISR(repeating_timer_t *p_rt)
  * @brief 指定アラームをタイマーに設定
  * 
  * @param alarm_num アラーム番号(0～3)
- * @param time_us 32bit設定アラームタイム（usec単位）
+ * @param time_ms 32bit設定アラームタイム（msec単位）
  */
-void app_timer_set_alarm(uint8_t alarm_num, uint32_t time_us)
+void app_timer_set_alarm(uint8_t alarm_num, uint32_t time_ms)
 {
     switch (alarm_num)
     {
         case 1:
             // 第一引数のマイナス ... コールバック関数の処理時間を含めない
-            add_repeating_timer_us(-time_us, TIMER_ALARM_1_ISR, NULL, &s_repeating_timer_t);
+            add_repeating_timer_ms(-time_ms, TIMER_ALARM_1_ISR, NULL, &s_rs_timer_0);
             break;
 
         case 2:
-            add_repeating_timer_us(-time_us, TIMER_ALARM_2_ISR, NULL, &s_repeating_timer_t);
+            add_repeating_timer_ms(-time_ms, TIMER_ALARM_2_ISR, NULL, &s_rs_timer_1);
             break;
 
         case 3:
-            add_repeating_timer_us(-time_us, TIMER_ALARM_3_ISR, NULL, &s_repeating_timer_t);
+            add_repeating_timer_ms(-time_ms, TIMER_ALARM_3_ISR, NULL, &s_rs_timer_2);
             break;
 
         case 0:
         default:
-            add_repeating_timer_us(-time_us, TIMER_ALARM_0_ISR, NULL, &s_repeating_timer_t);
+            add_repeating_timer_ms(-time_ms, TIMER_ALARM_0_ISR, NULL, &s_rs_timer_3);
             break;
     }
 }
@@ -100,7 +104,7 @@ void app_timer_set_alarm(uint8_t alarm_num, uint32_t time_us)
  * 
  * @return uint32_t 32bitタイマーカウント（usec単位）
  */
-uint32_t app_timer_get_time(void)
+uint32_t app_get_time_us(void)
 {
     return time_us_64();
 }

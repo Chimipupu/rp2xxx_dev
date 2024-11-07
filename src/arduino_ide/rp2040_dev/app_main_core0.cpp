@@ -41,19 +41,6 @@ void vTaskCore0Btn(void *p_parameter)
     }
 }
 
-void vTaskCore0Neopixel(void *param)
-{
-    DEBUG_PRINTF("[Core%X] vTaskCore0Neopixel\n", s_cpu_core);
-
-    while (1)
-    {
-        WDT_TOGGLE;
-        app_neopixel_main();
-        WDT_TOGGLE;
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-    }
-}
-
 void app_main_init_core0(void)
 {
     // WDT初期化
@@ -67,7 +54,10 @@ void app_main_init_core0(void)
     gpio_init();
 
     // タイマー初期化
-    app_timer_set_alarm(0, 20000); // アラーム0, 20msec
+    app_timer_set_alarm(0, 1000); // アラーム0, 1000msec
+    app_timer_set_alarm(1, 1500); // アラーム1, 1500msec
+    app_timer_set_alarm(2, 2000); // アラーム2, 2000msec
+    app_timer_set_alarm(3, 3000); // アラーム3, 3000msec
 
     // NeoPicel 初期化
     app_neopixel_init();
@@ -76,7 +66,6 @@ void app_main_init_core0(void)
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
-#if 1
     xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
                 "vTaskCore0Btn",        // タスク名
                 512,                    // スタック
@@ -84,15 +73,6 @@ void app_main_init_core0(void)
                 2,                      // 優先度(0～7、7が最優先)
                 nullptr                 // タスクハンドル
                 );
-
-    xTaskCreate(vTaskCore0Neopixel,     // コールバック関数ポインタ
-                "vTaskCore0Neopixel",   // タスク名
-                256,                    // スタック
-                nullptr,                // パラメータ
-                1,                      // 優先度(0～7、7が最優先)
-                nullptr                 // タスクハンドル
-                );
-#endif
 }
 
 void app_main_core0(void)
