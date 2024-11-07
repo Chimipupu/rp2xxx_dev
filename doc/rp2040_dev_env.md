@@ -1,4 +1,41 @@
-# 開発環境構築(Windows)
+# 開発環境
+
+- 📍IDE
+  - 📍[Arduino IDE v2.33🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.3)
+    - [Raspberry Pi Pico/RP2040 by Earle F. Philhower, III🔗](https://github.com/earlephilhower/arduino-pico)
+
+- 📍基板
+  - RP2040
+    - [VCC-GND YD-RP2040🔗](https://www.aliexpress.us/item/1005004004120604.html?gatewayAdapt=4itemAdapt)
+
+## 基板
+### VCC GND YD-RP2040
+CPUに ARM Cortex-M0+を2つ搭載のRP2040の開発基板🥳
+
+![yd_rp2040_pin_out](/doc/YD-RP2040/YD-2040-PIN.png)
+
+- YD-RP2040
+  - 📍NeoPixel ... GPIO23
+  - 📍ボタン ... GPIO24
+  - 📍LED ... GPIO25
+  - 📍MCU(マイコン) ... RP2040
+    - 📍CPU ... ARM Cortex-M0+ x2コア
+    - 📍プロセス ... 40nm
+    - 📍クロック ... 133MHz
+    - 📍ROM ... 2MB、4MB、8MB、16MB
+    - 📍SRAM ... 264KB
+    - 📍FPU ... 単精度
+    - 📍UART ... x2ch
+    - 📍SPI ... x2ch
+    - 📍I2C ... x2ch
+    - 📍ADC ... 12bit SAR x4ch
+    - 📍GPIO ... 30本
+    - 📍PWM ... 16本
+    - 📍タイマー(64bit) ... アラーム x4 (IRQ生成)
+    - 📍RTC
+    - 📍WDT
+    - 📍PIO ... x8基
+
 ## Arduino IED
 - `基本設定`から👇下記URLを追加
 - `ボードマネージャ`から`Raspberry Pi Pico/RP2040 by Earle F Philhower, III`をダウンロード or 更新
@@ -7,7 +44,7 @@
 https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 ```
 
-#s# VSCode
+## VSCode
 ### `Raspberry Pi Pico`をインストール
 - VSCodeの拡張機能で`Raspberry Pi Pico`をインストール
 
@@ -84,9 +121,19 @@ chmod +x ./pico_setup.sh
 ./pico_setup.sh
 ```
 
-# 参考文献
+## 参考文献
+### RP2040
+- [RP2040のメーカーHP](https://www.raspberrypi.com/products/rp2040/)
+
+- [RP2040のメーカー公式ドキュメントHP](https://www.raspberrypi.com/documentation/microcontrollers/silicon.html)
+
+- [データシート(RP2040)](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf)
+
+### Pico SDK
 - [Pico SDK 公式URL](https://www.raspberrypi.com/documentation/microcontrollers/c_sdk.html)
+
 - [公式マニュアル（英語）※最新](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf?_gl=1*anhnfe*_ga*MTE3MTIyMDMzMS4xNzI4OTQ5MzU2*_ga_22FD70LWDS*MTcyODk2NTE2OC42LjAuMTcyODk2NTE3MS4wLjAuMA..)
+
 - [公式マニュアル（日本語）※更新が2021年で止まっている](https://datasheets.raspberrypi.com/pico/getting-started-with-pico-JP.pdf)
 
 - Zenn『Pico SDKの開発環境構築の最適解 📝』 by ちみ

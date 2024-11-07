@@ -1,15 +1,24 @@
-# RP2040評価プログラム by ちみ
-RP2040評価プログラムのF/W 個人開発リポジトリ🥳
+# RP2040評価F/W by ちみ
+RP2040評価F/W 個人開発リポジトリ🥳
 
-- 📍CPU ... RP2040
-  - 📍CPU0 ... ARM Cortex-M0+
-  - 📍CPU1 ... ARM Cortex-M0+
-- 📍OS ... FreeRTOS
-  - 📍CPU0 ... ✅FreeRTOSを搭載済み
-  - 📍CPU1 ... ✅FreeRTOSを搭載済み
+- 📍CPU ... [RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
+  - 📍CPU0 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
+  - 📍CPU1 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
 
-## 開発環境構築
-- [RP2040 開発環境構築(Windows)](doc/rp2040_dev_env.md)
+- 📍OS ... [FreeRTOS🔗](https://www.freertos.org/)
+  - 📍CPU0 ... ✅FreeRTOS (搭載済み)
+  - 📍CPU1 ... ✅FreeRTOS (搭載済み)
+
+## 開発環境
+- [開発環境の詳細🔗](/doc/rp2040_dev_env.md)
+
+- 📍IDE
+  - 📍[Arduino IDE v2.33🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.3)
+    - [Raspberry Pi Pico/RP2040 by Earle F. Philhower, III🔗](https://github.com/earlephilhower/arduino-pico)
+
+- 📍基板
+  - RP2040
+    - [VCC-GND YD-RP2040🔗](https://www.aliexpress.us/item/1005004004120604.html?gatewayAdapt=4itemAdapt)
 
 ## ✅実装機能
 - 📍CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
@@ -45,7 +54,7 @@ RP2040評価プログラムのF/W 個人開発リポジトリ🥳
     - ✅アラーム 2 ⏰(TIMER_IRQ_2) ... TODO
     - ✅アラーム 3 ⏰(TIMER_IRQ_3) ... TODO
 
-## TBD
+### TBD
 - ARM Cortex-M0+
   - ADC & DMA ... ADCをDMAでとりたい
   - アプリ追加 ... I2C、SPI、PIO、スリープ機能
@@ -54,36 +63,3 @@ RP2040評価プログラムのF/W 個人開発リポジトリ🥳
   - GPIO ... PIOにGPIO任せる
   - VGA ... モニターに描画したい
   - SDIO ... SDカード
-
-## 開発基板
-## VCC GND YD-RP2040
-CPUに ARM Cortex-M0+を2つ搭載のRP2040の開発基板🥳
-
-![yd_rp2040_pin_out](doc/YD-RP2040/YD-2040-PIN.png)
-
-- YD-RP2040
-  - 📍NeoPixel ... GPIO23
-  - 📍ボタン ... GPIO24
-  - 📍LED ... GPIO25
-  - 📍MCU(マイコン) ... RP2040
-    - 📍CPU ... ARM Cortex-M0+ x2コア
-    - 📍プロセス ... 40nm
-    - 📍クロック ... 133MHz
-    - 📍ROM ... 2MB、4MB、8MB、16MB
-    - 📍SRAM ... 264KB
-    - 📍FPU ... 単精度
-    - 📍UART ... x2ch
-    - 📍SPI ... x2ch
-    - 📍I2C ... x2ch
-    - 📍ADC ... 12bit SAR x4ch
-    - 📍GPIO ... 30本
-    - 📍PWM ... 16本
-    - 📍タイマー(64bit) ... アラーム x4 (IRQ生成)
-    - 📍RTC
-    - 📍WDT
-    - 📍PIO ... x8基
-
-## 参考文献
-[RP2040のメーカーHP](https://www.raspberrypi.com/products/rp2040/)
-[RP2040のメーカー公式ドキュメントHP](https://www.raspberrypi.com/documentation/microcontrollers/silicon.html)
-[データシート(RP2040)](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf)
