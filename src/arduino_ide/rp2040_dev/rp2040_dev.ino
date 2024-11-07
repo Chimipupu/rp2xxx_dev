@@ -21,6 +21,7 @@
 #include "app_main_core0.hpp"
 #include "app_main_core1.hpp"
 
+e_firmware_info g_firmware_info = FW_INIT;
 SemaphoreHandle_t xSerialMutex;
 // portMUX_TYPE g_mux = portMUX_INITIALIZER_UNLOCKED;
 

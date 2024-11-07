@@ -12,6 +12,10 @@
 #define APP_MAIN_CORE0_HPP
 
 #include "common.hpp"
+#include "app_timer.hpp"
+#include "app_btn.hpp"
+#include "app_neopixel.hpp"
+#include "app_util.hpp"
 
 #define DEBUG_UART_BAUDRATE     115200
 

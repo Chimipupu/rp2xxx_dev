@@ -12,6 +12,9 @@
 #define APP_MAIN_CORE1_HPP
 
 #include "common.hpp"
+#include "app_oled.hpp"
+#include "app_util.hpp"
+#include "cpm.hpp"
 
 void app_main_init_core1(void);
 void app_main_core1(void);

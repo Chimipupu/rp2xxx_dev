@@ -20,6 +20,25 @@
 // #define __WDT_ENABLE__
 #include "app_wdt.hpp"
 
+typedef enum {
+    FW_INIT = 0x00,
+    RF_OFFLINE = 0x08,
+    FW_IDLE = 0x10,
+    PROC_NOW = 0x16,
+    RF_ONLINE = 0x18,
+    SLEEP_NOW = 0x1A,
+    UART_ERR = 0x20,
+    SPI_ERR = 0x30,
+    I2C_ERR = 0x40,
+    USB_ERR = 0x50,
+    FILESYSTEM_ERR = 0x60,
+    PSRAM_ERR = 0x70,
+    PIO_ERR = 0x80,
+    FW_ERR = 0xFF
+} e_firmware_info;
+
+extern e_firmware_info g_firmware_info;
+
 extern "C"
 {
     static inline void NOP(void)

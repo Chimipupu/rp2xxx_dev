@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include "hardware/timer.h"
 #include "common.hpp"
+#include "app_neopixel.hpp"
 
 void app_timer_set_alarm(uint8_t alarm_num, uint32_t time_ms);
 uint32_t app_get_time_us(void);

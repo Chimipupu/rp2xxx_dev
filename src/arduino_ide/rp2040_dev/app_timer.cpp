@@ -9,8 +9,7 @@
  * 
  */
 
-#include "common.hpp"
-#include "app_neopixel.hpp"
+#include "app_timer.hpp"
 
 static repeating_timer s_rs_timer_0;
 static repeating_timer s_rs_timer_1;
@@ -26,7 +25,8 @@ static repeating_timer s_rs_timer_3;
  */
 bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
 {
-    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
+    // TODO:タイマーアラーム0割込みの処理実装
+    NOP;
     return true;
 }
 
@@ -39,7 +39,8 @@ bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
 {
-    app_neopixel_ctrl(0, 16, 0, 0, true, false); // 青
+    // TODO:タイマーアラーム1割込みの処理実装
+    NOP;
     return true;
 }
 
@@ -52,7 +53,8 @@ bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
 {
-    app_neopixel_ctrl(0, 0, 16, 0, true, false); // 緑
+    // TODO:タイマーアラーム2割込みの処理実装
+    NOP;
     return true;
 }
 
@@ -65,7 +67,8 @@ bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_3_ISR(repeating_timer_t *p_rt)
 {
-    app_neopixel_ctrl(16, 16, 16, 0, true, false); // 白
+    // TODO:タイマーアラーム3割込みの処理実装
+    NOP;
     return true;
 }
 
