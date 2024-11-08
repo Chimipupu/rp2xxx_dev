@@ -9,9 +9,16 @@
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
-<div align="center">
+<!-- <div align="center">
 <img width="500" src="/doc/img/IMG_20241108_195840.jpg">
-</div>
+</div> -->
+
+<table>
+  <tr>
+    <td><img src="/doc/img/IMG_20241108_195849.jpg"></td>
+    <td><img src="/doc/img/IMG_20241108_195825.jpg"></td>
+  </tr>
+</table>
 
 ## 📍開発環境
 
