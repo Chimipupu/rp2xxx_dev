@@ -17,13 +17,88 @@
 static uint8_t s_red = 0;               // 赤
 static uint8_t s_green = 0;             // 青
 static uint8_t s_blue = 0;              // 緑
-static uint8_t s_brightness = 0;        // 明るさ
-static bool s_onoff = false;            // 消灯=false, 点灯=ture
-static bool s_autoled = false;          // 手動=false, 自動=ture
+static uint8_t s_red_fade_val = 0;      // 赤のフェード値
+static uint8_t s_gree_fade_val = 0;     // 青のフェード値
+static uint8_t s_blue_fade_val = 0;     // 緑のフェード値
+static uint8_t s_fade_led_no = 0;       // フェードするNeoPixelの番号
+static bool s_is_fade = false;
+static bool s_led_fade_amount = false;
+static bool s_rgbled_fade_amount = false;
+static uint8_t s_led_pwm_val = 0;
 
 Adafruit_NeoPixel pixels(RGBLED_NUM,
                         RGBLED_PIN,
                         NEO_GRB + NEO_KHZ800);
+
+/**
+ * @brief 単色LEDのフェード
+ * 
+ * @param pin LEDのピン（GPIOの番号)
+ */
+void app_led_fade(uint8_t pin)
+{
+    GPIO_PWM(pin, s_led_pwm_val);
+
+    if (s_led_fade_amount != true) {
+        s_led_pwm_val++;
+        if (s_led_pwm_val == 255){
+            s_led_fade_amount = !s_led_fade_amount;
+        }
+    } else {
+        s_led_pwm_val--;
+        if (s_led_pwm_val == 0){
+            s_led_fade_amount = !s_led_fade_amount;
+        }
+    }
+}
+
+/**
+ * @brief NeoPixelのフェード
+ * 
+ */
+void app_neopixel_fade(void)
+{
+    if (s_is_fade != false) {
+        pixels.setPixelColor(s_fade_led_no, pixels.Color(s_red_fade_val, s_gree_fade_val, s_blue_fade_val));
+        pixels.show();
+        if (s_rgbled_fade_amount != true) {
+            if (s_red != 0) {
+                s_red_fade_val++;
+            }
+            if (s_blue != 0){
+                s_blue_fade_val++;
+            }
+            if (s_green != 0){
+                s_gree_fade_val++;
+            }
+            if ((s_red_fade_val >= s_red) && (s_gree_fade_val >= s_green) && (s_blue_fade_val >= s_blue)) {
+                s_red_fade_val = s_red;
+                s_gree_fade_val = s_green;
+                s_blue_fade_val = s_blue;
+                s_rgbled_fade_amount = !s_rgbled_fade_amount;
+            }
+        } else {
+            if (s_red != 0){
+                s_red_fade_val--;
+            }
+            if (s_blue != 0){
+                s_blue_fade_val--;
+            }
+            if (s_green != 0){
+                s_gree_fade_val--;
+            }
+            if ((s_red_fade_val == 0) && (s_gree_fade_val == 0) && (s_blue_fade_val == 0)) {
+                s_rgbled_fade_amount = !s_rgbled_fade_amount;
+            }
+        }
+    } else {
+        s_red_fade_val = 0;
+        s_gree_fade_val = 0;
+        s_blue_fade_val = 0;
+        pixels.setPixelColor(s_fade_led_no, pixels.Color(s_red_fade_val, s_gree_fade_val, s_blue_fade_val));
+        pixels.show();
+    }
+}
 
 /**
  * @brief RGB LED 初期化
@@ -37,82 +112,32 @@ void app_neopixel_init(void)
 }
 
 /**
- * @brief 全カラー回転表示
- * 
- */
-static void rgbled_fade(void)
-{
-    uint8_t cnt, red,green,blue;
-
-    red = MAX_BRIGHTNESS;
-    for(green = 0; green < MAX_BRIGHTNESS; green++)
-    {
-        for(cnt = 0; cnt < RGBLED_NUM; cnt++)
-        {
-            pixels.setPixelColor(cnt, pixels.Color(s_red, s_green, s_blue));
-            pixels.show();
-        }
-        s_green++;
-        s_red--;
-        delay(LED_COLOR_ON_TIMER);
-    }
-    s_red = 0;
-
-    for(blue = 0; blue < MAX_BRIGHTNESS; blue++)
-    {
-        for(cnt = 0; cnt < RGBLED_NUM; cnt++)
-        {
-            pixels.setPixelColor(cnt, pixels.Color(s_red, s_green, s_blue));
-            pixels.show();
-        }
-        s_blue++;
-        s_green--;
-        delay(LED_COLOR_ON_TIMER);
-    }
-    s_green = 0;
-
-    for(red = 0; red < MAX_BRIGHTNESS; red++)
-    {
-        for(cnt = 0; cnt < RGBLED_NUM; cnt++)
-        {
-            pixels.setPixelColor(cnt, pixels.Color(s_red, s_green, s_blue));
-            pixels.show();
-        }
-        s_red++;
-        s_blue--;
-        delay(LED_COLOR_ON_TIMER);
-    }
-    s_blue = 0;
-}
-
-/**
  * @brief 指定のRGBにLEDを点灯 or 発光
  * 
  * @param red 赤
  * @param green 緑
  * @param blue 青
- * @param brightness 明るさ
- * @param onoff ON/OFF
- * @param autoled 自動で色を遷移し続けるか
+ * @param led_no NeoPixelの番号
+ * @param is_onoff ON/OFF
+ * @param is_fade フェードするか
  */
-void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t brightness, bool onoff, bool autoled)
+void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t led_no, uint8_t onoff, bool is_fade)
 {
     s_red = red;
     s_blue = blue;
     s_green = green;
-    s_brightness = brightness;
-    s_onoff = onoff;
-    s_autoled = autoled;
+    s_is_fade = is_fade;
 
-    if(s_autoled != true){
-        if (s_onoff != false) {
-            pixels.setPixelColor(0, pixels.Color(s_red, s_green, s_blue));
+    if(s_is_fade != false)
+    {
+        s_fade_led_no = led_no;
+    }else{
+        if (onoff != false) {
+            pixels.setPixelColor(led_no, pixels.Color(s_red, s_green, s_blue));
             pixels.show();
         }else{
             pixels.clear();
             pixels.show();
         }
-    }else{
-        rgbled_fade();
     }
 }

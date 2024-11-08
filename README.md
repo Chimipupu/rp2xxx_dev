@@ -15,8 +15,7 @@
 
 <table>
   <tr>
-    <td><img src="/doc/img/IMG_20241108_195849.jpg"></td>
-    <td><img src="/doc/img/IMG_20241108_195825.jpg"></td>
+    <td><img src="/doc/img/IMG_20241109_031836.jpg"></td>
   </tr>
 </table>
 

@@ -10,13 +10,12 @@
  */
 
 #include "app_timer.hpp"
+#include "app_neopixel.hpp"
 
 static repeating_timer s_rs_timer_0;
 static repeating_timer s_rs_timer_1;
 static repeating_timer s_rs_timer_2;
 static repeating_timer s_rs_timer_3;
-static uint8_t s_led_pwm_val = 0;
-static bool s_led_fade_amount = false;
 
 /**
  * @brief タイマーアラーム0割込み ISR
@@ -41,20 +40,7 @@ bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
 {
-    // TODO:タイマーアラーム1割込みの処理実装
-    GPIO_PWM(OB_LED_PIN, s_led_pwm_val);
-
-    if (s_led_fade_amount != true) {
-        s_led_pwm_val++;
-        if (s_led_pwm_val == 255){
-            s_led_fade_amount = !s_led_fade_amount;
-        }
-    }else{
-        s_led_pwm_val--;
-        if (s_led_pwm_val == 0){
-            s_led_fade_amount = !s_led_fade_amount;
-        }
-    }
+    app_led_fade(OB_LED_PIN);
     return true;
 }
 
@@ -67,8 +53,7 @@ bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
 {
-    // TODO:タイマーアラーム2割込みの処理実装
-    NOP;
+    app_neopixel_fade();
     return true;
 }
 

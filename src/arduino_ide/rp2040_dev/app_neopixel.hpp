@@ -23,7 +23,9 @@ typedef struct {
     bool autoled;       // 自動制御のフラグ
 } rgbled_state_t;
 
+void app_led_fade(uint8_t pin);
+void app_neopixel_fade(void);
 void app_neopixel_init(void);
-void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t brightness, bool onoff, bool autoled);
+void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t led_no, uint8_t onoff, bool is_fade);
 
 #endif /* APP_NEOPIXEL_HPP */

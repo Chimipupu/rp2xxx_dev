@@ -60,7 +60,7 @@ void vTaskCore0Main(void *p_parameter)
         {
             case FW_INIT:
             case RF_OFFLINE:
-                app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
+                app_neopixel_ctrl(16, 0, 0, 0, true, true); // 赤
                 break;
 
             case RF_ONLINE:
@@ -68,7 +68,7 @@ void vTaskCore0Main(void *p_parameter)
                 break;
 
             case FW_IDLE:
-                app_neopixel_ctrl(16, 16, 16, 0, true, false); // 白
+                app_neopixel_ctrl(16, 16, 16, 0, true, true); // 白
                 break;
 
             case PROC_NOW:
@@ -76,11 +76,12 @@ void vTaskCore0Main(void *p_parameter)
                 break;
 
             default:
-                app_neopixel_ctrl(16, 0, 16, 0, true, false); // 紫
+                app_neopixel_ctrl(16, 0, 16, 0, true, true); // 紫
                 break;
         }
         WDT_TOGGLE;
         vTaskDelay(100 / portTICK_PERIOD_MS);
+        // vTaskSuspend(NULL);
     }
 }
 
@@ -96,15 +97,15 @@ void app_main_init_core0(void)
     // PWM 初期化
     pwm_init();
 
+    // タイマー初期化
+    app_timer_set_alarm(0, 1);      // アラーム0, 1msec
+    app_timer_set_alarm(1, 8);      // アラーム1, 8msec
+    app_timer_set_alarm(2, 20);     // アラーム2, 20msec
+    app_timer_set_alarm(3, 1000);   // アラーム3, 1000msec
+
     // NeoPicel 初期化
     app_neopixel_init();
-    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
-
-    // タイマー初期化
-    app_timer_set_alarm(0, 1);      // アラーム0, 1msec(実行時間計測用)
-    app_timer_set_alarm(1, 8);      // アラーム1, 8msec(メインタスク起床)
-    app_timer_set_alarm(2, 20);     // アラーム2, 20msec(ボタンタスク起床)
-    app_timer_set_alarm(3, 1000);   // アラーム3, 1000msec(LEDを処理)
+    app_neopixel_ctrl(16, 0, 0, 0, true, true); // 赤
 
     // UART 初期化
     DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
