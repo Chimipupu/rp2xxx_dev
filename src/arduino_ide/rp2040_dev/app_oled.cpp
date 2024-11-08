@@ -42,8 +42,8 @@ static void oled_math_txt_test(void);
 
 static void oled_i2c_init(void)
 {
-    pinMode(I2C_SDA, INPUT_PULLUP);	//	SDA
-	pinMode(I2C_SCL, INPUT_PULLUP);	//	SCL
+    GPIO_PORT_DIR(I2C_SDA, INPUT_PULLUP);	//	SDA
+	GPIO_PORT_DIR(I2C_SCL, INPUT_PULLUP);	//	SCL
     Wire1.setSDA(I2C_SDA);
     Wire1.setSCL(I2C_SCL);
     Wire1.begin();

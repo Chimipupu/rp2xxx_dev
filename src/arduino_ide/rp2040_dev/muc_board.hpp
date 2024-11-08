@@ -25,6 +25,9 @@
         #define RGBLED_PIN          23   // Neopixel (GPIO 23)
         #define BUTTON_PIN          24   // ボタン (GPIO 24)
         #define OB_LED_PIN          25   // 青色LED (GPIO 25)
+        // #define PWM_PIN             OB_LED_PIN
+        #define PWM_PIN             22
+        #define PWM_PIN_2           21
         #define I2C_SDA             6    // I2C SDA (GPIO 6)
         #define I2C_SCL             7    // I2C SCL (GPIO 7)
     #endif /* __MCU_BOARD_YD_RP2040__ */

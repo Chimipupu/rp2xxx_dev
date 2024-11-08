@@ -15,6 +15,7 @@
 #include <Arduino.h>
 #include <stdint.h>
 #include "pico/stdlib.h"
+#include "hardware/pwm.h"
 
 #include "muc_board.hpp"
 
@@ -41,18 +42,63 @@ typedef enum {
 
 extern e_firmware_info g_firmware_info;
 
+// 割込みマスク・許可
+#define __DI            taskENTER_CRITICAL
+#define __EI            taskEXIT_CRITICAL
+#define __DI_ISR        taskENTER_CRITICAL_FROM_ISR
+#define __EI_ISR        taskEXIT_CRITICAL_FROM_ISR
+
+// typedef enum {
+//     CPU_CORE_0 = 0x00,
+//     CPU_CORE_1,
+//     CPU_CORE_UNKNOWN = 0xFF
+// } E_CPU_CORE;
+
+#define DUAL_CORE_BUILD
+
+#define core0_init          setup
+#define core0_main          loop
+#define core1_init          setup1
+#define core1_main          loop1
+#define DEBUG_PRINT         Serial.print
+#define DEBUG_PRINTLN       Serial.println
+#define DEBUG_PRINTF        safeSerialPrintf
+#define DEBUG_PRINT_INIT    Serial.begin
+
+#define SW_DELAY_MS         delay
+
+#define GPIO_PORT_DIR       pinMode
+#define GPIO_OUTPUT         digitalWrite
+#define GPIO_PWM            analogWrite
+
+#define ON                  0x00    // ON ... Active Low
+#define OFF                 0x01
+
+// I2Cスレーブ
+#define QMC5883_I2C_ADDR    0x0D  // HMC5883のパチモン
+#define HMC5883_I2C_ADDR    0x1E
+#define MPU9250_I2C_ADDR    0x68
+#define MPU6050_I2C_ADDR    0x69  // ADOピンをHIGH = 0x69(Low/HiZ = 0x68)
+#define OLED_I2C_ADDR       0x3C
+
+extern "C"
+{
+    static inline void GPIO_TOGGLE(uint8_t port)
+    {
+        static bool s_port_val = OFF;
+
+        GPIO_OUTPUT(port, s_port_val);
+        s_port_val = !s_port_val;
+    }
+} /* extern "C" */
+
+
 /***********************************/
 //          FreeRTOS関連
 /***********************************/
 #include <FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
-
-// 割込みマスク・許可
-#define __DI            taskENTER_CRITICAL
-#define __EI            taskEXIT_CRITICAL
-#define __DI_ISR        taskENTER_CRITICAL_FROM_ISR
-#define __EI_ISR        taskEXIT_CRITICAL_FROM_ISR
 
 extern SemaphoreHandle_t xSerialMutex;
 
@@ -130,48 +176,5 @@ extern "C"
 }
 #endif /* DEBUG_PRINTF_RTOS */
 /***********************************/
-
-// typedef enum {
-//     CPU_CORE_0 = 0x00,
-//     CPU_CORE_1,
-//     CPU_CORE_UNKNOWN = 0xFF
-// } E_CPU_CORE;
-
-#define DUAL_CORE_BUILD
-
-#define core0_init          setup
-#define core0_main          loop
-#define core1_init          setup1
-#define core1_main          loop1
-#define DEBUG_PRINT         Serial.print
-#define DEBUG_PRINTLN       Serial.println
-#define DEBUG_PRINTF        safeSerialPrintf
-#define DEBUG_PRINT_INIT    Serial.begin
-
-#define SW_DELAY_MS         delay
-
-#define GPIO_PORT_DIR       pinMode
-#define GPIO_OUTPUT         digitalWrite
-
-#define ON                  0x00    // ON ... Active Low
-#define OFF                 0x01
-
-// I2Cスレーブ
-#define QMC5883_I2C_ADDR    0x0D  // HMC5883のパチモン
-#define HMC5883_I2C_ADDR    0x1E
-#define MPU9250_I2C_ADDR    0x68
-#define MPU6050_I2C_ADDR    0x69  // ADOピンをHIGH = 0x69(Low/HiZ = 0x68)
-#define OLED_I2C_ADDR       0x3C
-
-extern "C"
-{
-    static inline void GPIO_TOGGLE(uint8_t port)
-    {
-        static bool s_port_val = OFF;
-
-        GPIO_OUTPUT(port, s_port_val);
-        s_port_val = !s_port_val;
-    }
-} /* extern "C" */
 
 #endif /* COMMON_HPP */

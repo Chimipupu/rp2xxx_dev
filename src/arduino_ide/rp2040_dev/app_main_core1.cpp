@@ -30,7 +30,6 @@ void vTaskCore1oled(void *p_parameter)
 void vTaskCore1monitor(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
-    digitalWrite(OB_LED_PIN, HIGH);
 
     while (1)
     {

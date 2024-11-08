@@ -121,7 +121,7 @@ void app_btn_polling(ButtonState btnstate)
 void app_btn_init(void)
 {
     // GPIO INPUT, プルアップ（アクティブLow）
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
+    GPIO_PORT_DIR(BUTTON_PIN, INPUT_PULLUP);
 
     // 割込み(割込みピン、割込みハンドラ、エッジ)
     attachInterrupt(BUTTON_PIN, buttonISR, CHANGE);
