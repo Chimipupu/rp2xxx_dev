@@ -15,8 +15,10 @@
 #include <Arduino.h>
 #include <stdint.h>
 #include "pico/stdlib.h"
-#include "rp2040_reg.hpp"
 
+#include "muc_board.hpp"
+
+#define OLED_USE
 // #define __WDT_ENABLE__
 #include "app_wdt.hpp"
 
@@ -38,16 +40,6 @@ typedef enum {
 } e_firmware_info;
 
 extern e_firmware_info g_firmware_info;
-
-extern "C"
-{
-    static inline void NOP(void)
-    {
-        asm volatile("nop");
-    }
-}
-
-// #define OLED_USE
 
 /***********************************/
 //          FreeRTOS関連
@@ -146,13 +138,6 @@ extern "C"
 // } E_CPU_CORE;
 
 #define DUAL_CORE_BUILD
-
-// YD-RP2040の使用ピン
-#define RGBLED_PIN          23   // Neopixel (GPIO 23)
-#define BUTTON_PIN          24   // ボタン (GPIO 24)
-#define OB_LED_PIN          25   // 青色LED (GPIO 25)
-#define I2C_SDA             6    // I2C SDA (GPIO 6)
-#define I2C_SCL             7    // I2C SCL (GPIO 7)
 
 #define core0_init          setup
 #define core0_main          loop

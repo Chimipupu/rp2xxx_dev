@@ -12,35 +12,36 @@
 #define APP_OLED_HPP
 
 #include "common.hpp"
-#ifdef OLED_USE
 #include <Wire.h>
 
-#define LGFX_USE_V1
+// #define LGFX_USE_V1
 #define LGFX_AUTODETECT
 #include <LovyanGFX.hpp>
+#include <LGFX_AUTODETECT.hpp>
 
-#define I2C_NORMAL_FREQ  100000 // I2C @100KHz
-#define I2C_FAST_FREQ    400000 // I2C Fast Mode @400KHz
-// #define I2C_FREQ         I2C_NORMAL_FREQ
-#define I2C_FREQ         I2C_FAST_FREQ
+#define I2C_NORMAL_FREQ     100000 // I2C @100KHz
+#define I2C_FAST_FREQ       400000 // I2C Fast Mode @400KHz
+// #define I2C_FREQ            I2C_NORMAL_FREQ
+#define I2C_FREQ            I2C_FAST_FREQ
 
-#define SCREEN_WIDTH   128 // OLED display width, in pixels
-#define SCREEN_HEIGHT  64 // OLED display height, in pixels
-#define OLED_RESET     -1
+#define SCREEN_WIDTH        128 // OLED display width, in pixels
+#define SCREEN_HEIGHT       64  // OLED display height, in pixels
+#define OLED_RESET          -1
 
 #define OLED_BACK_COLOR     TFT_BLACK
 #define OLED_TXT_COLOR      TFT_WHITE
 #define OLED_TXT_SIZE       1
 
+// 0.96インチのOLED用
 // #define LCD_SSD1306
+// 1.3インチのOLED用(128x64)
 #define LCD_SH110x
 
 #ifdef LCD_SSD1306
-// 0.96インチのOLED用
 class LGFX_SSD1306 : public lgfx::LGFX_Device
 {
     lgfx::Panel_SSD1306   _panel_instance;
-    lgfx::Bus_I2C   _bus_instance;
+    lgfx::Bus_I2C         _bus_instance;
 
     public:
         LGFX_SSD1306()
@@ -70,11 +71,10 @@ class LGFX_SSD1306 : public lgfx::LGFX_Device
 #endif /* LCD_SSD1306 */
 
 #ifdef LCD_SH110x
-// 1.3インチのOLED用
 class LGFX_SH110x : public lgfx::LGFX_Device
 {
     lgfx::Panel_SH110x  _panel_instance;
-    lgfx::Bus_I2C   _bus_instance;
+    lgfx::Bus_I2C       _bus_instance;
 
     public:
         LGFX_SH110x()
@@ -92,11 +92,10 @@ class LGFX_SH110x : public lgfx::LGFX_Device
             }
 
             {
-                // auto cfg = _panel_instance.config();
-                // cfg.memory_width  = SCREEN_WIDTH;     // LCDのの幅
-                // cfg.memory_height =  SCREEN_HEIGHT;   // LCDの高さ
-                // _panel_instance.config(cfg);
-                // setPanel(&_panel_instance);
+                auto cfg = _panel_instance.config();
+                cfg.memory_width  = SCREEN_WIDTH;    // LCDのの幅
+                cfg.memory_height = SCREEN_HEIGHT;   // LCDの高さ
+                _panel_instance.config(cfg);
             }
             setPanel(&_panel_instance);
         }
@@ -106,5 +105,4 @@ class LGFX_SH110x : public lgfx::LGFX_Device
 void app_oled_init(void);
 void app_oled_test(void);
 
-#endif /* OLED_USE */
 #endif /* APP_OLED_HPP */

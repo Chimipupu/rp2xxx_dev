@@ -1,5 +1,5 @@
 /**
- * @file app_timer.hpp
+ * @file app_timer.cpp
  * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief RP2040 タイマーアプリ
  * @version 0.1

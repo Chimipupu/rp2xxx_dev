@@ -9,8 +9,11 @@
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
+<div align="center">
+<img width="500" src="/doc/img/IMG_20241108_195840.jpg">
+</div>
+
 ## 📍開発環境
-- [開発環境の詳細🔗](/doc/rp2040_dev_env.md)
 
 - 📍IDE
   - 📍[Arduino IDE v2.33🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.3)
@@ -38,7 +41,9 @@
     - 📍OS ... FreeRTOS
       - ✅Core1メインタスク
         - 🚩TODO
-      - ✅モニタプログラムタスク
+      - ✅OLEDタスク(@OLED画面)
+        - 英語、日本語、科学計算の結果を画面表示
+      - ✅モニタプログラムタスク(@UART)
         - ✅レジスタ
           - M0PLUS CPUIDレジスタ、SIOレジスタのRead
         - ✅計算

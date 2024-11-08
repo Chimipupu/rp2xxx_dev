@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2024
  * 
  */
-#ifdef OLED_USE
 #include "app_oled.hpp"
 #include "math_uc.hpp"
 
+#define DELAY_MS          2000
 #define MATH_PI_CALC_TIME 3
-#define FIBONACCI_N 14
+#define FIBONACCI_N       8
 
 typedef enum
 {
@@ -33,14 +33,24 @@ static LGFX_SH110x lcd;    // 1.3インチのOLED用
 
 static LGFX_Sprite sprite(&lcd);
 
-void app_oled_init(void)
+static void oled_i2c_init(void);
+static void gfx_init(void);
+void oled_clear(void);
+static void oled_en_txt_test(void);
+static void oled_jp_txt_test(void);
+static void oled_math_txt_test(void);
+
+static void oled_i2c_init(void)
 {
     pinMode(I2C_SDA, INPUT_PULLUP);	//	SDA
 	pinMode(I2C_SCL, INPUT_PULLUP);	//	SCL
     Wire1.setSDA(I2C_SDA);
     Wire1.setSCL(I2C_SCL);
     Wire1.begin();
+}
 
+static void gfx_init(void)
+{
     lcd.init();
     lcd.setRotation(ROTATION_C);
 
@@ -50,7 +60,52 @@ void app_oled_init(void)
     sprite.createSprite(lcd.width(), lcd.height());
 }
 
-void app_oled_test(void)
+void oled_clear(void)
+{
+    sprite.fillScreen(OLED_BACK_COLOR);
+    sprite.setTextColor(OLED_TXT_COLOR);
+    sprite.setCursor(0, 0);
+    sprite.pushSprite(0, 0);
+}
+
+void app_oled_init(void)
+{
+    oled_i2c_init();
+    gfx_init();
+}
+
+static void oled_en_txt_test(void)
+{
+    oled_clear();
+
+    sprite.setFont(&fonts::Font0);
+    sprite.printf("RP2040 F/W Test\n");
+    sprite.printf("by Chimi\n");
+    sprite.printf("github.com/Chimipupu\n");
+    sprite.printf("RP2040=CPU x2@133MHz\n");
+    sprite.printf("CPU=ARM Cortex-M0+\n");
+    sprite.printf("Flash:16MB,SRAM:264KB\n");
+    sprite.printf("Very Good! ARM MUC!\n");
+    sprite.printf("pi=%.15f\n", MATH_PI);
+    sprite.pushSprite(0, 0);
+}
+
+static void oled_jp_txt_test(void)
+{
+    oled_clear();
+
+    // 日本語は12pxが下限
+    // sprite.setFont(&fonts::lgfxJapanGothic_12); // ゴシック体 12px
+    sprite.setFont(&fonts::efontJA_12);
+    sprite.printf("ちみさん電子工作すき\n");
+    sprite.printf("あいうえおかきくけこ\n");
+    sprite.printf("アイウエオカキクケコ\n");
+    sprite.printf("らずべりーぱい ぴこ\n");
+    sprite.printf("ラズベリーパイ ピコ\n");
+    sprite.pushSprite(0, 0);
+}
+
+static void oled_math_txt_test(void)
 {
     uint32_t i, cnt;
     volatile double c;
@@ -59,50 +114,15 @@ void app_oled_test(void)
     volatile double napier;
     volatile uint32_t a_fib[FIBONACCI_N] = {0};
     volatile double result;
-    static uint32_t s_dbg_val = 0;
-    static double s_val = 0;
 
-    // 英数字 表示テスト
-    sprite.fillScreen(OLED_BACK_COLOR);
-    sprite.setTextColor(OLED_TXT_COLOR);
-    sprite.setCursor(0, 0);
+    oled_clear();
     sprite.setFont(&fonts::Font0);
-    sprite.printf(" Dual Core uC\n");
-    sprite.printf("133MHz ARM Cortex-M0+\n");
-    sprite.printf("ROM 2MB, RAM 264KB\n");
-    sprite.printf("Very Good! ARM uC!\n");
-    s_val = MATH_PI;
-    sprite.printf("pi=%.015lf\n", s_val);
-    s_val = s_val * 2;
-    sprite.printf("2pi=%.015lf\n", s_val);
-    sprite.pushSprite(0, 0);
-    delay(3000);
-
-#if 1
-    // 日本語 表示テスト
-    sprite.fillScreen(OLED_BACK_COLOR);
-    sprite.setTextColor(OLED_TXT_COLOR);
-    sprite.setCursor(0, 0);
-    sprite.pushSprite(0, 0);
-    // sprite.setFont(&fonts::lgfxJapanGothic_12); // ゴシック体 12px
-    // sprite.printf("[ゴシック体 12px]\n");
-    sprite.setFont(&fonts::efontJA_12);         // eFont 12px
-    sprite.printf("[eFont 12px]\n");
-    sprite.printf("日本語は12pxが下限\n");
-    sprite.printf("ラズベリーパイ ピコ\n");
-    sprite.printf("あいうえおアイウエオ\n");
-    sprite.printf("電子工作 最&高!!!\n");
-    sprite.pushSprite(0, 0);
-    delay(3000);
-
-    // 計算結果表示テスト
-    sprite.fillScreen(OLED_BACK_COLOR);
-    sprite.setTextColor(OLED_TXT_COLOR);
-    sprite.setCursor(0, 0);
+    sprite.printf("RP2040 F/W Test\n");
 
     // tan(355/226)の計算（※期待値:-7497258.185...）
     result = math_calc_accuracy();
-    sprite.printf("res=%.4f\n", result);
+    sprite.printf("tan(355/226)\n");
+    sprite.printf("=%.6f\n", result);
 
     // 円周率π
     for(i=1; i<=MATH_PI_CALC_TIME; i++)
@@ -110,6 +130,7 @@ void app_oled_test(void)
         pi = math_pi_calc(i);
     }
     sprite.printf("pi=%.15f\n", pi);
+    sprite.printf("2pi=%.15f\n", pi * 2);
 
     // ネイピアe
     napier = math_napier_calc();
@@ -120,21 +141,27 @@ void app_oled_test(void)
     sprite.printf("phi=%.15f\n", phi);
 
     // フィボナッチ数列
-    // sprite.printf("Fn(n = %d)\n", FIBONACCI_N);
-    for(i = 1; i<= FIBONACCI_N; i++)
+    sprite.printf("Fn=");
+    for(i = 1; i <= FIBONACCI_N; i++)
     {
         a_fib[i-1] = math_fibonacci_calc(i);
         sprite.print(a_fib[i-1]);
-        sprite.print(",");
+        sprite.print(" ");
     }
-    sprite.print("\n");
-
-    // (DEBUG)
-    sprite.printf("dbg = %d\n",s_dbg_val);
-    s_dbg_val++;
-
     sprite.pushSprite(0, 0);
-    delay(3000);
-#endif
 }
-#endif /* OLED_USE */
+
+void app_oled_test(void)
+{
+    // 英数字 表示テスト
+    oled_en_txt_test();
+    delay(DELAY_MS);
+
+    // 日本語 表示テスト
+    oled_jp_txt_test();
+    delay(DELAY_MS);
+
+    // 計算結果表示テスト
+    oled_math_txt_test();
+    delay(DELAY_MS);
+}

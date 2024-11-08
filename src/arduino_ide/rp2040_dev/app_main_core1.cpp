@@ -11,26 +11,21 @@
 #include "app_main_core1.hpp"
 
 static uint8_t s_cpu_core = 0;
-#ifdef OLED_USE
 static xTaskHandle s_xTaskCore1oled;
-#endif /* OLED_USE */
 static xTaskHandle s_xTaskCore1monitor;
 static xTaskHandle s_xTaskCore1Main;
 
-#ifdef OLED_USE
 void vTaskCore1oled(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
 
     while (1)
     {
-        WDT_TOGGLE;
         app_oled_test();
         WDT_TOGGLE;
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
-#endif /* OLED_USE */
 
 void vTaskCore1monitor(void *p_parameter)
 {
@@ -39,29 +34,26 @@ void vTaskCore1monitor(void *p_parameter)
 
     while (1)
     {
-        WDT_TOGGLE;
-        g_firmware_info = PROC_NOW;
         cpm_main();
-        g_firmware_info = FW_IDLE;
         WDT_TOGGLE;
         vTaskDelay(200 / portTICK_PERIOD_MS);
     }
 }
 
+#if 0
 void vTaskCore1Main(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore1Main\n", s_cpu_core);
 
     while (1)
     {
-        g_firmware_info = PROC_NOW;
         // TODO: Core1メイン処理
         NOP;
-        g_firmware_info = FW_IDLE;
         WDT_TOGGLE;
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
+#endif
 
 void app_main_init_core1(void)
 {
@@ -69,17 +61,16 @@ void app_main_init_core1(void)
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
-#ifdef OLED_USE
     app_oled_init();
 
+    // FreeRTOS初期化
     xTaskCreate(vTaskCore1oled,         // コールバック関数ポインタ
                 "vTaskCore1oled",       // タスク名
-                512,                    // スタック
+                1024,                    // スタック
                 nullptr,                // パラメータ
                 2,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore1oled       // タスクハンドル
                 );
-#endif /* OLED_USE */
 
     xTaskCreate(vTaskCore1monitor,      // コールバック関数ポインタ
                 "vTaskCore1monitor",    // タスク名

@@ -1,5 +1,5 @@
 /**
- * @file app_util.cpp
+ * @file app_util.hpp
  * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief RP2040の評価プログラム用  アプリユーティリティ
  * @version 0.1

@@ -1,5 +1,5 @@
 /**
- * @file _reg.hpp
+ * @file rp2040_reg.hpp
  * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief レジスタ定義
  * @version 0.1

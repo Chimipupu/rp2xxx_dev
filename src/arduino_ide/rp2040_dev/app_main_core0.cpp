@@ -32,10 +32,7 @@ void vTaskCore0Btn(void *p_parameter)
 
     while (1)
     {
-        WDT_TOGGLE;
-        g_firmware_info = PROC_NOW;
         app_btn_polling(btnstate);
-        g_firmware_info = FW_IDLE;
         WDT_TOGGLE;
         vTaskDelay(300 / portTICK_PERIOD_MS);
     }
@@ -47,8 +44,6 @@ void vTaskCore0Main(void *p_parameter)
 
     while (1)
     {
-        WDT_TOGGLE;
-        g_firmware_info = PROC_NOW;
         switch (g_firmware_info)
         {
             case FW_INIT:
@@ -72,7 +67,6 @@ void vTaskCore0Main(void *p_parameter)
                 app_neopixel_ctrl(16, 0, 16, 0, true, false); // 紫
                 break;
         }
-        g_firmware_info = FW_IDLE;
         WDT_TOGGLE;
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
@@ -84,11 +78,12 @@ void app_main_init_core0(void)
     app_wdt_init();
     WDT_TOGGLE;
 
-    // UART 初期化
-    DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
-
     // GPIO 初期化
     gpio_init();
+
+    // NeoPicel 初期化
+    app_neopixel_init();
+    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
 
     // タイマー初期化
     app_timer_set_alarm(0, 1);      // アラーム0, 1msec(実行時間計測用)
@@ -96,13 +91,14 @@ void app_main_init_core0(void)
     app_timer_set_alarm(2, 100);    // アラーム2, 100msec(ボタンタスク起床)
     app_timer_set_alarm(3, 1000);   // アラーム3, 1000msec(LEDを処理)
 
-    // NeoPicel 初期化
-    app_neopixel_init();
+    // UART 初期化
+    DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
 
     s_cpu_core = app_util_get_cpu_core_num();
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
+    // FreeRTOS初期化
     xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
                 "vTaskCore0Btn",        // タスク名
                 512,                    // スタック

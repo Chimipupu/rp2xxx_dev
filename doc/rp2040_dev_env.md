@@ -85,7 +85,6 @@ https://github.com/earlephilhower/arduino-pico/releases/download/global/package_
 <img width="600" src="https://storage.googleapis.com/zenn-user-upload/7b86d616bf51-20241015.png">
 </div>
 
-
 ### デバッガの準備
 
 Picoでデバッグするためには`デバッガ`がつくる💁‍♀️
