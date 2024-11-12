@@ -29,10 +29,13 @@
 - 📍基板
   - 📍RP2040
     - [VCC-GND YD-RP2040🔗](https://www.aliexpress.us/item/1005004004120604.html?gatewayAdapt=4itemAdapt)
+  - 📍拡張基板
+    - [Pimoroni Pico VGA Demo Base🔗](https://shop.pimoroni.com/products/pimoroni-pico-vga-demo-base)
 
 ## 📍実装機能
 **凡例(✅実装＆テスト完了、🆗実装済み、🚩TODO、❌TBD)**
 
+### CPU
 - 📍CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
   - 📍Core0 ... ドライバCPU
     - 📍OS ... FreeRTOS
@@ -75,3 +78,17 @@
     - ✅ボタン複数押し判定 ... 短時間に複数回ボタン押しを検知
     - ✅ボタン長押し判定 ... ボタン長押しを検知（1000ms = 1s）
     - ✅ボタン超長押し判定 ... ボタン長押しを検知（3000ms = 3s)
+
+## PIO
+- 📍PIO
+  - 📍PIO0
+    - ✅SM0
+      - GPIOのトグル
+    - 🚩SM1
+    - 🚩SM2
+    - 🚩SM3
+  - 📍PIO1
+    - 🚩SM0
+    - 🚩SM1
+    - 🚩SM2
+    - 🚩SM3
