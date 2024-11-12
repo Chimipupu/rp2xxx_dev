@@ -53,5 +53,5 @@ static void sd_spi_init(void)
 void mcu_board_init(void)
 {
     spi_init();
-    // sd_spi_init();
+    sd_spi_init();
 }

@@ -115,10 +115,10 @@ void app_main_init_core0(void)
     app_neopixel_ctrl(16, 0, 0, 0, true, true); // 赤
 
     // File System(SD/SPIFS/FATFS)
+    app_fs_init();
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
-    app_fs_init();
-    // app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
+    app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
 
     s_cpu_core = app_util_get_cpu_core_num();
     WDT_TOGGLE;

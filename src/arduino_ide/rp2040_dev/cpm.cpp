@@ -11,6 +11,11 @@
 #include "cpm.hpp"
 #include "app_timer.hpp"
 #include "app_util.hpp"
+#include "app_filesystem.hpp"
+#include "muc_board.hpp"
+
+extern char g_ssid[16];
+extern char g_password[32];
 
 #define DEBUG_CMD
 #ifdef DEBUG_CMD
@@ -238,6 +243,12 @@ void dbg_cmd(char *p_cmd)
 {
     DEBUG_PRINTF("DEBUG Command\n");
     app_util_system_reg_read();
+
+    // FileSystem Test
+    app_fs_test();
+    memset(&g_ssid[0], 0x00, sizeof(g_ssid));
+    memset(&g_password[0], 0x00, sizeof(g_password));
+    app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
 }
 #endif
 

@@ -53,7 +53,7 @@ bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
 {
-    app_neopixel_fade();
+    // app_neopixel_fade();
     return true;
 }
 

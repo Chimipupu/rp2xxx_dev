@@ -60,7 +60,8 @@ void app_main_init_core1(void)
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
-    // app_oled_init();
+#if 0
+    app_oled_init();
 
     // FreeRTOS初期化
     xTaskCreate(vTaskCore1oled,         // コールバック関数ポインタ
@@ -70,7 +71,7 @@ void app_main_init_core1(void)
                 2,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore1oled       // タスクハンドル
                 );
-
+#endif
     xTaskCreate(vTaskCore1monitor,      // コールバック関数ポインタ
                 "vTaskCore1monitor",    // タスク名
                 2048,                   // スタック

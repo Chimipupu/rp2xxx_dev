@@ -28,22 +28,21 @@ static void fs_init(void)
 
 static void fs_test(void)
 {
-    DEBUG_PRINTF("SD card Test");
+    DEBUG_PRINTF("SD card Test\n");
 
     if (SD.exists(text_file_path)) {
-        DEBUG_PRINTF("test.txt exists.");
+        DEBUG_PRINTF("test.txt exists\n");
     } else {
-        DEBUG_PRINTF("test.txt doesn't exist.");
-        DEBUG_PRINTF("Creating test.txt");
+        DEBUG_PRINTF("test.txt doesn't exist\n");
+        DEBUG_PRINTF("Creating test.txt\n");
     }
 
     DEBUG_PRINTF("SD card Write Test\n");
-    File myFile = SD.open(text_file_path, FILE_WRITE);
+    File myFile = SD.open(text_file_path, FILE_WRITE | O_TRUNC);
     if (myFile) {
         DEBUG_PRINTF("Writing to test.txt...\n");
-        myFile.println("SD test.");
+        myFile.println("SD test RP2040");
         myFile.close();
-        DEBUG_PRINTF("done\n");
     } else {
         DEBUG_PRINTF("error opening test.txt\n");
     }
@@ -51,9 +50,9 @@ static void fs_test(void)
     DEBUG_PRINTF("SD card Read Test\n");
     myFile = SD.open(text_file_path, FILE_READ);
     if (myFile) {
-        DEBUG_PRINTF("/test.txt Content:");
+        DEBUG_PRINTF("Read : ");
         while (myFile.available()) {
-            DEBUG_PRINTF("c", myFile.read());
+            DEBUG_PRINTF("%c", myFile.read());
         }
         myFile.close();
     } else {
@@ -98,6 +97,11 @@ void app_fs_init(void)
 {
     fs_init();
     // fs_test();
+}
+
+void app_fs_test(void)
+{
+    fs_test();
 }
 
 void app_fs_wifi_config_read(char *p_ssid, char *p_password)
