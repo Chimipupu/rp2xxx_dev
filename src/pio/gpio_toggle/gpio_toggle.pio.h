@@ -1,11 +1,11 @@
 /**
  * @file gpio_toggle.pio.h
- * @author ����/Chimi�ihttps://github.com/Chimipupu�j
- * @brief PIO��GPIO�g�O��
+ * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @brief PIOのGPIOトグル inoファイル
  * @version 0.1
  * @date 2024-11-12
  * 
- * @copyright Copyright (c) 2024 ����/Chimi�ihttps://github.com/Chimipupu�j
+ * @copyright Copyright (c) 2024 ちみ/Chimi（https://github.com/Chimipupu）
  * 
  */
 
@@ -78,7 +78,7 @@ static inline void pio_gpio_init(PIO pio, uint sm, uint offset, uint pin) {
  * @param pin GPIO pin
  * @param freq gpio toggle freq [Hz]
  */
-static inline void pio_independent_gpio_toggle(PIO pio, uint sm, uint offset, uint pin, uint freq) {
+static inline void pio_gpio_toggle_hz(PIO pio, uint sm, uint offset, uint pin, uint freq) {
     pio_gpio_init(pio, sm, offset, pin);
     pio_sm_set_enabled(pio, sm, true);
 

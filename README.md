@@ -35,7 +35,7 @@
 ## 📍実装機能
 **凡例(✅実装＆テスト完了、🆗実装済み、🚩TODO、❌TBD)**
 
-### CPU
+### OS(FreeRTOS)
 - 📍CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
   - 📍Core0 ... ドライバCPU
     - 📍OS ... FreeRTOS
@@ -58,7 +58,7 @@
           - M0PLUS CPUIDレジスタ、SIOレジスタのRead
         - ✅計算
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
-
+### ペリフェラル
 - 📍RGB LED (@GPIO 35)
   - ✅赤🔴 : 初期化中、オフライン状態(WiFi,Bluetooth未接続)
   - ✅青🔵 : オンライン状態（WiFi,Bluetooth接続中）
@@ -83,7 +83,7 @@
 - 📍PIO
   - 📍PIO0
     - ✅SM0
-      - GPIOのトグル
+      - GPIOを独立してトグル @GPIO25を3Hzで
     - 🚩SM1
     - 🚩SM2
     - 🚩SM3

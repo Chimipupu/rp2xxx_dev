@@ -1,8 +1,7 @@
 ; PIO makes output of GPIO pin Toggle(high and low)
 ; Copyright (c) 2024, ちみ/Chimi（https://github.com/Chimipupu）
 
-; [GPIOを500msでトグル]
-; CPU 133MHz 1サイクル = 1/133MHz ≒ 7.52ns
+; CPU 133MHz 1サイクル = 1/133MHz ≒ 7.519ns
 .program gpio_toggle
     pull block ; TX FIFOからpull
     out y, 32
@@ -43,7 +42,7 @@ static inline void pio_gpio_init(PIO pio, uint sm, uint offset, uint pin) {
  * @param pin GPIO pin
  * @param freq gpio toggle freq [MHz]
  */
-static inline void pio_independent_gpio_toggle(PIO pio, uint sm, uint offset, uint pin, uint freq) {
+static inline void pio_gpio_toggle_hz(PIO pio, uint sm, uint offset, uint pin, uint freq) {
     blink_program_init(pio, sm, offset, pin);
     pio_sm_set_enabled(pio, sm, true);
 
@@ -51,5 +50,4 @@ static inline void pio_independent_gpio_toggle(PIO pio, uint sm, uint offset, ui
     // input (wait for n + 1; mov; jmp)
     pio->txf[sm] = (clock_get_hz(clk_sys) / (2 * freq)) - 3;
 }
-
 %}
