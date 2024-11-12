@@ -1,11 +1,11 @@
 /**
  * @file gpio_toggle.pio.h
- * @author ちみ/Chimi（https://github.com/Chimipupu）
- * @brief PIOのGPIOトグル
+ * @author ����/Chimi�ihttps://github.com/Chimipupu�j
+ * @brief PIO��GPIO�g�O��
  * @version 0.1
  * @date 2024-11-12
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ����/Chimi�ihttps://github.com/Chimipupu�j
  * 
  */
 
@@ -54,7 +54,7 @@ static inline pio_sm_config gpio_toggle_program_get_default_config(uint offset) 
 }
 
 /**
- * @brief 
+ * @brief PIO GPIOトグル初期化関数
  * 
  * @param pio pio0 or pio1
  * @param sm 0 or 1 or 2 or 3
@@ -64,9 +64,27 @@ static inline pio_sm_config gpio_toggle_program_get_default_config(uint offset) 
 static inline void pio_gpio_init(PIO pio, uint sm, uint offset, uint pin) {
     pio_gpio_init(pio, pin);
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
-    pio_sm_config c = blink_program_get_default_config(offset);
+    pio_sm_config c = gpio_toggle_program_get_default_config(offset);
     sm_config_set_set_pins(&c, pin, 1);
     pio_sm_init(pio, sm, offset, &c);
+}
+
+/**
+ * @brief PIOが指定周波数でGPIOをトグルする関数
+ * 
+ * @param pio pio0 or pio1
+ * @param sm 0 or 1 or 2 or 3
+ * @param offset program address
+ * @param pin GPIO pin
+ * @param freq gpio toggle freq [Hz]
+ */
+static inline void pio_independent_gpio_toggle(PIO pio, uint sm, uint offset, uint pin, uint freq) {
+    pio_gpio_init(pio, sm, offset, pin);
+    pio_sm_set_enabled(pio, sm, true);
+
+    // PIO counter program takes 3 more cycles in total than we pass as
+    // input (wait for n + 1; mov; jmp)
+    pio->txf[sm] = (clock_get_hz(clk_sys) / (2 * freq)) - 3;
 }
 
 #endif

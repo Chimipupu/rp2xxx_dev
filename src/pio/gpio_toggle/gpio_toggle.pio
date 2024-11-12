@@ -1,21 +1,31 @@
 ; PIO makes output of GPIO pin Toggle(high and low)
 ; Copyright (c) 2024, ちみ/Chimi（https://github.com/Chimipupu）
 
+; [GPIOを500msでトグル]
+; CPU 133MHz 1サイクル = 1/133MHz ≒ 7.52ns
 .program gpio_toggle
-    pull block
+    pull block ; TX FIFOからpull
     out y, 32
 .wrap_target
     mov x, y
     set pins, 1
 lp1:
-    jmp x-- lp1   ; Delay for (x + 1) cycles
+    jmp x-- lp1
     mov x, y
     set pins, 0
 lp2:
-    jmp x-- lp2   ; Delay for the same number of cycles again
+    jmp x-- lp2
 .wrap
 
 % c-sdk {
+/**
+ * @brief PIO GPIOトグル初期化関数
+ * 
+ * @param pio pio0 or pio1
+ * @param sm 0 or 1 or 2 or 3
+ * @param offset program address
+ * @param pin GPIO pin
+ */
 static inline void pio_gpio_init(PIO pio, uint sm, uint offset, uint pin) {
     pio_gpio_init(pio, pin);
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
@@ -23,4 +33,23 @@ static inline void pio_gpio_init(PIO pio, uint sm, uint offset, uint pin) {
     sm_config_set_set_pins(&c, pin, 1);
     pio_sm_init(pio, sm, offset, &c);
 }
+
+/**
+ * @brief PIOが指定周波数でGPIOをトグルする関数
+ * 
+ * @param pio pio0 or pio1
+ * @param sm 0 or 1 or 2 or 3
+ * @param offset program address
+ * @param pin GPIO pin
+ * @param freq gpio toggle freq [MHz]
+ */
+static inline void pio_independent_gpio_toggle(PIO pio, uint sm, uint offset, uint pin, uint freq) {
+    blink_program_init(pio, sm, offset, pin);
+    pio_sm_set_enabled(pio, sm, true);
+
+    // PIO counter program takes 3 more cycles in total than we pass as
+    // input (wait for n + 1; mov; jmp)
+    pio->txf[sm] = (clock_get_hz(clk_sys) / (2 * freq)) - 3;
+}
+
 %}
