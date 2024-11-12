@@ -20,6 +20,7 @@
 #ifdef _MCU_RP2040_
     #include "rp2040_reg.hpp"
 
+    // VCC-GND RP2040
     #define __MCU_BOARD_YD_RP2040__
     #ifdef __MCU_BOARD_YD_RP2040__
         #define RGBLED_PIN          23   // Neopixel (GPIO 23)
@@ -31,6 +32,54 @@
         #define I2C_SDA             6    // I2C SDA (GPIO 6)
         #define I2C_SCL             7    // I2C SCL (GPIO 7)
     #endif /* __MCU_BOARD_YD_RP2040__ */
+
+    // Pimoroni Pico VGA Demo Base
+    #define __MCU_EX_BOARD_PICO_VGA__
+    #ifdef __MCU_EX_BOARD_PICO_VGA__
+        // SD
+        #define SD_CLK_PIN              7
+        #define SD_CMD_PIN              24
+        #define SD_DAT_0_PIN            25
+        #define SD_DAT_1_PIN            26
+        #define SD_DAT_2_PIN            27
+        #define SD_DAT_3_PIN            29
+
+        // Button(SW_A ～ SW_C)
+        #define SW_A_PIN                1
+        #define SW_B_PIN                9
+        #define SW_C_PIN                15
+
+        // VGA
+        #define VGA_RED_0_PIN           1
+        #define VGA_RED_1_PIN           2
+        #define VGA_RED_2_PIN           4
+        #define VGA_RED_3_PIN           5
+        #define VGA_RED_4_PIN           6
+
+        #define VGA_GREEN_0_PIN         9
+        #define VGA_GREEN_1_PIN         10
+        #define VGA_GREEN_2_PIN         11
+        #define VGA_GREEN_3_PIN         12
+        #define VGA_GREEN_4_PIN         14
+
+        #define VGA_BLUE_0_PIN          15
+        #define VGA_BLUE_1_PIN          16
+        #define VGA_BLUE_2_PIN          17
+        #define VGA_BLUE_3_PIN          19
+        #define VGA_BLUE_4_PIN          20
+
+        #define VGA_V_SYNC_PIN          22
+        #define VGA_H_SYNC_PIN          21
+
+        // PWM
+        #define PWM_0_PIN               34
+        #define PWM_1_PIN               32
+
+        // PCM
+        #define PCM_LRCLK_PIN           34
+        #define PCM_BCLK_PIN            32
+        #define PCM_DATA_PIN            31
+    #endif /* __MCU_EX_BOARD_PICO_VGA__ */
 #endif /* _MCU_RP2040_ */
 
 extern "C"
