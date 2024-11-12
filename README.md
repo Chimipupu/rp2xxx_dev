@@ -59,6 +59,9 @@
         - ✅計算
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
 ### ペリフェラル
+- 📍SPI
+  - ✅SDカードのR/W
+
 - 📍RGB LED (@GPIO 35)
   - ✅赤🔴 : 初期化中、オフライン状態(WiFi,Bluetooth未接続)
   - ✅青🔵 : オンライン状態（WiFi,Bluetooth接続中）
@@ -79,11 +82,11 @@
     - ✅ボタン長押し判定 ... ボタン長押しを検知（1000ms = 1s）
     - ✅ボタン超長押し判定 ... ボタン長押しを検知（3000ms = 3s)
 
-## PIO
+### PIO
 - 📍PIO
   - 📍PIO0
     - ✅SM0
-      - GPIOを独立してトグル @GPIO25を3Hzで
+      - GPIOを独立してトグル
     - 🚩SM1
     - 🚩SM2
     - 🚩SM3
@@ -92,3 +95,12 @@
     - 🚩SM1
     - 🚩SM2
     - 🚩SM3
+
+### Pimoroni Pico VGA Demo Base
+
+- 📍Pimoroni Pico VGA Demo Base
+  - 📍Audio📢
+    - 📍DAC📢
+    - 📍PWM📢
+  - 📍VGA📺
+  - 📍SD/TF📚

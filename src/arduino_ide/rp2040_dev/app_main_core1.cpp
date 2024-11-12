@@ -60,7 +60,7 @@ void app_main_init_core1(void)
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
-    app_oled_init();
+    // app_oled_init();
 
     // FreeRTOS初期化
     xTaskCreate(vTaskCore1oled,         // コールバック関数ポインタ

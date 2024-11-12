@@ -3,7 +3,7 @@
  * @author ちみ/Chimi（https://github.com/Chimipupu）
  * @brief マイコン基板 ヘッダー
  * @version 0.1
- * @date 2024-11-08
+ * @date 2024-11-13
  * 
  * @copyright Copyright (c) 2024
  * 
@@ -23,26 +23,39 @@
     // VCC-GND RP2040
     #define __MCU_BOARD_YD_RP2040__
     #ifdef __MCU_BOARD_YD_RP2040__
-        #define RGBLED_PIN          23   // Neopixel (GPIO 23)
-        #define BUTTON_PIN          24   // ボタン (GPIO 24)
-        #define OB_LED_PIN          25   // 青色LED (GPIO 25)
-        // #define PWM_PIN             OB_LED_PIN
-        #define PWM_PIN             22
-        #define PWM_PIN_2           21
-        #define I2C_SDA             6    // I2C SDA (GPIO 6)
-        #define I2C_SCL             7    // I2C SCL (GPIO 7)
+        #define RGBLED_PIN               23  // Neopixel (GPIO 23)
+        #define BUTTON_PIN               24  // ボタン (GPIO 24)
+        #define OB_LED_PIN               25  // 青色LED (GPIO 25)
+        // PWM
+        #define PWM_PIN                  22
+        #define PWM_PIN_2                21
+        // I2C
+        #define I2C_SDA                  6   // I2C SDA (GPIO 6)
+        #define I2C_SCL                  7   // I2C SCL (GPIO 7)
+        // SPI
+        #define SPI_SCK_PIN              6   // SPI CLK
+        #define SPI_MISO_PIN             4   // SPI MOSI
+        #define SPI_MOSI_PIN             7   // SPI MISO
+        #define SPI_CS_PIN               5   // SPI CS
+
     #endif /* __MCU_BOARD_YD_RP2040__ */
 
     // Pimoroni Pico VGA Demo Base
-    #define __MCU_EX_BOARD_PICO_VGA__
+    // #define __MCU_EX_BOARD_PICO_VGA__
     #ifdef __MCU_EX_BOARD_PICO_VGA__
         // SD
-        #define SD_CLK_PIN              7
-        #define SD_CMD_PIN              24
-        #define SD_DAT_0_PIN            25
-        #define SD_DAT_1_PIN            26
-        #define SD_DAT_2_PIN            27
-        #define SD_DAT_3_PIN            29
+        #define SD_CLK_PIN              7   // SPI CLK
+        #define SD_CMD_PIN              24  // SPI MOSI
+        #define SD_DAT_0_PIN            25  // SPI MISO
+        #define SD_DAT_1_PIN            26  // 未使用（microSDでは不要）
+        #define SD_DAT_2_PIN            27  // 未使用（microSDでは不要）
+        #define SD_DAT_3_PIN            29  // SPI CS
+
+        // SPI
+        #define SPI_SCK_PIN              7   // SPI CLK
+        #define SPI_MISO_PIN             24  // SPI MOSI
+        #define SPI_MOSI_PIN             25  // SPI MISO
+        #define SPI_CS_PIN               29  // SPI CS
 
         // Button(SW_A ～ SW_C)
         #define SW_A_PIN                1
@@ -90,4 +103,5 @@ extern "C"
     }
 }
 
+void mcu_board_init(void);
 #endif /* MUC_BOARDHPP */

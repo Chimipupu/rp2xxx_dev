@@ -21,7 +21,7 @@ typedef enum
     ROTATION_B,     // USB (未調査)
     ROTATION_C,     // USB 左
     ROTATION_D,     // USB 左 画面反転
-};
+}E_LCD_ROATATION;
 
 #ifdef LCD_SSD1306
 static LGFX_SSD1306 lcd;   // 0.96インチのOLED用

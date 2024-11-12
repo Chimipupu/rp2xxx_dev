@@ -10,10 +10,14 @@
  */
 
 #include "app_main_core0.hpp"
+#include "app_filesystem.hpp"
 
 static uint8_t s_cpu_core = 0;
 static xTaskHandle s_xTaskCore0Btn;
 static xTaskHandle s_xTaskCore0Main;
+
+char g_ssid[16] = {0};
+char g_password[32] = {0};
 
 static void gpio_init(void);
 static void pwm_init(void);
@@ -87,9 +91,12 @@ void vTaskCore0Main(void *p_parameter)
 
 void app_main_init_core0(void)
 {
-    // WDT s初期化
+    // WDT 初期化
     app_wdt_init();
     WDT_TOGGLE;
+
+    // UART 初期化
+    DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
 
     // GPIO 初期化
     gpio_init();
@@ -107,8 +114,11 @@ void app_main_init_core0(void)
     app_neopixel_init();
     app_neopixel_ctrl(16, 0, 0, 0, true, true); // 赤
 
-    // UART 初期化
-    DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
+    // File System(SD/SPIFS/FATFS)
+    memset(&g_ssid[0], 0x00, sizeof(g_ssid));
+    memset(&g_password[0], 0x00, sizeof(g_password));
+    app_fs_init();
+    // app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
 
     s_cpu_core = app_util_get_cpu_core_num();
     WDT_TOGGLE;
