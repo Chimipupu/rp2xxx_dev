@@ -15,20 +15,9 @@
 #include <SD.h>
 
 static void gpio_init(void);
+#if defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
 static void spi_init(void);
 static void sd_spi_init(void);
-
-static void gpio_init(void)
-{
-#ifdef __MCU_BOARD_XIAO_RP2040__
-    GPIO_PORT_DIR(OB_LED_RED_PIN, OUTPUT);
-    GPIO_PORT_DIR(OB_LED_GREEN_PIN, OUTPUT);
-    GPIO_PORT_DIR(OB_LED_PIN, OUTPUT);
-    GPIO_PORT_DIR(BUZZUER_PIN, OUTPUT);
-#else
-    NOP;
-#endif /* __MCU_BOARD_XIAO_RP2040__ */
-}
 
 static void spi_init(void)
 {
@@ -49,6 +38,19 @@ static void sd_spi_init(void)
 
     DEBUG_PRINTF_RTOS("File System Init(@SD)\n");
 }
+#endif
+
+static void gpio_init(void)
+{
+#ifdef __MCU_BOARD_XIAO_RP2040__
+    GPIO_PORT_DIR(OB_LED_RED_PIN, OUTPUT);
+    GPIO_PORT_DIR(OB_LED_GREEN_PIN, OUTPUT);
+    GPIO_PORT_DIR(OB_LED_PIN, OUTPUT);
+    // GPIO_PORT_DIR(BUZZUER_PIN, OUTPUT);
+#else
+    NOP;
+#endif /* __MCU_BOARD_XIAO_RP2040__ */
+}
 
 void mcu_board_init(void)
 {
@@ -57,6 +59,6 @@ void mcu_board_init(void)
     spi_init();
     sd_spi_init();
 #else
-    NOP
+    NOP;
 #endif /* __MCU_EX_BOARD_PICO_VGA__ */
 }

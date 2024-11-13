@@ -22,7 +22,7 @@
 
     // #define __MCU_BOARD_YD_RP2040__
     #define __MCU_BOARD_XIAO_RP2040__
-    #define __MCU_EX_XIAO_EXPANSION__
+    // #define __MCU_EX_XIAO_EXPANSION__
     // #define __MCU_EX_BOARD_PICO_VGA__
 
     // VCC-GND RP2040
@@ -49,9 +49,12 @@
         #define OB_LED_RED_PIN           17  // 赤色LED  (GPIO 17)
         #define OB_LED_GREEN_PIN         16  // 緑色LED  (GPIO 16)
         #define OB_LED_PIN               25  // 青色LED  (GPIO 25)
+        #define BUTTON_PIN               27  // ボタン (GPIO 27)
+
         // PWM
         #define PWM_PIN                  22
         #define PWM_PIN_2                21
+
         // I2C
         #define I2C_SDA                  6   // I2C SDA (GPIO 6)
         #define I2C_SCL                  7   // I2C SCL (GPIO 7)
@@ -59,14 +62,14 @@
 
     // XIAO Expansion Board
     #ifdef __MCU_EX_XIAO_EXPANSION__
-        #define BUTTON_PIN                  27  // ボタン (GPIO 27)
-        #define BUZZUER_PIN                 29  // ブザー (GPIO 29)
+        // #define BUTTON_PIN             27  // ボタン (GPIO 27)
+        #define BUZZUER_PIN            29  // ブザー (GPIO 29)
 
         // SPI
-        #define SPI_SCK_PIN                 2   // SPI CLK
-        #define SPI_MISO_PIN                3   // SPI MOSI
-        #define SPI_MOSI_PIN                4   // SPI MISO
-        #define SPI_CS_PIN                  28  // SPI CS
+        #define SPI_SCK_PIN             2   // SPI CLK
+        #define SPI_MISO_PIN            3   // SPI MOSI
+        #define SPI_MOSI_PIN            4   // SPI MISO
+        #define SPI_CS_PIN              28  // SPI CS
     #endif /* __MCU_EX_XIAO_EXPANSION__ */
 
     // Pimoroni Pico VGA Demo Base

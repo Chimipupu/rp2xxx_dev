@@ -19,7 +19,7 @@
 
 #include "muc_board.hpp"
 
-#define OLED_LCD_USE
+// #define OLED_LCD_USE
 
 // #define __WDT_ENABLE__
 #include "app_wdt.hpp"
