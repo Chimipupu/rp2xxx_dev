@@ -1,11 +1,11 @@
 /**
  * @file app_oled.cpp
- * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)）
  * @brief OLEDアプリ
  * @version 0.1
  * @date 2024-10-16
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
  * 
  */
 #include "app_oled.hpp"

@@ -1,11 +1,11 @@
 /**
  * @file muc_board.hpp
- * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)）
  * @brief マイコン基板 ヘッダー
  * @version 0.1
  * @date 2024-11-13
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
  * 
  */
 
@@ -20,12 +20,16 @@
 #ifdef _MCU_RP2040_
     #include "rp2040_reg.hpp"
 
+    // #define __MCU_BOARD_YD_RP2040__
+    #define __MCU_BOARD_XIAO_RP2040__
+    #define __MCU_EX_XIAO_EXPANSION__
+    // #define __MCU_EX_BOARD_PICO_VGA__
+
     // VCC-GND RP2040
-    #define __MCU_BOARD_YD_RP2040__
     #ifdef __MCU_BOARD_YD_RP2040__
         #define RGBLED_PIN               23  // Neopixel (GPIO 23)
-        #define BUTTON_PIN               24  // ボタン (GPIO 24)
         #define OB_LED_PIN               25  // 青色LED (GPIO 25)
+        #define BUTTON_PIN               24  // ボタン (GPIO 24)
         // PWM
         #define PWM_PIN                  22
         #define PWM_PIN_2                21
@@ -37,11 +41,35 @@
         #define SPI_MISO_PIN             4   // SPI MOSI
         #define SPI_MOSI_PIN             7   // SPI MISO
         #define SPI_CS_PIN               5   // SPI CS
-
     #endif /* __MCU_BOARD_YD_RP2040__ */
 
+    // XIAO RP2040
+    #ifdef __MCU_BOARD_XIAO_RP2040__
+        #define RGBLED_PIN               12  // Neopixel (GPIO 12)
+        #define OB_LED_RED_PIN           17  // 赤色LED  (GPIO 17)
+        #define OB_LED_GREEN_PIN         16  // 緑色LED  (GPIO 16)
+        #define OB_LED_PIN               25  // 青色LED  (GPIO 25)
+        // PWM
+        #define PWM_PIN                  22
+        #define PWM_PIN_2                21
+        // I2C
+        #define I2C_SDA                  6   // I2C SDA (GPIO 6)
+        #define I2C_SCL                  7   // I2C SCL (GPIO 7)
+    #endif /* __MCU_BOARD_XIAO_RP2040__ */
+
+    // XIAO Expansion Board
+    #ifdef __MCU_EX_XIAO_EXPANSION__
+        #define BUTTON_PIN                  27  // ボタン (GPIO 27)
+        #define BUZZUER_PIN                 29  // ブザー (GPIO 29)
+
+        // SPI
+        #define SPI_SCK_PIN                 2   // SPI CLK
+        #define SPI_MISO_PIN                3   // SPI MOSI
+        #define SPI_MOSI_PIN                4   // SPI MISO
+        #define SPI_CS_PIN                  28  // SPI CS
+    #endif /* __MCU_EX_XIAO_EXPANSION__ */
+
     // Pimoroni Pico VGA Demo Base
-    // #define __MCU_EX_BOARD_PICO_VGA__
     #ifdef __MCU_EX_BOARD_PICO_VGA__
         // SD
         #define SD_CLK_PIN              7   // SPI CLK

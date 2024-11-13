@@ -1,11 +1,11 @@
 /**
  * @file cpm.cpp
- * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)）
  * @brief 評価モニタプログラム
  * @version 0.1
  * @date 2024-10-16
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
  * 
  */
 #include "cpm.hpp"
@@ -255,7 +255,7 @@ void dbg_cmd(char *p_cmd)
 void cpm_op_msg(void)
 {
     DEBUG_PRINTF("RP2040 Monitor Program Ver1.0.0\n");
-    DEBUG_PRINTF("Copyright(C) 2024, Chimi（https://github.com/Chimipupu）\n");
+    DEBUG_PRINTF("Copyright(C) 2024, Chimi(https://github.com/Chimipupu)\n");
 }
 
 void cpm_main(void)

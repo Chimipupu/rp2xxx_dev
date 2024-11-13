@@ -1,11 +1,11 @@
 /**
  * @file app_main_core1.cpp
- * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)）
  * @brief  Core1 アプリ
  * @version 0.1
  * @date 2024-10-16
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
  * 
  */
 #include "app_main_core1.hpp"
@@ -15,6 +15,7 @@ static xTaskHandle s_xTaskCore1oled;
 static xTaskHandle s_xTaskCore1monitor;
 static xTaskHandle s_xTaskCore1Main;
 
+#ifdef OLED_LCD_USE
 void vTaskCore1oled(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
@@ -26,6 +27,7 @@ void vTaskCore1oled(void *p_parameter)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
+#endif /* OLED_LCD_USE */
 
 void vTaskCore1monitor(void *p_parameter)
 {
@@ -60,7 +62,7 @@ void app_main_init_core1(void)
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
-#if 0
+#ifdef OLED_LCD_USE
     app_oled_init();
 
     // FreeRTOS初期化
@@ -71,7 +73,8 @@ void app_main_init_core1(void)
                 2,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore1oled       // タスクハンドル
                 );
-#endif
+#endif /* OLED_LCD_USE */
+
     xTaskCreate(vTaskCore1monitor,      // コールバック関数ポインタ
                 "vTaskCore1monitor",    // タスク名
                 2048,                   // スタック

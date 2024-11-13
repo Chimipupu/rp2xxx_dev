@@ -1,11 +1,11 @@
 /**
  * @file app_oled.hpp
- * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)）
  * @brief OLEDアプリ
  * @version 0.1
  * @date 2024-10-16
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
  * 
  */
 #ifndef APP_OLED_HPP
@@ -32,10 +32,13 @@
 #define OLED_TXT_COLOR      TFT_WHITE
 #define OLED_TXT_SIZE       1
 
+#ifdef __MCU_EX_XIAO_EXPANSION__
 // 0.96インチのOLED用
-// #define LCD_SSD1306
+#define LCD_SSD1306
+#else
 // 1.3インチのOLED用(128x64)
 #define LCD_SH110x
+#endif /* __MCU_EX_XIAO_EXPANSION__ */
 
 #ifdef LCD_SSD1306
 class LGFX_SSD1306 : public lgfx::LGFX_Device

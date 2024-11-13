@@ -1,11 +1,11 @@
 /**
  * @file app_timer.hpp
- * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)）
  * @brief RP2040 タイマーヘッダー
  * @version 0.1
  * @date 2024-11-05
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
  * 
  */
 

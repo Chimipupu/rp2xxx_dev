@@ -1,16 +1,17 @@
 /**
  * @file app_timer.cpp
- * @author ちみ/Chimi（https://github.com/Chimipupu）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)
  * @brief RP2040 タイマーアプリ
  * @version 0.1
  * @date 2024-11-05
  * 
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
  * 
  */
 
 #include "app_timer.hpp"
 #include "app_neopixel.hpp"
+#include "muc_board.hpp"
 
 static repeating_timer s_rs_timer_0;
 static repeating_timer s_rs_timer_1;
@@ -40,7 +41,13 @@ bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
 {
+#ifdef __MCU_BOARD_XIAO_RP2040__
+    app_led_fade(OB_LED_RED_PIN);
+    app_led_fade(OB_LED_GREEN_PIN);
     app_led_fade(OB_LED_PIN);
+#else
+    app_led_fade(OB_LED_PIN);
+#endif /* __MCU_BOARD_XIAO_RP2040__ */
     return true;
 }
 
@@ -53,7 +60,7 @@ bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
 {
-    // app_neopixel_fade();
+    app_neopixel_fade();
     return true;
 }
 
