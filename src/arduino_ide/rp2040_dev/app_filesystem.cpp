@@ -19,6 +19,7 @@ constexpr char wifi_config_file_path[] = "/sys/wifi_config.txt";
 
 static void fs_init(void);
 static void fs_test(void);
+static void fs_dir_print(File dir);
 static void fs_wifi_config_read(char *p_ssid, char *p_password);
 
 static void fs_init(void)
@@ -93,6 +94,27 @@ static void fs_wifi_config_read(char *p_ssid, char *p_password)
     }
 }
 
+static void fs_dir_print(File dir)
+{
+    File entry = dir.openNextFile();
+
+    while (entry)
+    {
+        DEBUG_PRINTF("%s", entry.name());
+
+        if (entry.isDirectory()) {
+            DEBUG_PRINTF("/\n");
+            fs_dir_print(entry);
+        } else {
+            DEBUG_PRINTF("\t\t");
+            DEBUG_PRINTF("(%dByte)\n", entry.size());
+        }
+
+        entry.close();
+        entry = dir.openNextFile();
+    }
+}
+
 void app_fs_init(void)
 {
     fs_init();
@@ -107,4 +129,10 @@ void app_fs_test(void)
 void app_fs_wifi_config_read(char *p_ssid, char *p_password)
 {
     fs_wifi_config_read(p_ssid, p_password);
+}
+
+void app_fs_dir_print(void)
+{
+    File root = SD.open("/");
+    fs_dir_print(root);
 }

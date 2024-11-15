@@ -33,9 +33,20 @@ extern char g_password[32];
 #define HEIGHT              40
 #define MAX_ITER            1000
 
+static void help(void);
+static void dir(void);
+static void calculate(char *p_cmd);
+static void fibonacci(uint32_t n);
+static void prime(uint32_t n);
+static void calculatePi(uint32_t n);
+static void mandelbrot(void);
+static void timer_test(void);
 static void math_test(void);
+#ifdef DEBUG_CMD
+static void dbg_cmd(char *p_cmd);
+#endif
 
-void help()
+static void help(void)
 {
     DEBUG_PRINTF("Command List:\n");
     DEBUG_PRINTF("  HELP   - This Command. Show Command List\n");
@@ -56,13 +67,12 @@ void help()
 #endif
 }
 
-void dir()
+static void dir(void)
 {
-    DEBUG_PRINTF("Directory listing:\n");
-    DEBUG_PRINTF("File1.txt\nFile2.txt\nFile3.txt\n");
+    app_fs_dir_print();
 }
 
-void calculate(char *p_cmd)
+static void calculate(char *p_cmd)
 {
     char op;
     double num1, num2;
@@ -108,7 +118,7 @@ void calculate(char *p_cmd)
     }
 }
 
-void fibonacci(uint32_t n)
+static void fibonacci(uint32_t n)
 {
     uint32_t i,fib;
 
@@ -121,7 +131,7 @@ void fibonacci(uint32_t n)
     DEBUG_PRINTF("\n");
 }
 
-void prime(uint32_t n)
+static void prime(uint32_t n)
 {
     DEBUG_PRINTF("Prime Numbers: ");
     uint32_t count = 0;
@@ -136,7 +146,7 @@ void prime(uint32_t n)
     DEBUG_PRINTF("\n");
 }
 
-void calculatePi(uint32_t n)
+static void calculatePi(uint32_t n)
 {
     // ガウス・ルジャンドル法で円周率を計算
     __DI();
@@ -148,7 +158,7 @@ void calculatePi(uint32_t n)
     DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
 }
 
-void mandelbrot()
+static void mandelbrot(void)
 {
     DEBUG_PRINTF("Mandelbrot Set:\n");
 
@@ -222,7 +232,7 @@ static void math_test(void)
     }
 }
 
-void timer_test(void)
+static void timer_test(void)
 {
     __DI();
     uint32_t start_time = time_us_32();
@@ -239,7 +249,7 @@ void timer_test(void)
 }
 
 #ifdef DEBUG_CMD
-void dbg_cmd(char *p_cmd)
+static void dbg_cmd(char *p_cmd)
 {
     DEBUG_PRINTF("DEBUG Command\n");
     app_util_system_reg_read();

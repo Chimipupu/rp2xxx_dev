@@ -64,7 +64,7 @@
           - M0PLUS CPUIDレジスタ、SIOレジスタのRead
 ### ペリフェラル
 - 📍SPI
-  - ✅SDカードのR/W
+  - ✅SDカードのR/W、ディレクトリ表示
 
 - 📍RGB LED (@GPIO 35)
   - ✅赤🔴 : 初期化中、オフライン状態(WiFi,Bluetooth未接続)

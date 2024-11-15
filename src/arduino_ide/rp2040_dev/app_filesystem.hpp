@@ -16,6 +16,7 @@
 
 void app_fs_init(void);
 void app_fs_test(void);
+void app_fs_dir_print(void);
 void app_fs_wifi_config_read(char *p_ssid, char *p_password);
 
 #endif /* APP_FILESYSTEM_HPP */
