@@ -15,7 +15,7 @@
 #include <SD.h>
 
 static void gpio_init(void);
-#if defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
+#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
 static void spi_init(void);
 static void sd_spi_init(void);
 
@@ -55,7 +55,7 @@ static void gpio_init(void)
 void mcu_board_init(void)
 {
     gpio_init();
-#if defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
+#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
     spi_init();
     sd_spi_init();
 #else

@@ -19,7 +19,7 @@ constexpr char wifi_config_file_path[] = "/sys/wifi_config.txt";
 
 static void fs_init(void);
 static void fs_test(void);
-static void fs_dir_print(File dir);
+static void fs_dir_print(File dir, uint8_t tabs);
 static void fs_wifi_config_read(char *p_ssid, char *p_password);
 
 static void fs_init(void)
@@ -42,7 +42,7 @@ static void fs_test(void)
     File myFile = SD.open(text_file_path, FILE_WRITE | O_TRUNC);
     if (myFile) {
         DEBUG_PRINTF("Writing to test.txt...\n");
-        myFile.println("SD test RP2040");
+        // myFile.println("SD test RP2040");
         myFile.close();
     } else {
         DEBUG_PRINTF("error opening test.txt\n");
@@ -94,24 +94,31 @@ static void fs_wifi_config_read(char *p_ssid, char *p_password)
     }
 }
 
-static void fs_dir_print(File dir)
+static void fs_dir_print(File dir, uint8_t tabs)
 {
-    File entry = dir.openNextFile();
+    if (SD.exists(text_file_path)) {
+        File entry = SD.open("/", FILE_READ);
+        while (true)
+        {
+            File entry = dir.openNextFile();
+            if (!entry) {
+                // no file
+                break;
+            }
 
-    while (entry)
-    {
-        DEBUG_PRINTF("%s", entry.name());
-
-        if (entry.isDirectory()) {
-            DEBUG_PRINTF("/\n");
-            fs_dir_print(entry);
-        } else {
-            DEBUG_PRINTF("\t\t");
-            DEBUG_PRINTF("(%dByte)\n", entry.size());
+            DEBUG_PRINTF("%s", entry.name());
+            if (entry.isDirectory()) {
+                DEBUG_PRINTF("/");
+                fs_dir_print(entry, tabs + 1);
+            } else {
+                DEBUG_PRINTF("\n");
+            }
+            entry.close();
         }
 
         entry.close();
-        entry = dir.openNextFile();
+    } else {
+        DEBUG_PRINTF("No File Dir\n");
     }
 }
 
@@ -134,5 +141,5 @@ void app_fs_wifi_config_read(char *p_ssid, char *p_password)
 void app_fs_dir_print(void)
 {
     File root = SD.open("/");
-    fs_dir_print(root);
+    fs_dir_print(root, 0);
 }

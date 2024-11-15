@@ -69,7 +69,9 @@ static void help(void)
 
 static void dir(void)
 {
+#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
     app_fs_dir_print();
+#endif
 }
 
 static void calculate(char *p_cmd)
@@ -255,7 +257,7 @@ static void dbg_cmd(char *p_cmd)
     app_util_system_reg_read();
 
     // FileSystem Test
-#if defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
+#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
     app_fs_test();
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
