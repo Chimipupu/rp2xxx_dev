@@ -33,6 +33,8 @@ extern char g_password[32];
 #define HEIGHT              40
 #define MAX_ITER            1000
 
+static void cpm_ansi_txt_color(const char *p_ansi_txt_color);
+static void ascii_art(void);
 static void help(void);
 static void dir(void);
 static void calculate(char *p_cmd);
@@ -46,8 +48,32 @@ static void math_test(void);
 static void dbg_cmd(char *p_cmd);
 #endif
 
+static void cpm_ansi_txt_color(const char *p_ansi_txt_color)
+{
+    DEBUG_PRINTF_RTOS("%s", p_ansi_txt_color);
+}
+
+static void ascii_art(void)
+{
+    DEBUG_PRINTF_RTOS("   @                                     \n");
+    DEBUG_PRINTF_RTOS("   @                                     \n");
+    DEBUG_PRINTF_RTOS("@@@@@@@@     @@@@@        @@@@    @@@@@  \n");
+    DEBUG_PRINTF_RTOS("   @             @       @    @  @     @ \n");
+    DEBUG_PRINTF_RTOS("  @              @  @   @      @ @     @ \n");
+    DEBUG_PRINTF_RTOS("  @ @@@         @   @   @      @  @@     \n");
+    DEBUG_PRINTF_RTOS(" @@@   @     @@@@@@ @   @      @    @@   \n");
+    DEBUG_PRINTF_RTOS(" @      @   @  @   @@@  @      @      @  \n");
+    DEBUG_PRINTF_RTOS("        @  @  @     @ @ @      @ @     @ \n");
+    DEBUG_PRINTF_RTOS("        @  @  @     @    @    @  @     @ \n");
+    DEBUG_PRINTF_RTOS("      @@    @@     @      @@@@    @@@@@  \n");
+    DEBUG_PRINTF_RTOS("   @@@           @@                      \n");
+    DEBUG_PRINTF_RTOS("                                         \n");
+}
+
 static void help(void)
 {
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
+
     DEBUG_PRINTF("Command List:\n");
     DEBUG_PRINTF("  HELP   - This Command. Show Command List\n");
     DEBUG_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
@@ -65,6 +91,8 @@ static void help(void)
 #endif
     DEBUG_PRINTF("  DBG    - Develop cmd\n");
 #endif
+
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_RESET);
 }
 
 static void dir(void)
@@ -269,6 +297,8 @@ void cpm_op_msg(void)
 {
     DEBUG_PRINTF("RP2040 Monitor Program Ver1.0.0\n");
     DEBUG_PRINTF("Copyright(C) 2024, Chimi(https://github.com/Chimipupu)\n");
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_PURPLE);
+    ascii_art();
 }
 
 void cpm_main(void)

@@ -9,9 +9,9 @@
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
-<!-- <div align="center">
-<img width="500" src="/doc/img/IMG_20241108_195840.jpg">
-</div> -->
+<div align="center">
+<img width="500" src="/doc/img/chimi_os_opmsg.gif">
+</div>
 
 <table>
   <tr>
