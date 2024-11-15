@@ -42,7 +42,7 @@ static void fs_test(void)
     File myFile = SD.open(text_file_path, FILE_WRITE | O_TRUNC);
     if (myFile) {
         DEBUG_PRINTF("Writing to test.txt...\n");
-        // myFile.println("SD test RP2040");
+        myFile.println("SD test RP2040");
         myFile.close();
     } else {
         DEBUG_PRINTF("error opening test.txt\n");
@@ -75,14 +75,12 @@ static void fs_wifi_config_read(char *p_ssid, char *p_password)
     File myFile = SD.open(wifi_config_file_path, FILE_READ);
     if (myFile) {
         DEBUG_PRINTF("SSID:");
-
         String ssid = myFile.readStringUntil('\n');
         ssid.trim();
         ssid.toCharArray(p_ssid, ssid.length() + 1);
         DEBUG_PRINTF("%s\n", p_ssid);
 
         DEBUG_PRINTF("Password:");
-
         String password = myFile.readStringUntil('\n');
         ssid.trim();
         password.toCharArray(p_password, password.length() + 1);
