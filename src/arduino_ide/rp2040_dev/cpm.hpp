@@ -1,11 +1,11 @@
 /**
  * @file cpm.hpp
- * @author ちみ/Chimi(https://github.com/Chimipupu)）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)
  * @brief 評価モニタプログラム
  * @version 0.1
  * @date 2024-10-16
  * 
- * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
 #ifndef CPM_HPP

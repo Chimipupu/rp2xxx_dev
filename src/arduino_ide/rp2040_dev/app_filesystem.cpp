@@ -1,11 +1,11 @@
 /**
  * @file app_filesystem.hpp
- * @author ちみ/Chimi(https://github.com/Chimipupu)）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)
  * @brief File System(SD/SPIFS/FATFS) アプリ 実装
  * @version 0.1
  * @date 2024-11-13
  * 
- * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
 

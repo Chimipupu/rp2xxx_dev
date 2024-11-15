@@ -1,11 +1,11 @@
 /**
  * @file math_uc.cpp
- * @author ちみ/Chimi(https://github.com/Chimipupu)）
+ * @author ちみ/Chimi(https://github.com/Chimipupu)
  * @brief 数学計算アプリ
  * @version 0.1
  * @date 2024-10-16
  * 
- * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)）
+ * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
 #include "math_uc.hpp"
