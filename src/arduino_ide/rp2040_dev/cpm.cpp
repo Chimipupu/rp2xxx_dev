@@ -36,6 +36,7 @@ extern char g_password[32];
 static void cpm_ansi_txt_color(const char *p_ansi_txt_color);
 static void ascii_art(void);
 static void help(void);
+static void cls(void);
 static void dir(void);
 static void calculate(char *p_cmd);
 static void fibonacci(uint32_t n);
@@ -76,6 +77,7 @@ static void help(void)
 
     DEBUG_PRINTF("Command List:\n");
     DEBUG_PRINTF("  HELP   - This Command. Show Command List\n");
+    DEBUG_PRINTF("  CLS    - Display Clear Command\n");
     DEBUG_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
     DEBUG_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
     DEBUG_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)\n");
@@ -93,6 +95,11 @@ static void help(void)
 #endif
 
     // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
+}
+
+static void cls(void)
+{
+    DEBUG_PRINTF_RTOS("\033[2J\033[H");
 }
 
 static void dir(void)
@@ -312,7 +319,7 @@ void cpm_main(void)
     ascii_art();
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
     help();
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
+    // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
 
     while (1)
     {
@@ -322,7 +329,7 @@ void cpm_main(void)
         while (true)
         {
             if (Serial.available()) {
-                cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
+                // cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
                 char ch = Serial.read();
                 ch = app_util_eng_to_upper_case(ch);
                 if (ch == '\n') { // エンターキーが押された
@@ -336,9 +343,10 @@ void cpm_main(void)
             WDT_TOGGLE;
         }
 
-        // コマンドの処理
         if (strcmp(command, "HELP") == 0) {
             help();
+        } else if (strcmp(command, "CLS") == 0) {
+            cls();
         } else if (strcmp(command, "DIR") == 0) {
             dir();
         } else if (strstr(command, "CALC") == command) {

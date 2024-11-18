@@ -25,3 +25,18 @@ char app_util_eng_to_upper_case(char c)
 
     return c;
 }
+
+/**
+ * @brief 英語の大文字を小文字に変換
+ * 
+ * @param c 入力文字
+ * @return char 変換or無変換した文字
+ */
+char app_util_eng_to_lower_case(char c)
+{
+    if (c >= 'A' && c <= 'Z') {
+        return c + ('a' - 'A');
+    }
+
+    return c;
+}
