@@ -121,7 +121,7 @@ void app_main_init_core0(void)
     memset(&g_password[0], 0x00, sizeof(g_password));
     app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
 #endif
-    s_cpu_core = app_util_get_cpu_core_num();
+    s_cpu_core = rp2040_get_cpu_core_num();
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 

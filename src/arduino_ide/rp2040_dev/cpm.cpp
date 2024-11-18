@@ -92,7 +92,7 @@ static void help(void)
     DEBUG_PRINTF("  DBG    - Develop cmd\n");
 #endif
 
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_RESET);
+    // cpm_ansi_txt_color(ANSI_TXT_COLOR_RESET);
 }
 
 static void dir(void)
@@ -282,7 +282,7 @@ static void timer_test(void)
 static void dbg_cmd(char *p_cmd)
 {
     DEBUG_PRINTF("DEBUG Command\n");
-    app_util_system_reg_read();
+    rp2040_reg_info();
 
     // FileSystem Test
 #if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
@@ -297,7 +297,8 @@ void cpm_op_msg(void)
 {
     DEBUG_PRINTF("RP2040 Monitor Program Ver1.0.0\n");
     DEBUG_PRINTF("Copyright(C) 2024, Chimi(https://github.com/Chimipupu)\n");
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_PURPLE);
+    // cpm_ansi_txt_color(ANSI_TXT_COLOR_PURPLE);
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
     ascii_art();
 }
 

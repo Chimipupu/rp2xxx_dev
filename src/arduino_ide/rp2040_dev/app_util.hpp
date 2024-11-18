@@ -38,6 +38,4 @@ static inline void DRV_REG_WRITE_U32(uint32_t reg_addr, uint32_t reg_val)
     (*(volatile uint32_t *)reg_addr) = reg_val;
 }
 
-uint8_t app_util_get_cpu_core_num(void);
-void app_util_system_reg_read(void);
 #endif /* APP_UTIL_HPP */

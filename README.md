@@ -9,9 +9,12 @@
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
-<div align="center">
-<img width="500" src="/doc/img/chimi_os_opmsg.gif">
-</div>
+<table>
+  <tr>
+    <!-- <td><img width="500" src="/doc/img/chimi_os_opmsg.png"></td> -->
+    <td><img width="500" src="/doc/img/chimi_os_opmsg.gif"></td>
+  </tr>
+</table>
 
 <table>
   <tr>
@@ -35,9 +38,11 @@
     - 📍[XIAO Expansion Board🔗](https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/)
 
 ## 📍実装機能
+
 **凡例(✅実装＆テスト完了、🆗実装済み、🚩TODO、❌TBD)**
 
 ### OS(FreeRTOS)
+
 - 📍CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
   - 📍Core0 ... ドライバCPU
     - 📍OS ... FreeRTOS
@@ -61,8 +66,10 @@
         - ✅計算
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
         - ✅レジスタ
-          - M0PLUS CPUIDレジスタ、SIOレジスタのRead
+          - SYSINFO/M0PLUS/SIOのCPUIDレジスタRead
+
 ### ペリフェラル
+
 - 📍SPI
   - ✅SDカードのR/W、ディレクトリ表示
 
