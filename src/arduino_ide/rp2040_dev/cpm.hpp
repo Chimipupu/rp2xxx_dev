@@ -19,7 +19,7 @@
 #include <math.h>
 
 // 文字の色を変更するのANSIエスケープシーケンス
-#define ANSI_TXT_COLOR_RESET    "\033[0m"
+#define ANSI_TXT_COLOR_WHITE    "\033[0m"
 #define ANSI_TXT_COLOR_RED      "\033[31m"
 #define ANSI_TXT_COLOR_GREEN    "\033[32m"
 #define ANSI_TXT_COLOR_YELLOW   "\033[33m"

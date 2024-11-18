@@ -38,4 +38,6 @@ static inline void DRV_REG_WRITE_U32(uint32_t reg_addr, uint32_t reg_val)
     (*(volatile uint32_t *)reg_addr) = reg_val;
 }
 
+char app_util_eng_to_upper_case(char c);
+
 #endif /* APP_UTIL_HPP */

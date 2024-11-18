@@ -92,7 +92,7 @@ static void help(void)
     DEBUG_PRINTF("  DBG    - Develop cmd\n");
 #endif
 
-    // cpm_ansi_txt_color(ANSI_TXT_COLOR_RESET);
+    // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
 }
 
 static void dir(void)
@@ -297,9 +297,6 @@ void cpm_op_msg(void)
 {
     DEBUG_PRINTF("RP2040 Monitor Program Ver1.0.0\n");
     DEBUG_PRINTF("Copyright(C) 2024, Chimi(https://github.com/Chimipupu)\n");
-    // cpm_ansi_txt_color(ANSI_TXT_COLOR_PURPLE);
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
-    ascii_art();
 }
 
 void cpm_main(void)
@@ -312,27 +309,27 @@ void cpm_main(void)
     }
 
     cpm_op_msg();
+    ascii_art();
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
     help();
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
 
     while (1)
     {
         DEBUG_PRINTF("\n> ");
-
-        idx = 0; // 入力インデックスの初期化
+        idx = 0;
 
         while (true)
         {
-            if (Serial.available())
-            {
+            if (Serial.available()) {
+                cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
                 char ch = Serial.read();
-
-                if (ch == '\n') // エンターキーが押された
-                {
+                ch = app_util_eng_to_upper_case(ch);
+                if (ch == '\n') { // エンターキーが押された
                     command[idx] = '\0'; // 文字列の終端
                     break; // 入力完了
                 }
-                else if (idx < MAX_CMD_LEN - 1) // バッファオーバーフローを防ぐ
-                {
+                else if (idx < MAX_CMD_LEN - 1) { // バッファオーバーフローを防ぐ
                     command[idx++] = ch; // 文字をコマンドに追加
                 }
             }
@@ -340,16 +337,11 @@ void cpm_main(void)
         }
 
         // コマンドの処理
-        if (strcmp(command, "HELP") == 0)
-        {
+        if (strcmp(command, "HELP") == 0) {
             help();
-        }
-        else if (strcmp(command, "DIR") == 0)
-        {
+        } else if (strcmp(command, "DIR") == 0) {
             dir();
-        }
-        else if (strstr(command, "CALC") == command)
-        {
+        } else if (strstr(command, "CALC") == command) {
             char *p_cmd = command + CALC_CMD_ARG;
             while (*p_cmd == ' '){
                 p_cmd++;
@@ -357,32 +349,20 @@ void cpm_main(void)
             }
             // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
             calculate(p_cmd);
-        }
-        else if (strstr(command, "FIB") == command)
-        {
+        } else if (strstr(command, "FIB") == command) {
             int n = atoi(command + 4);
             fibonacci(n);
-        }
-        else if (strstr(command, "PRIME") == command)
-        {
+        } else if (strstr(command, "PRIME") == command) {
             int n = atoi(command + 6);
             prime(n);
-        }
-        else if (strstr(command, "PI") == command)
-        {
+        } else if (strstr(command, "PI") == command) {
             uint32_t num = atoi(command + 3);
             calculatePi(num);
-        }
-        else if (strcmp(command, "MANDEL") == 0)
-        {
+        } else if (strcmp(command, "MANDEL") == 0) {
             mandelbrot();
-        }
-        else if (strcmp(command, "TIMER") == 0)
-        {
+        } else if (strcmp(command, "TIMER") == 0) {
             timer_test();
-        }
-        else if (strcmp(command, "TEST") == 0)
-        {
+        } else if (strcmp(command, "TEST") == 0) {
             math_test();
         }
 #ifdef DEBUG_CMD
@@ -398,8 +378,7 @@ void cpm_main(void)
             dbg_cmd(p_cmd);
         }
 #endif
-        else
-        {
+        else {
             DEBUG_PRINTF("Bad command: %s\n", command);
         }
         WDT_TOGGLE;
