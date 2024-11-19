@@ -8,7 +8,16 @@
  * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
+
 #include "math_uc.hpp"
+#include "common.hpp"
+
+#define MATH_PI_CALC_TIME   3
+#define FIBONACCI_N         20
+#define INVSQRT_N           7
+#define WIDTH               80
+#define HEIGHT              40
+#define MAX_ITER            1000
 
 // 計算精度の表示（期待値:-7497258.185...）
 double math_calc_accuracy(void)
@@ -119,4 +128,116 @@ float math_fast_inv_sqrt(float num)
     y = y * (threehalfs - (x2 * y * y)); // ニュートン法による補正
 
     return y;
+}
+
+void math_uc_fibonacci(uint32_t n)
+{
+    uint32_t i,fib;
+
+    DEBUG_PRINTF("Fibonacci : ");
+    for(uint8_t i = 1; i < n; i++)
+    {
+        fib = math_fibonacci_calc(i);
+        DEBUG_PRINTF("%d ", fib);
+    }
+    DEBUG_PRINTF("\n");
+}
+
+void math_uc_prime(uint32_t n)
+{
+    DEBUG_PRINTF("Prime Numbers: ");
+    uint32_t count = 0;
+    for (int i = 2; count < n; i++)
+    {
+        if (math_is_prime_num(i))
+        {
+            DEBUG_PRINTF("%d ", i);
+            count++;
+        }
+    }
+    DEBUG_PRINTF("\n");
+}
+
+void math_uc_calc_pi(uint32_t n)
+{
+    // ガウス・ルジャンドル法で円周率を計算
+    __DI();
+    uint32_t start_time = time_us_32();
+    double pi = math_pi_calc(n);
+    uint32_t end_time = time_us_32();
+    __EI();
+    DEBUG_PRINTF("pi = %.15f\n", pi);
+    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
+}
+
+void math_uc_mandelbrot(void)
+{
+    for (int y = 0; y < HEIGHT; y++)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            double c_re = (x - WIDTH / 2.0) * 4.0 / WIDTH;   // xのスケーリング
+            double c_im = (y - HEIGHT / 2.0) * 4.0 / HEIGHT; // yのスケーリング
+            double z_re = c_re, z_im = c_im;
+            int iteration;
+
+            for (iteration = 0; iteration < MAX_ITER; iteration++)
+            {
+                if (z_re * z_re + z_im * z_im > 4.0)
+                    break; // 発散判定
+
+                double z_re_new = z_re * z_re - z_im * z_im + c_re;
+                z_im = 2.0 * z_re * z_im + c_im;
+                z_re = z_re_new;
+            }
+
+            char symbol = (iteration == MAX_ITER) ? '#' : ' ';
+            DEBUG_PRINTF("%c", symbol);
+        }
+        DEBUG_PRINTF("\n");
+    }
+}
+
+void math_uc_math_test(void)
+{
+    uint32_t i,fib;
+    volatile double pi;
+    volatile double phi;
+    volatile double napier;
+    volatile double invsqrt;
+    volatile double result;
+
+    // tan(355/226)の計算（※期待値:-7497258.185...）
+    __DI();
+    uint32_t start_time = time_us_32();
+    result = math_calc_accuracy();
+    uint32_t end_time = time_us_32();
+    __EI();
+    DEBUG_PRINTF("tan(355/226) = %.3f\n", result);
+    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
+
+    // 円周率π
+    math_uc_calc_pi(MATH_PI_CALC_TIME);
+
+    // ネイピアe
+    napier = math_napier_calc();
+    DEBUG_PRINTF("e = %.15f\n", napier);
+
+    // 黄金比φ
+    __DI();
+    start_time = time_us_32();
+    phi = math_goldenratio_calc();
+    end_time = time_us_32();
+    __EI();
+    DEBUG_PRINTF("phi = %.15f\n", phi);
+
+    // フィボナッチ数列
+    math_uc_fibonacci(FIBONACCI_N);
+
+    // 高速逆平方根
+    for(i = 1; i < INVSQRT_N; i++)
+    {
+        invsqrt = math_fast_inv_sqrt(i);
+        DEBUG_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
+    }
 }

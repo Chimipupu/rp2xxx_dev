@@ -44,6 +44,11 @@ uint32_t math_fibonacci_calc(uint32_t cnt);
 double math_goldenratio_calc(void);
 double math_napier_calc(void);
 float math_fast_inv_sqrt(float num);
+void math_uc_fibonacci(uint32_t n);
+void math_uc_prime(uint32_t n);
+void math_uc_calc_pi(uint32_t n);
+void math_uc_mandelbrot(void);
+void math_uc_math_test(void);
 #ifdef __cplusplus
 }
 #endif

@@ -9,6 +9,10 @@
  * 
  */
 #include "app_main_core1.hpp"
+#include "app_filesystem.hpp"
+
+char g_ssid[16] = {0};
+char g_password[32] = {0};
 
 static uint8_t s_cpu_core = 0;
 static xTaskHandle s_xTaskCore1oled;
@@ -62,6 +66,17 @@ void app_main_init_core1(void)
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
+    // ファイルシステム(SD/SPIFS/FATFS)
+    app_fs_init();
+
+    // WiFi 初期化
+#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
+    memset(&g_ssid[0], 0x00, sizeof(g_ssid));
+    memset(&g_password[0], 0x00, sizeof(g_password));
+    app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
+#endif
+    // TODO:WiFi接続処理
+
 #ifdef OLED_LCD_USE
     app_oled_init();
 
@@ -92,8 +107,6 @@ void app_main_init_core1(void)
                 &s_xTaskCore1Main       // タスクハンドル
                 );
 #endif
-
-    g_firmware_info = FW_IDLE;
 }
 
 void app_main_core1(void)

@@ -65,10 +65,10 @@ void app_neopixel_fade(void)
             if (s_red != 0) {
                 s_red_fade_val++;
             }
-            if (s_blue != 0){
+            if (s_blue != 0) {
                 s_blue_fade_val++;
             }
-            if (s_green != 0){
+            if (s_green != 0) {
                 s_gree_fade_val++;
             }
             if ((s_red_fade_val >= s_red) && (s_gree_fade_val >= s_green) && (s_blue_fade_val >= s_blue)) {
@@ -78,13 +78,13 @@ void app_neopixel_fade(void)
                 s_rgbled_fade_amount = !s_rgbled_fade_amount;
             }
         } else {
-            if (s_red != 0){
+            if (s_red != 0) {
                 s_red_fade_val--;
             }
-            if (s_blue != 0){
+            if (s_blue != 0) {
                 s_blue_fade_val--;
             }
-            if (s_green != 0){
+            if (s_green != 0) {
                 s_gree_fade_val--;
             }
             if ((s_red_fade_val == 0) && (s_gree_fade_val == 0) && (s_blue_fade_val == 0)) {
@@ -128,14 +128,13 @@ void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t led_no, 
     s_green = green;
     s_is_fade = is_fade;
 
-    if(s_is_fade != false)
-    {
+    if (s_is_fade != false) {
         s_fade_led_no = led_no;
-    }else{
+    } else {
         if (onoff != false) {
             pixels.setPixelColor(led_no, pixels.Color(s_red, s_green, s_blue));
             pixels.show();
-        }else{
+        } else {
             pixels.clear();
             pixels.show();
         }

@@ -10,14 +10,10 @@
  */
 
 #include "app_main_core0.hpp"
-#include "app_filesystem.hpp"
 
 static uint8_t s_cpu_core = 0;
 static xTaskHandle s_xTaskCore0Btn;
 static xTaskHandle s_xTaskCore0Main;
-
-char g_ssid[16] = {0};
-char g_password[32] = {0};
 
 static void gpio_init(void);
 static void pwm_init(void);
@@ -60,11 +56,13 @@ void vTaskCore0Main(void *p_parameter)
 
     while (1)
     {
+        // TODO:キューのメッセージでRGBLEDの色を変更に
+#if 0
         switch (g_firmware_info)
         {
             case FW_INIT:
             case RF_OFFLINE:
-                app_neopixel_ctrl(16, 0, 0, 0, true, true); // 赤
+                app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
                 break;
 
             case RF_ONLINE:
@@ -72,7 +70,7 @@ void vTaskCore0Main(void *p_parameter)
                 break;
 
             case FW_IDLE:
-                app_neopixel_ctrl(16, 16, 16, 0, true, true); // 白
+                app_neopixel_ctrl(16, 16, 16, 0, true, false); // 白
                 break;
 
             case PROC_NOW:
@@ -80,9 +78,10 @@ void vTaskCore0Main(void *p_parameter)
                 break;
 
             default:
-                app_neopixel_ctrl(16, 0, 16, 0, true, true); // 紫
+                app_neopixel_ctrl(16, 0, 16, 0, true, false); // 紫
                 break;
         }
+#endif
         WDT_TOGGLE;
         vTaskDelay(100 / portTICK_PERIOD_MS);
         // vTaskSuspend(NULL);
@@ -97,6 +96,9 @@ void app_main_init_core0(void)
 
     // UART 初期化
     DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
+    s_cpu_core = rp2040_get_cpu_core_num();
+    WDT_TOGGLE;
+    DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 
     // GPIO 初期化
     gpio_init();
@@ -104,26 +106,15 @@ void app_main_init_core0(void)
     // PWM 初期化
     pwm_init();
 
-    // タイマー初期化
+    // タイマー 初期化
     app_timer_set_alarm(0, 1);      // アラーム0, 1msec
     app_timer_set_alarm(1, 8);      // アラーム1, 8msec
     app_timer_set_alarm(2, 20);     // アラーム2, 20msec
     app_timer_set_alarm(3, 1000);   // アラーム3, 1000msec
 
-    // NeoPicel 初期化
+    // NeoPicel 初期化 初期化
     app_neopixel_init();
-    app_neopixel_ctrl(16, 0, 0, 0, true, true); // 赤
-
-    // File System(SD/SPIFS/FATFS)
-    app_fs_init();
-#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
-    memset(&g_ssid[0], 0x00, sizeof(g_ssid));
-    memset(&g_password[0], 0x00, sizeof(g_password));
-    app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
-#endif
-    s_cpu_core = rp2040_get_cpu_core_num();
-    WDT_TOGGLE;
-    DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
+    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
 
     // FreeRTOS 初期化
     xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
@@ -134,6 +125,7 @@ void app_main_init_core0(void)
                 &s_xTaskCore0Btn        // タスクハンドル
                 );
 
+#if 0
     xTaskCreate(vTaskCore0Main,         // コールバック関数ポインタ
                 "vTaskCore0Main",       // タスク名
                 2048,                   // スタック
@@ -141,6 +133,7 @@ void app_main_init_core0(void)
                 7,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore0Main       // タスクハンドル
                 );
+#endif
 }
 
 void app_main_core0(void)
