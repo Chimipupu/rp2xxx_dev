@@ -92,7 +92,7 @@ static void cls(void)
 
 static void dir(void)
 {
-#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
+#if 1
     app_fs_dir_print();
 #endif
 }
@@ -161,7 +161,7 @@ static void dbg_cmd(char *p_cmd)
     rp2040_reg_info();
 
     // FileSystem Test
-#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
+#if 1
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
     app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);

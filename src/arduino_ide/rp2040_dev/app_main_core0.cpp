@@ -10,6 +10,12 @@
  */
 
 #include "app_main_core0.hpp"
+#include "muc_board.hpp"
+#ifdef __MCU_BOARD_PICO_W__
+#include "SerialBT.h"
+#include "app_bluetooth.hpp"
+static xTaskHandle s_xTaskCore0BT;
+#endif /* __MCU_BOARD_PICO_W__ */
 
 static uint8_t s_cpu_core = 0;
 static xTaskHandle s_xTaskCore0Btn;
@@ -88,6 +94,18 @@ void vTaskCore0Main(void *p_parameter)
     }
 }
 
+void vTaskCore0BT(void *p_parameter)
+{
+    DEBUG_PRINTF("[Core%X] vTaskCore0BT\n", s_cpu_core);
+
+    while (1)
+    {
+        app_bluetooth_main();
+        WDT_TOGGLE;
+        vTaskDelay(300 / portTICK_PERIOD_MS);
+    }
+}
+
 void app_main_init_core0(void)
 {
     // WDT 初期化
@@ -95,26 +113,33 @@ void app_main_init_core0(void)
     WDT_TOGGLE;
 
     // UART 初期化
+#ifdef __MCU_BOARD_PICO_W__
+    // app_bluetooth_init();
+    SerialBT.begin();
+    mcu_board_gpio_init();
+    GPIO_OUTPUT(OB_LED_PIN, HIGH);
+#endif /* __MCU_BOARD_PICO_W__ */
     DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
     s_cpu_core = rp2040_get_cpu_core_num();
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 
     // GPIO 初期化
+#ifndef __MCU_BOARD_PICO_W__
     gpio_init();
 
     // PWM 初期化
     pwm_init();
+
+    // NeoPicel 初期化 初期化
+    app_neopixel_init();
+    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
 
     // タイマー 初期化
     app_timer_set_alarm(0, 1);      // アラーム0, 1msec
     app_timer_set_alarm(1, 8);      // アラーム1, 8msec
     app_timer_set_alarm(2, 20);     // アラーム2, 20msec
     app_timer_set_alarm(3, 1000);   // アラーム3, 1000msec
-
-    // NeoPicel 初期化 初期化
-    app_neopixel_init();
-    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
 
     // FreeRTOS 初期化
     xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
@@ -124,6 +149,15 @@ void app_main_init_core0(void)
                 2,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore0Btn        // タスクハンドル
                 );
+#else
+    xTaskCreate(vTaskCore0BT,           // コールバック関数ポインタ
+                "vTaskCore0BT",         // タスク名
+                4096,                   // スタック
+                nullptr,                // パラメータ
+                3,                      // 優先度(0～7、7が最優先)
+                &s_xTaskCore0BT         // タスクハンドル
+                );
+#endif
 
 #if 0
     xTaskCreate(vTaskCore0Main,         // コールバック関数ポインタ

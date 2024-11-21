@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
+
 #include "app_main_core1.hpp"
 #include "app_filesystem.hpp"
 
@@ -69,8 +70,8 @@ void app_main_init_core1(void)
     // ファイルシステム(SD/SPIFS/FATFS)
     app_fs_init();
 
+#if 0
     // WiFi 初期化
-#if defined(__MCU_BOARD_YD_RP2040__) || defined(__MCU_EX_BOARD_PICO_VGA__) || defined(__MCU_EX_XIAO_EXPANSION__)
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
     app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);

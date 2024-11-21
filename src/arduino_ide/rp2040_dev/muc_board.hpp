@@ -20,10 +20,29 @@
 #ifdef _MCU_RP2040_
     #include "rp2040_reg.hpp"
 
-    #define __MCU_BOARD_YD_RP2040__
+    #define __MCU_BOARD_PICO_W__
+    // #define __MCU_BOARD_YD_RP2040__
     // #define __MCU_BOARD_XIAO_RP2040__
     // #define __MCU_EX_XIAO_EXPANSION__
     // #define __MCU_EX_BOARD_PICO_VGA__
+
+    // Pico W
+    #ifdef __MCU_BOARD_PICO_W__
+        #define RGBLED_PIN               20  // Neopixel (GPIO 20)
+        #define OB_LED_PIN               0   // 緑色LED (GPIO 0)
+        #define BUTTON_PIN               19  // ボタン (GPIO 19)
+        // PWM
+        #define PWM_PIN                  22
+        #define PWM_PIN_2                21
+        // I2C
+        #define I2C_SDA                  6   // I2C SDA (GPIO 6)
+        #define I2C_SCL                  7   // I2C SCL (GPIO 7)
+        // SPI
+        #define SPI_CS_PIN               5   // SPI CS
+        #define SPI_SCK_PIN              6   // SPI CLK
+        #define SPI_MISO_PIN             4   // SPI MOSI
+        #define SPI_MOSI_PIN             7   // SPI MISO
+    #endif /* __MCU_BOARD_PICO_W__ */
 
     // VCC-GND RP2040
     #ifdef __MCU_BOARD_YD_RP2040__
@@ -134,5 +153,6 @@ extern "C"
     }
 }
 
-void mcu_board_init(void);
+void mcu_board_gpio_init(void);
+void mcu_board_fs_init(void);
 #endif /* MUC_BOARDHPP */

@@ -24,7 +24,7 @@ static void fs_wifi_config_read(char *p_ssid, char *p_password);
 
 static void fs_init(void)
 {
-    mcu_board_init();
+    mcu_board_fs_init();
 }
 
 static void fs_test(void)

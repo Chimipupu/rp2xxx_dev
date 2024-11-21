@@ -31,6 +31,7 @@
 
 - 📍基板
   - 📍RP2040
+    - 📍[Raspberry Pi Pico W🔗](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html#raspberry-pi-pico-w)
     - 📍[VCC-GND YD-RP2040🔗](https://www.aliexpress.us/item/1005004004120604.html?gatewayAdapt=4itemAdapt)
     - 📍[XIAO RP2040🔗](https://wiki.seeedstudio.com/XIAO-RP2040/)
   - 📍拡張基板
@@ -47,7 +48,9 @@
   - 📍Core0 ... ドライバCPU
     - 📍OS ... FreeRTOS
       - ✅Core0メインタスク
-        - ✅状態遷移、LED処理
+        - 🚩TODO
+      - ✅Bluetoothタスク📶
+        - ✅Bluetoothシリアル
       - ✅ボタンタスク
         - 🚩ボタン処理
           - 🚩ボタン単押し ... TODO
