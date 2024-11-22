@@ -20,8 +20,8 @@
 #ifdef _MCU_RP2040_
     #include "rp2040_reg.hpp"
 
-    #define __MCU_BOARD_PICO_W__
-    // #define __MCU_BOARD_YD_RP2040__
+    // #define __MCU_BOARD_PICO_W__
+    #define __MCU_BOARD_YD_RP2040__
     // #define __MCU_BOARD_XIAO_RP2040__
     // #define __MCU_EX_XIAO_EXPANSION__
     // #define __MCU_EX_BOARD_PICO_VGA__

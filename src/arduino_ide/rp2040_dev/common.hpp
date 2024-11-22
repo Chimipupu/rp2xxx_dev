@@ -65,7 +65,6 @@ extern e_firmware_info g_firmware_info;
 #define DEBUG_PRINTLN       Serial.println
 #define DEBUG_PRINTF        safeSerialPrintf
 #define DEBUG_PRINT_INIT    Serial.begin
-#define DEBUG_UART_BAUDRATE 115200
 
 #define SW_DELAY_MS         delay
 

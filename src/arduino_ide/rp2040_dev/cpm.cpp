@@ -184,10 +184,6 @@ void cpm_main(void)
     char command[MAX_CMD_LEN];
     uint32_t idx = 0;
 
-    while (!Serial) {
-        WDT_TOGGLE;
-    }
-
     cls();
     cpm_op_msg();
     ascii_art();

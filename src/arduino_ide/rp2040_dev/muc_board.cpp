@@ -28,10 +28,10 @@ static void sd_spi_init(void)
 {
     if (!SD.begin(SPI_CS_PIN)) {
         DEBUG_PRINTF_RTOS("No SD Card. Plz, Insert SD & Reboot\n");
-        while (1)
-        {
-            NOP;
-        }
+        // while (1)
+        // {
+        //     NOP;
+        // }
     }
 
     DEBUG_PRINTF_RTOS("File System Init(@SD)\n");

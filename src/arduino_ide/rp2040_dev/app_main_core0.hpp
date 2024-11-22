@@ -17,6 +17,8 @@
 #include "app_neopixel.hpp"
 #include "app_util.hpp"
 
+#define DEBUG_UART_BAUDRATE 115200
+
 void app_main_init_core0(void);
 void app_main_core0(void);
 

@@ -94,6 +94,7 @@ void vTaskCore0Main(void *p_parameter)
     }
 }
 
+#ifdef __MCU_BOARD_PICO_W__
 void vTaskCore0BT(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore0BT\n", s_cpu_core);
@@ -105,6 +106,7 @@ void vTaskCore0BT(void *p_parameter)
         vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 }
+#endif /* __MCU_BOARD_PICO_W__ */
 
 void app_main_init_core0(void)
 {
@@ -120,6 +122,9 @@ void app_main_init_core0(void)
     GPIO_OUTPUT(OB_LED_PIN, HIGH);
 #endif /* __MCU_BOARD_PICO_W__ */
     DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
+    while (!Serial) {
+        WDT_TOGGLE;
+    }
     s_cpu_core = rp2040_get_cpu_core_num();
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);

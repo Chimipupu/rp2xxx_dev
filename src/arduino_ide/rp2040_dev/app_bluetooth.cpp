@@ -10,7 +10,9 @@
  */
 
 #include "app_bluetooth.hpp"
+#ifdef __MCU_BOARD_PICO_W__
 #include "SerialBT.h"
+#endif /* __MCU_BOARD_PICO_W__ */
 
 /**
  * @brief Bluetoothアプリ初期化関数
@@ -18,9 +20,10 @@
  */
 void app_bluetooth_init(void)
 {
+#ifdef __MCU_BOARD_PICO_W__
     SerialBT.begin();
-    DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
     GPIO_OUTPUT(OB_LED_PIN, LOW);
+#endif /* __MCU_BOARD_PICO_W__ */
 }
 
 /**
@@ -29,6 +32,7 @@ void app_bluetooth_init(void)
  */
 void app_bluetooth_main(void)
 {
+#ifdef __MCU_BOARD_PICO_W__
     if (SerialBT.available()) {
         byte val;
         SerialBT.readBytes(&val, 1);
@@ -39,4 +43,5 @@ void app_bluetooth_main(void)
             SerialBT.println("BT B");
         }
     }
+#endif /* __MCU_BOARD_PICO_W__ */
 }
