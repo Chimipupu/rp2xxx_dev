@@ -20,6 +20,7 @@
 #include "muc_board.hpp"
 
 // #define OLED_LCD_USE
+// #define __IR_ENABLE__
 
 // #define __WDT_ENABLE__
 #include "app_wdt.hpp"
@@ -100,6 +101,9 @@ extern "C"
 #include <FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
+
+#define TICKS_PER_SECOND 1000
+#define USEC_TO_TICKS(us) ((us) / (1000000 / TICKS_PER_SECOND))
 
 extern SemaphoreHandle_t xSerialMutex;
 

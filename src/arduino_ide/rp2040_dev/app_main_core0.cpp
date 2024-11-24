@@ -11,6 +11,12 @@
 
 #include "app_main_core0.hpp"
 #include "muc_board.hpp"
+
+#ifdef __IR_ENABLE__
+#include "app_ir.hpp"
+static xTaskHandle s_xTaskCore0IR;
+#endif /* __IR_ENABLE__ */
+
 #ifdef __MCU_BOARD_PICO_W__
 #include "SerialBT.h"
 #include "app_bluetooth.hpp"
@@ -55,6 +61,21 @@ void vTaskCore0Btn(void *p_parameter)
         vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 }
+
+#ifdef __IR_ENABLE__
+void vTaskCore0IR(void *p_parameter)
+{
+    ButtonState btnstate;
+    DEBUG_PRINTF("[Core%X] vTaskCore0IR\n", s_cpu_core);
+
+    while (1)
+    {
+        app_ir_main();
+        WDT_TOGGLE;
+        // vTaskDelay(USEC_TO_TICKS(300));
+    }
+}
+#endif /* __IR_ENABLE__ */
 
 void vTaskCore0Main(void *p_parameter)
 {
@@ -146,6 +167,19 @@ void app_main_init_core0(void)
     app_timer_set_alarm(2, 20);     // アラーム2, 20msec
     app_timer_set_alarm(3, 1000);   // アラーム3, 1000msec
 
+#ifdef __IR_ENABLE__
+    // 赤外線関連 アプリ初期化
+    app_ir_init();
+
+    xTaskCreate(vTaskCore0IR,           // コールバック関数ポインタ
+                "vTaskCore0IR",         // タスク名
+                1024,                   // スタック
+                nullptr,                // パラメータ
+                3,                      // 優先度(0～7、7が最優先)
+                &s_xTaskCore0IR         // タスクハンドル
+                );
+#endif /* __IR_ENABLE__ */
+
     // FreeRTOS 初期化
     xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
                 "vTaskCore0Btn",        // タスク名
@@ -159,7 +193,7 @@ void app_main_init_core0(void)
                 "vTaskCore0BT",         // タスク名
                 4096,                   // スタック
                 nullptr,                // パラメータ
-                3,                      // 優先度(0～7、7が最優先)
+                5,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore0BT         // タスクハンドル
                 );
 #endif
