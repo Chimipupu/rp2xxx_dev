@@ -22,6 +22,10 @@
 // #define OLED_LCD_USE
 // #define __IR_ENABLE__
 
+#ifndef __BENCHMARK_TEST__
+#define __BENCHMARK_TEST__
+#endif /* __BENCHMARK_TEST__ */
+
 // #define __WDT_ENABLE__
 #include "app_wdt.hpp"
 

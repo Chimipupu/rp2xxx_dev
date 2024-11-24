@@ -13,6 +13,7 @@
 #include "app_util.hpp"
 #include "app_filesystem.hpp"
 #include "muc_board.hpp"
+#include "benchmark_test.hpp"
 
 extern char g_ssid[16];
 extern char g_password[32];

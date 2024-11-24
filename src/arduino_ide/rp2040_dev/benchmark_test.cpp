@@ -1,7 +1,7 @@
 /**
  * @file benchmark_test.cpp
  * @author ちみ/Chimi(https://github.com/Chimipupu)
- * @brief マイコン評価用ベンチテストのアプリ
+ * @brief ベンチマークテスト アプリ
  * @version 0.1
  * @date 2024-11-24
  * 
@@ -132,7 +132,7 @@ static void calc_test_float(void)
  */
 void benchmark_test(void)
 {
-    DEBUG_PRINTF("[BenchMark Test Start]");
+    DEBUG_PRINTF("[BenchMark Test Start]\n");
 #ifdef __BENCHMARK_TEST__
     // 四則演算（整数）
     calc_test_int();
@@ -152,5 +152,5 @@ void benchmark_test(void)
     // GPIOのトグル
     gpio_tgl_test();
 #endif /* __BENCHMARK_TEST__ */
-    DEBUG_PRINTF("[BenchMark Test END]");
+    DEBUG_PRINTF("[BenchMark Test END]\n");
 }
