@@ -14,7 +14,8 @@
 
 #include "common.hpp"
 
-#define TEST_N    1000000
+#define TEST_N    1
+// #define TEST_N    100
 
 void benchmark_test(void);
 
