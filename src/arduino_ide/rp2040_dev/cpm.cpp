@@ -243,7 +243,11 @@ void cpm_main(void)
         } else if (strcmp(command, "TIMER") == 0) {
             timer_test();
         } else if (strcmp(command, "TEST") == 0) {
+#ifdef __BENCHMARK_TEST__
+            benchmark_test();
+#else
             math_uc_math_test();
+#endif /* __BENCHMARK_TEST__ */
         }
 #ifdef DEBUG_CMD
         else if (strstr(command, "DBG") == command)
