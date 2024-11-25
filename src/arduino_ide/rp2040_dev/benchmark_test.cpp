@@ -12,7 +12,7 @@
 #include <math.h>
 #include "benchmark_test.hpp"
 #include "math_uc.hpp"
-#include "rp2040_reg.hpp"
+#include "rp2xxx.hpp"
 #include "cpm.hpp"
 
 #ifdef __BENCHMARK_TEST__
@@ -324,7 +324,7 @@ static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name)
 void benchmark_test(void)
 {
     cpm_op_msg();
-    rp2040_develop_info_print();
+    rp2xxx_develop_info_print();
     DEBUG_PRINTF("BenchMark Test [Start]\n");
 #ifdef __BENCHMARK_TEST__
     // 四則演算（整数）

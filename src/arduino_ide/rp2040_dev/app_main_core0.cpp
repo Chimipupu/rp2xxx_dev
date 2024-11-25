@@ -146,7 +146,7 @@ void app_main_init_core0(void)
     while (!Serial) {
         WDT_TOGGLE;
     }
-    s_cpu_core = rp2040_get_cpu_core_num();
+    s_cpu_core = rp2xxx_get_cpu_core_num();
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 

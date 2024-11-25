@@ -13,13 +13,9 @@
 #define MUC_BOARDHPP
 
 #include "common.hpp"
+#include "rp2xxx.hpp"
 
-#define _MCU_RP2040_
-// #define _MCU_RP2350_
-
-#ifdef _MCU_RP2040_
-    #include "rp2040_reg.hpp"
-
+#ifdef MCU_RP2040
     // #define __MCU_BOARD_PICO_W__
     #define __MCU_BOARD_YD_RP2040__
     // #define __MCU_BOARD_XIAO_RP2040__
@@ -143,7 +139,7 @@
         #define PCM_BCLK_PIN            32
         #define PCM_DATA_PIN            31
     #endif /* __MCU_EX_BOARD_PICO_VGA__ */
-#endif /* _MCU_RP2040_ */
+#endif /* MCU_RP2040 */
 
 extern "C"
 {

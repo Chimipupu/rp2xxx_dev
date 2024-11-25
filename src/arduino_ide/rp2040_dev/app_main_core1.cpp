@@ -67,7 +67,7 @@ void app_main_init_core1(void)
         WDT_TOGGLE;
     }
 
-    s_cpu_core = rp2040_get_cpu_core_num();
+    s_cpu_core = rp2xxx_get_cpu_core_num();
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 

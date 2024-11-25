@@ -14,7 +14,7 @@
 #include "app_filesystem.hpp"
 #include "muc_board.hpp"
 #include "benchmark_test.hpp"
-#include "rp2040_reg.hpp"
+#include "rp2xxx.hpp"
 
 extern char g_ssid[16];
 extern char g_password[32];
@@ -160,7 +160,7 @@ static void timer_test(void)
 static void dbg_cmd(char *p_cmd)
 {
     DEBUG_PRINTF("DEBUG Command\n");
-    rp2040_reg_info();
+    rp2xxx_reg_info();
 
     // FileSystem Test
 #if 1
@@ -188,7 +188,7 @@ void cpm_main(void)
 
     cls();
     cpm_op_msg();
-    rp2040_develop_info_print();
+    rp2xxx_develop_info_print();
     ascii_art();
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
     help();
@@ -218,7 +218,7 @@ void cpm_main(void)
 
         if (strcmp(command, "HELP") == 0) {
             cpm_op_msg();
-            rp2040_develop_info_print();
+            rp2xxx_develop_info_print();
             help();
         } else if (strcmp(command, "CLS") == 0) {
             cls();
