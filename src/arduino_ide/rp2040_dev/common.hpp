@@ -73,10 +73,6 @@ extern e_firmware_info g_firmware_info;
 
 #define SW_DELAY_MS         delay
 
-#define GPIO_PORT_DIR       pinMode
-#define GPIO_OUTPUT         digitalWrite
-#define GPIO_PWM            analogWrite
-
 #define ON                  0x00    // ON ... Active Low
 #define OFF                 0x01
 
@@ -86,6 +82,11 @@ extern e_firmware_info g_firmware_info;
 #define MPU9250_I2C_ADDR    0x68
 #define MPU6050_I2C_ADDR    0x69  // ADOピンをHIGH = 0x69(Low/HiZ = 0x68)
 #define OLED_I2C_ADDR       0x3C
+
+// GPIO
+#define GPIO_PORT_DIR       pinMode
+#define GPIO_OUTPUT         digitalWrite
+#define GPIO_PWM            analogWrite
 
 extern "C"
 {
@@ -97,7 +98,6 @@ extern "C"
         s_port_val = !s_port_val;
     }
 } /* extern "C" */
-
 
 /***********************************/
 //          FreeRTOS関連

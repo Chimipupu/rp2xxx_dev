@@ -18,6 +18,7 @@
 #ifdef __BENCHMARK_TEST__
 #include <float.h>
 #define FUNC_SYMBOL(func) #func
+#define BENCHMARK_TEST_GPIO_PIN    15
 
 static void add_test_int(void);
 static void sub_test_int(void);
@@ -243,7 +244,12 @@ static void mem_test(void)
 
 static void gpio_tgl_test(void)
 {
-    // TODO:
+    volatile double cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        GPIO_TOGGLE(BENCHMARK_TEST_GPIO_PIN);
+    }
 }
 
 /**
@@ -335,13 +341,11 @@ void benchmark_test(void)
     benchmark(TEST_N, atan2_test, FUNC_SYMBOL(atan2_test));
     benchmark(TEST_N, sqrt_test, FUNC_SYMBOL(sqrt_test));
 
-#if 0
     // メモリ
-    mem_test();
+    // mem_test();
 
     // GPIOのトグル
-    gpio_tgl_test();
-#endif
+    benchmark(TEST_N, gpio_tgl_test, FUNC_SYMBOL(gpio_tgl_test));
 #endif /* __BENCHMARK_TEST__ */
     DEBUG_PRINTF("BenchMark Test [End]\n");
 }
