@@ -32,10 +32,12 @@
 
 #define UNKNOWN_VAL 0
 
+#define MATH_DEG_TO_RAD(deg)    (deg * M_PI) / 180.0f      // 度からラジアン
+#define MATH_RAD_TO_DEG(rad)    ((rad) * 180.0f / M_PI)    // ラジアンから度
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 double math_calc_accuracy(void);
 bool math_is_prime_num(uint32_t n);
 double math_pythagoras(double a, double b);

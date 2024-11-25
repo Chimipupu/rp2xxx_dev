@@ -9,7 +9,9 @@
  * 
  */
 
+#include <math.h>
 #include "benchmark_test.hpp"
+#include "math_uc.hpp"
 #include "rp2040_reg.hpp"
 #include "cpm.hpp"
 
@@ -34,12 +36,14 @@ static void div_test_double(void);
 static void calc_test_double(void);
 static void sin_test(void);
 static void cos_test(void);
+static void tan_test(void);
 static void atan2_test(void);
 static void sqrt_test(void);
 static void mem_test(void);
 static void gpio_tgl_test(void);
 static uint32_t test_run(void (*p_func)());
 static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name);
+volatile double g_ang = MATH_DEG_TO_RAD(30); // 30度のラジアン π/6
 
 void (*p_func)(void);
 
@@ -177,22 +181,59 @@ static void div_test_double(void)
 
 static void sin_test(void)
 {
-    // TODO:
+    volatile double cnt = 0.0f;
+    volatile double sin_val = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        sin_val = sin(g_ang);
+    }
 }
 
 static void cos_test(void)
 {
-    // TODO:
+    volatile double cnt = 0.0f;
+    volatile double cos_val = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        cos_val = cos(g_ang);
+    }
+}
+
+static void tan_test(void)
+{
+    volatile double cnt = 0.0f;
+    volatile double tan_val = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        tan_val = tan(g_ang);
+    }
 }
 
 static void atan2_test(void)
 {
-    // TODO:
+    volatile double cnt = 0.0f;
+    volatile double x = 1.0;
+    volatile double y = 1.0;
+    volatile double atan2_val = 0;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        atan2_val = atan2(y, x);
+    }
 }
 
 static void sqrt_test(void)
 {
-    // TODO:
+    volatile double cnt = 0.0f;
+    volatile double root = 0;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        root = sqrt(2.0f);
+    }
 }
 
 static void mem_test(void)
@@ -286,13 +327,15 @@ void benchmark_test(void)
     // 四則演算（浮動小数）
     calc_test_float();
     calc_test_double();
-#if 0
-    // sin, cos, atan2, sqrt
-    sin_test();
-    cos_test();
-    atan2_test();
-    sqrt_test();
 
+    // sin, cos, atan2, sqrt
+    benchmark(TEST_N, sin_test, FUNC_SYMBOL(sin_test));
+    benchmark(TEST_N, cos_test, FUNC_SYMBOL(cos_test));
+    benchmark(TEST_N, tan_test, FUNC_SYMBOL(tan_test));
+    benchmark(TEST_N, atan2_test, FUNC_SYMBOL(atan2_test));
+    benchmark(TEST_N, sqrt_test, FUNC_SYMBOL(sqrt_test));
+
+#if 0
     // メモリ
     mem_test();
 

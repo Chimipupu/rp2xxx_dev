@@ -9,12 +9,16 @@
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
-<table>
+<!-- <table>
   <tr>
     <td><img width="500" src="/doc/img/chimi_os_opmsg.png"></td>
-    <!-- <td><img width="500" src="/doc/img/chimi_os_opmsg.gif"></td> -->
+    <td><img width="500" src="/doc/img/chimi_os_opmsg.gif"></td>
   </tr>
-</table>
+</table> -->
+
+<div align="center">
+  <img width="500" src="/doc/img/chimi_os_opmsg.png">
+</div>
 
 <table>
   <tr>
@@ -66,7 +70,7 @@
       - ✅モニタプログラムタスク(@USBシリアル)
         - ✅ベンチマークテスト
           - 🚩四則演算（整数、浮動小数 float & double）
-          - 🚩sin, cos, atan2, sqrt
+          - 🚩sin, cos, tan, atan2, sqrt
           - 🚩メモリ, GPIOトグル
         - ✅SDカードのR/W
           - ✅WiFi設定情報
