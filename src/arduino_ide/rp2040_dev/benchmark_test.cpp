@@ -25,6 +25,11 @@ static void sub_test_float(void);
 static void mul_test_float(void);
 static void div_test_float(void);
 static void calc_test_float(void);
+static void add_test_double(void);
+static void sub_test_double(void);
+static void mul_test_double(void);
+static void div_test_double(void);
+static void calc_test_double(void);
 static void sin_test(void);
 static void cos_test(void);
 static void atan2_test(void);
@@ -82,6 +87,50 @@ static void div_test_int(void)
 
 static void add_test_float(void)
 {
+    volatile float val = 0.0f;
+    volatile float cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val + 0.1f;
+    }
+}
+
+static void sub_test_float(void)
+{
+    volatile float val = DBL_MAX;
+    volatile float cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val - 0.1f;
+    }
+}
+
+static void mul_test_float(void)
+{
+    volatile float val = 0.0f;
+    volatile float cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val * 2.0f;
+    }
+}
+
+static void div_test_float(void)
+{
+    volatile float val = DBL_MAX;
+    volatile float cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val / 2.0f;
+    }
+}
+
+static void add_test_double(void)
+{
     volatile double val = 0.0f;
     volatile double cnt = 0.0f;
 
@@ -91,7 +140,7 @@ static void add_test_float(void)
     }
 }
 
-static void sub_test_float(void)
+static void sub_test_double(void)
 {
     volatile double val = DBL_MAX;
     volatile double cnt = 0.0f;
@@ -102,7 +151,7 @@ static void sub_test_float(void)
     }
 }
 
-static void mul_test_float(void)
+static void mul_test_double(void)
 {
     volatile double val = 0.0f;
     volatile double cnt = 0.0f;
@@ -113,7 +162,7 @@ static void mul_test_float(void)
     }
 }
 
-static void div_test_float(void)
+static void div_test_double(void)
 {
     volatile double val = DBL_MAX;
     volatile double cnt = 0.0f;
@@ -167,7 +216,7 @@ static void calc_test_int(void)
 }
 
 /**
- * @brief 四則演算（浮動小数）テスト
+ * @brief 四則演算（浮動小数 float）テスト
  * 
  */
 static void calc_test_float(void)
@@ -176,6 +225,18 @@ static void calc_test_float(void)
     benchmark(TEST_N, sub_test_float, FUNC_SYMBOL(sub_test_float));
     benchmark(TEST_N, mul_test_float, FUNC_SYMBOL(mul_test_float));
     benchmark(TEST_N, div_test_float, FUNC_SYMBOL(div_test_float));
+}
+
+/**
+ * @brief 四則演算（浮動小数 double）テスト
+ * 
+ */
+static void calc_test_double(void)
+{
+    benchmark(TEST_N, add_test_double, FUNC_SYMBOL(add_test_double));
+    benchmark(TEST_N, sub_test_double, FUNC_SYMBOL(sub_test_double));
+    benchmark(TEST_N, mul_test_double, FUNC_SYMBOL(mul_test_double));
+    benchmark(TEST_N, div_test_double, FUNC_SYMBOL(div_test_double));
 }
 #endif /* __BENCHMARK_TEST__ */
 
@@ -220,6 +281,7 @@ void benchmark_test(void)
 
     // 四則演算（浮動小数）
     calc_test_float();
+    calc_test_double();
 #if 0
     // sin, cos, atan2, sqrt
     sin_test();

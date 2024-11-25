@@ -65,7 +65,7 @@
         - 英語、日本語、科学計算の結果を画面表示
       - ✅モニタプログラムタスク(@USBシリアル)
         - ✅ベンチマークテスト
-          - 🚩四則演算（整数、浮動小数）
+          - 🚩四則演算（整数、浮動小数 float & double）
           - 🚩sin, cos, atan2, sqrt
           - 🚩メモリ, GPIOトグル
         - ✅SDカードのR/W
@@ -101,18 +101,17 @@
     - ✅ボタン超長押し判定 ... ボタン長押しを検知（3000ms = 3s)
 
 ### PIO
-- 📍PIO
-  - 📍PIO0
-    - ✅SM0
-      - GPIOを独立してトグル
-    - 🚩SM1
-    - 🚩SM2
-    - 🚩SM3
-  - 📍PIO1
-    - 🚩SM0
-    - 🚩SM1
-    - 🚩SM2
-    - 🚩SM3
+- 📍PIO0
+  - ✅SM0
+    - GPIOを独立してトグル
+  - 🚩SM1
+  - 🚩SM2
+  - 🚩SM3
+- 📍PIO1
+  - 🚩SM0
+  - 🚩SM1
+  - 🚩SM2
+  - 🚩SM3
 
 ### Pimoroni Pico VGA Demo Base
 
