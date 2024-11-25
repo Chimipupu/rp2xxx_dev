@@ -11,8 +11,8 @@
 
 <table>
   <tr>
-    <!-- <td><img width="500" src="/doc/img/chimi_os_opmsg.png"></td> -->
-    <td><img width="500" src="/doc/img/chimi_os_opmsg.gif"></td>
+    <td><img width="500" src="/doc/img/chimi_os_opmsg.png"></td>
+    <!-- <td><img width="500" src="/doc/img/chimi_os_opmsg.gif"></td> -->
   </tr>
 </table>
 
@@ -101,6 +101,7 @@
     - ✅ボタン超長押し判定 ... ボタン長押しを検知（3000ms = 3s)
 
 ### PIO
+
 - 📍PIO0
   - ✅SM0
     - GPIOを独立してトグル

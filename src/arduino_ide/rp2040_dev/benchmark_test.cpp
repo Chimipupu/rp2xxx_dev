@@ -10,6 +10,8 @@
  */
 
 #include "benchmark_test.hpp"
+#include "rp2040_reg.hpp"
+#include "cpm.hpp"
 
 #ifdef __BENCHMARK_TEST__
 #include <float.h>
@@ -274,7 +276,9 @@ static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name)
  */
 void benchmark_test(void)
 {
-    DEBUG_PRINTF("[BenchMark Test Start]\n");
+    cpm_op_msg();
+    rp2040_develop_info_print();
+    DEBUG_PRINTF("BenchMark Test [Start]\n");
 #ifdef __BENCHMARK_TEST__
     // 四則演算（整数）
     calc_test_int();
@@ -296,5 +300,5 @@ void benchmark_test(void)
     gpio_tgl_test();
 #endif
 #endif /* __BENCHMARK_TEST__ */
-    DEBUG_PRINTF("[BenchMark Test END]\n");
+    DEBUG_PRINTF("BenchMark Test [End]\n");
 }

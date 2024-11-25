@@ -31,6 +31,42 @@ uint8_t rp2040_get_cpu_core_num(void)
 }
 
 /**
+ * @brief RP2040のチップRevisonの取得
+ * 
+ * @return uint8_t Revsion.B0/B1/B2(0/1/2)
+ */
+uint8_t rp2040_read_reg_chip_rev(void)
+{
+    uint8_t chip_rev = 0;
+
+    SYSINFO_CPUID SYSINFO_CPUID_REG;
+    SYSINFO_CPUID_REG.DWORD = (*(volatile uint32_t *)SYSINFO_CPUID_REG_ADDR);
+    chip_rev = SYSINFO_CPUID_REG.BIT.REVISION;
+
+    return chip_rev;
+}
+
+/**
+ * @brief Pico SDKのバージョン取得関数
+ * 
+ * @return const char* Pico SDKのバージョン
+ */
+const char* get_pico_sdk_version(void)
+{
+    return PICO_SDK_VERSION_STRING;
+}
+
+/**
+ * @brief RP2040のチップRevisonとPico SDKのバージョンの表示
+ * 
+ */
+void rp2040_develop_info_print(void)
+{
+    DEBUG_PRINTF("Pico SDK Ver.%s\n", get_pico_sdk_version());
+    DEBUG_PRINTF("RP2040 Chip Rev.B%d\n", rp2040_read_reg_chip_rev());
+}
+
+/**
  * @brief コアレジスタを読み出し
  * 
  */

@@ -14,6 +14,7 @@
 #include "app_filesystem.hpp"
 #include "muc_board.hpp"
 #include "benchmark_test.hpp"
+#include "rp2040_reg.hpp"
 
 extern char g_ssid[16];
 extern char g_password[32];
@@ -172,7 +173,7 @@ static void dbg_cmd(char *p_cmd)
 
 void cpm_op_msg(void)
 {
-    DEBUG_PRINTF("Chimi Monitor Program Ver.1.0.0\n");
+    DEBUG_PRINTF("Chimi Monitor Program for RP2040 Ver.1.0.0\n");
     DEBUG_PRINTF("Copyright(C) 2024, Chimi(");
     cpm_ansi_txt_color(ANSI_TXT_COLOR_BLUE);
     DEBUG_PRINTF("https://github.com/Chimipupu");
@@ -187,6 +188,7 @@ void cpm_main(void)
 
     cls();
     cpm_op_msg();
+    rp2040_develop_info_print();
     ascii_art();
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
     help();
@@ -216,6 +218,7 @@ void cpm_main(void)
 
         if (strcmp(command, "HELP") == 0) {
             cpm_op_msg();
+            rp2040_develop_info_print();
             help();
         } else if (strcmp(command, "CLS") == 0) {
             cls();

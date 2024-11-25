@@ -55,7 +55,10 @@ typedef union {
 
 } /* extern "C" */
 
-void rp2040_reg_info(void);
+uint8_t rp2040_read_reg_chip_rev(void);
 uint8_t rp2040_get_cpu_core_num(void);
+const char* get_pico_sdk_version(void);
+void rp2040_develop_info_print(void);
+void rp2040_reg_info(void);
 
 #endif /* RP2040_REG_H */

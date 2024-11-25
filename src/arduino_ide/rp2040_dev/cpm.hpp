@@ -28,12 +28,7 @@
 #define ANSI_TXT_COLOR_PURPLE   "\e[35m"
 #define ANSI_TXT_COLOR_MAGENTA  "\e[36m"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+void cpm_op_msg(void);
 void cpm_main(void);
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* CPM_HPP */
