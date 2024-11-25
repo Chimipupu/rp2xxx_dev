@@ -14,8 +14,9 @@
 
 #include "common.hpp"
 
-#define TEST_N    1
-// #define TEST_N    100
+#define TEST_LOOP    1000
+// #define TEST_N       1
+#define TEST_N       10
 
 void benchmark_test(void);
 

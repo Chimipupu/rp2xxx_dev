@@ -12,7 +12,7 @@
 #include "benchmark_test.hpp"
 
 #ifdef __BENCHMARK_TEST__
-
+#include <float.h>
 #define FUNC_SYMBOL(func) #func
 
 static void add_test_int(void);
@@ -39,49 +39,89 @@ void (*p_func)(void);
 static void add_test_int(void)
 {
     volatile uint32_t val = 0;
-    val = val + 1;
+    volatile uint32_t cnt = 0;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val + 1;
+    }
 }
 
 static void sub_test_int(void)
 {
-    volatile uint32_t val = 1;
-    val = val - 1;
+    volatile uint32_t val = UINT32_MAX;
+    volatile uint32_t cnt = 0;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val - 1;
+    }
 }
 
 static void mul_test_int(void)
 {
     volatile uint32_t val = 2;
-    val = val * 2;
+    volatile uint32_t cnt = 0;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val * 2;
+    }
 }
 
 static void div_test_int(void)
 {
-    volatile uint32_t val = 2;
-    val = val / 2;
+    volatile uint32_t val = UINT32_MAX;
+    volatile uint32_t cnt = 0;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val / 2;
+    }
 }
 
 static void add_test_float(void)
 {
     volatile double val = 0.0f;
-    val = val + 1.0f;
+    volatile double cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val + 0.1f;
+    }
 }
 
 static void sub_test_float(void)
 {
-    volatile double val = 1.0f;
-    val = val - 1.0f;
+    volatile double val = DBL_MAX;
+    volatile double cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val - 0.1f;
+    }
 }
 
 static void mul_test_float(void)
 {
-    volatile double val = 2.0f;
-    val = val * 2.0f;
+    volatile double val = 0.0f;
+    volatile double cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val * 2.0f;
+    }
 }
 
 static void div_test_float(void)
 {
-    volatile double val = 2.0f;
-    val = val / 2.0f;
+    volatile double val = DBL_MAX;
+    volatile double cnt = 0.0f;
+
+    for(cnt; cnt < TEST_LOOP; cnt++)
+    {
+        val = val / 2.0f;
+    }
 }
 
 static void sin_test(void)
@@ -141,9 +181,11 @@ static void calc_test_float(void)
 
 static uint32_t test_run(void (*p_func)())
 {
+    // __DI;
     uint32_t start_time = time_us_32();
     ((void (*)(void))p_func)();
     uint32_t end_time = time_us_32();
+    // __EI;
 
     return (end_time - start_time);
 }
@@ -153,7 +195,7 @@ static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name)
     uint32_t proc_time_buf[n] = {0};
     uint32_t proc_time_avg = 0;
 
-    DEBUG_PRINTF("%s() Func (n = %d)\n", p_func_name, TEST_N);
+    DEBUG_PRINTF("%s() Func (n=%d)\t", p_func_name, TEST_N);
     memset(&proc_time_buf[0], 0x00, sizeof(proc_time_buf));
 
     for(uint32_t i = 0; i < n; i++)
