@@ -12,7 +12,7 @@
 #define APP_NEOPIXEL_HPP
 
 #include "common.hpp"
-#if defined(__NEOPIXEL_ENABLE__)
+#ifdef __NEOPIXEL_ENABLE__
 #include <Adafruit_NeoPixel.h>
 #endif /* __NEOPIXEL_ENABLE__ */
 

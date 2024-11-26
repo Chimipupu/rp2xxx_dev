@@ -20,7 +20,7 @@ static xTaskHandle s_xTaskCore1oled;
 static xTaskHandle s_xTaskCore1monitor;
 static xTaskHandle s_xTaskCore1Main;
 
-#if defined(__LCD_ENABLE__)
+#ifdef __LCD_ENABLE__
 void vTaskCore1oled(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
@@ -84,7 +84,7 @@ void app_main_init_core1(void)
 #endif
     // TODO:WiFi接続処理
 
-#if defined(__LCD_ENABLE__)
+#ifdef __LCD_ENABLE__
     app_oled_init();
 
     // FreeRTOS初期化

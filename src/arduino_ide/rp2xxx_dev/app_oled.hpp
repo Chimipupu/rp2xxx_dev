@@ -13,7 +13,7 @@
 
 #include "common.hpp"
 
-#if defined(__LCD_ENABLE__)
+#ifdef __LCD_ENABLE__
 #include <Wire.h>
 
 // #define LGFX_USE_V1

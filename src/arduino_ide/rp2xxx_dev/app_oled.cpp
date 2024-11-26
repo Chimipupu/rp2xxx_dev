@@ -10,7 +10,7 @@
  */
 
 #include "app_oled.hpp"
-#if defined(__LCD_ENABLE__)
+#ifdef __LCD_ENABLE__
 #include "math_uc.hpp"
 
 #define DELAY_MS          2000

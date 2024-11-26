@@ -10,7 +10,7 @@
  */
 
 #include "benchmark_test.hpp"
-#if defined(__BENCHMARK_TEST__)
+#ifdef __BENCHMARK_TEST__
 #include <math.h>
 #include "math_uc.hpp"
 #include "rp2xxx.hpp"
@@ -323,7 +323,7 @@ static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name)
  */
 void benchmark_test(void)
 {
-#if defined(__BENCHMARK_TEST__)
+#ifdef __BENCHMARK_TEST__
     cpm_op_msg();
     rp2xxx_develop_info_print();
     DEBUG_PRINTF("BenchMark Test [Start]\n");
