@@ -12,6 +12,8 @@
 #define APP_OLED_HPP
 
 #include "common.hpp"
+
+#if defined(__LCD_ENABLE__)
 #include <Wire.h>
 
 // #define LGFX_USE_V1
@@ -107,5 +109,5 @@ class LGFX_SH110x : public lgfx::LGFX_Device
 
 void app_oled_init(void);
 void app_oled_test(void);
-
+#endif /* __LCD_ENABLE__ */
 #endif /* APP_OLED_HPP */

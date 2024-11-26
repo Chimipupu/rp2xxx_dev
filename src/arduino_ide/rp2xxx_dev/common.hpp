@@ -19,14 +19,14 @@
 
 #include "muc_board.hpp"
 
-// #define OLED_LCD_USE
+// #define __DEBUG_MONITOR_ENABLE__
+// #define __NEOPIXEL_ENABLE__
+// #define __SD_TF_ENABLE__
+// #define __LCD_ENABLE__
 // #define __IR_ENABLE__
 // #define __PWM_ENABLE__
 // #define __BTN_ENABLE__
-
-#ifndef __BENCHMARK_TEST__
-#define __BENCHMARK_TEST__
-#endif /* __BENCHMARK_TEST__ */
+// #define __BENCHMARK_TEST__
 
 // #define __WDT_ENABLE__
 #include "app_wdt.hpp"

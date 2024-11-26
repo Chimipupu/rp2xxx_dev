@@ -11,6 +11,7 @@
 
 #include "muc_board.hpp"
 
+#ifdef __SD_TF_ENABLE__
 #include <SPI.h>
 #include <SD.h>
 
@@ -27,15 +28,13 @@ static void spi_init(void)
 static void sd_spi_init(void)
 {
     if (!SD.begin(SPI_CS_PIN)) {
-        DEBUG_PRINTF_RTOS("No SD Card. Plz, Insert SD & Reboot\n");
-        // while (1)
-        // {
-        //     NOP;
-        // }
+        // DEBUG_PRINTF_RTOS("No SD Card. Plz, Insert SD & Reboot\n");
     }
 
     DEBUG_PRINTF_RTOS("File System Init(@SD)\n");
 }
+
+#endif /* __SD_TF_ENABLE__ */
 
 void mcu_board_gpio_init(void)
 {
@@ -49,6 +48,8 @@ void mcu_board_gpio_init(void)
 
 void mcu_board_fs_init(void)
 {
+#ifdef __SD_TF_ENABLE__
     spi_init();
     sd_spi_init();
+#endif
 }

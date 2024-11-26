@@ -8,7 +8,9 @@
  * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
+
 #include "app_oled.hpp"
+#if defined(__LCD_ENABLE__)
 #include "math_uc.hpp"
 
 #define DELAY_MS          2000
@@ -42,8 +44,8 @@ static void oled_math_txt_test(void);
 
 static void oled_i2c_init(void)
 {
-    GPIO_PORT_DIR(I2C_SDA, INPUT_PULLUP);	//	SDA
-	GPIO_PORT_DIR(I2C_SCL, INPUT_PULLUP);	//	SCL
+    GPIO_PORT_DIR(I2C_SDA, INPUT_PULLUP);
+    GPIO_PORT_DIR(I2C_SCL, INPUT_PULLUP);
     Wire1.setSDA(I2C_SDA);
     Wire1.setSCL(I2C_SCL);
     Wire1.begin();
@@ -78,16 +80,29 @@ static void oled_en_txt_test(void)
 {
     oled_clear();
 
+#ifdef MCU_RP2040
     sprite.setFont(&fonts::Font0);
     sprite.printf("RP2040 F/W Test\n");
     sprite.printf("by Chimi\n");
     sprite.printf("github.com/Chimipupu\n");
     sprite.printf("RP2040=CPU x2@133MHz\n");
     sprite.printf("CPU=ARM Cortex-M0+\n");
-    sprite.printf("Flash:16MB,SRAM:264KB\n");
+    sprite.printf("Flash:16MB sSRAM:264KB\n");
     sprite.printf("Very Good! ARM MUC!\n");
     sprite.printf("pi=%.15f\n", MATH_PI);
     sprite.pushSprite(0, 0);
+#else
+    sprite.setFont(&fonts::Font0);
+    sprite.printf("RP2350 F/W Test\n");
+    sprite.printf("by Chimi\n");
+    sprite.printf("github.com/Chimipupu\n");
+    sprite.printf("RP2350=CPU x2@150MHz\n");
+    sprite.printf("CPU=ARM Cortex-M33\n");
+    sprite.printf("Flash:4MB SRAM:520KB\n");
+    sprite.printf("Very Good! ARM MUC!\n");
+    sprite.printf("pi=%.15f\n", MATH_PI);
+    sprite.pushSprite(0, 0);
+#endif
 }
 
 static void oled_jp_txt_test(void)
@@ -165,3 +180,4 @@ void app_oled_test(void)
     oled_math_txt_test();
     delay(DELAY_MS);
 }
+#endif /* __LCD_ENABLE__ */

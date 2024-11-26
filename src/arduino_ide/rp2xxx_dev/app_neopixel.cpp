@@ -8,8 +8,9 @@
  * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
-#include "app_neopixel.hpp"
 
+#include "app_neopixel.hpp"
+#ifdef __NEOPIXEL_ENABLE__
 #define MAX_BRIGHTNESS          32      // 最大輝度
 #define LED_COLOR_ON_TIMER      100     // 1色の表示時間
 #define RGBLED_NUM              1       // RGB LEDの数
@@ -29,6 +30,7 @@ static uint8_t s_led_pwm_val = 0;
 Adafruit_NeoPixel pixels(RGBLED_NUM,
                         RGBLED_PIN,
                         NEO_GRB + NEO_KHZ800);
+#endif /* __NEOPIXEL_ENABLE__ */
 
 /**
  * @brief 単色LEDのフェード
@@ -37,6 +39,7 @@ Adafruit_NeoPixel pixels(RGBLED_NUM,
  */
 void app_led_fade(uint8_t pin)
 {
+#ifdef __NEOPIXEL_ENABLE__
     GPIO_PWM(pin, s_led_pwm_val);
 
     if (s_led_fade_amount != true) {
@@ -50,6 +53,7 @@ void app_led_fade(uint8_t pin)
             s_led_fade_amount = !s_led_fade_amount;
         }
     }
+#endif /* __NEOPIXEL_ENABLE__ */
 }
 
 /**
@@ -58,6 +62,7 @@ void app_led_fade(uint8_t pin)
  */
 void app_neopixel_fade(void)
 {
+#ifdef __NEOPIXEL_ENABLE__
     if (s_is_fade != false) {
         pixels.setPixelColor(s_fade_led_no, pixels.Color(s_red_fade_val, s_gree_fade_val, s_blue_fade_val));
         pixels.show();
@@ -98,6 +103,7 @@ void app_neopixel_fade(void)
         pixels.setPixelColor(s_fade_led_no, pixels.Color(s_red_fade_val, s_gree_fade_val, s_blue_fade_val));
         pixels.show();
     }
+#endif /* __NEOPIXEL_ENABLE__ */
 }
 
 /**
@@ -106,9 +112,11 @@ void app_neopixel_fade(void)
  */
 void app_neopixel_init(void)
 {
+#ifdef __NEOPIXEL_ENABLE__
     pixels.begin();
     pixels.clear();
     pixels.show();
+#endif /* __NEOPIXEL_ENABLE__ */
 }
 
 /**
@@ -123,6 +131,7 @@ void app_neopixel_init(void)
  */
 void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t led_no, uint8_t onoff, bool is_fade)
 {
+#ifdef __NEOPIXEL_ENABLE__
     s_red = red;
     s_blue = blue;
     s_green = green;
@@ -139,4 +148,5 @@ void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t led_no, 
             pixels.show();
         }
     }
+#endif /* __NEOPIXEL_ENABLE__ */
 }

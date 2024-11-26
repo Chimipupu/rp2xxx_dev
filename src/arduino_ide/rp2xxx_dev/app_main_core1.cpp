@@ -20,7 +20,7 @@ static xTaskHandle s_xTaskCore1oled;
 static xTaskHandle s_xTaskCore1monitor;
 static xTaskHandle s_xTaskCore1Main;
 
-#ifdef OLED_LCD_USE
+#if defined(__LCD_ENABLE__)
 void vTaskCore1oled(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
@@ -32,8 +32,9 @@ void vTaskCore1oled(void *p_parameter)
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
-#endif /* OLED_LCD_USE */
+#endif /* __LCD_ENABLE__ */
 
+#ifdef __DEBUG_MONITOR_ENABLE__
 void vTaskCore1monitor(void *p_parameter)
 {
     DEBUG_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
@@ -45,6 +46,7 @@ void vTaskCore1monitor(void *p_parameter)
         vTaskDelay(200 / portTICK_PERIOD_MS);
     }
 }
+#endif /* __DEBUG_MONITOR_ENABLE__ */
 
 #if 0
 void vTaskCore1Main(void *p_parameter)
@@ -82,7 +84,7 @@ void app_main_init_core1(void)
 #endif
     // TODO:WiFi接続処理
 
-#ifdef OLED_LCD_USE
+#if defined(__LCD_ENABLE__)
     app_oled_init();
 
     // FreeRTOS初期化
@@ -93,8 +95,9 @@ void app_main_init_core1(void)
                 2,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore1oled       // タスクハンドル
                 );
-#endif /* OLED_LCD_USE */
+#endif /* __LCD_ENABLE__ */
 
+#ifdef __DEBUG_MONITOR_ENABLE__
     xTaskCreate(vTaskCore1monitor,      // コールバック関数ポインタ
                 "vTaskCore1monitor",    // タスク名
                 2048,                   // スタック
@@ -102,6 +105,7 @@ void app_main_init_core1(void)
                 5,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore1monitor    // タスクハンドル
                 );
+#endif
 
 #if 0
     xTaskCreate(vTaskCore1Main,         // コールバック関数ポインタ

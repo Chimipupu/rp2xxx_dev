@@ -9,13 +9,12 @@
  * 
  */
 
-#include <math.h>
 #include "benchmark_test.hpp"
+#if defined(__BENCHMARK_TEST__)
+#include <math.h>
 #include "math_uc.hpp"
 #include "rp2xxx.hpp"
 #include "cpm.hpp"
-
-#ifdef __BENCHMARK_TEST__
 #include <float.h>
 #define FUNC_SYMBOL(func) #func
 #define BENCHMARK_TEST_GPIO_PIN    15
@@ -287,7 +286,6 @@ static void calc_test_double(void)
     benchmark(TEST_N, mul_test_double, FUNC_SYMBOL(mul_test_double));
     benchmark(TEST_N, div_test_double, FUNC_SYMBOL(div_test_double));
 }
-#endif /* __BENCHMARK_TEST__ */
 
 static uint32_t test_run(void (*p_func)())
 {
@@ -317,16 +315,19 @@ static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name)
     proc_time_avg = proc_time_avg / n;
     DEBUG_PRINTF("Proc Time Avg = %d [usec]\n", proc_time_avg);
 }
+#endif /* __BENCHMARK_TEST__ */
+
 /**
  * @brief ベンチマークテスト関数
  * 
  */
 void benchmark_test(void)
 {
+#if defined(__BENCHMARK_TEST__)
     cpm_op_msg();
     rp2xxx_develop_info_print();
     DEBUG_PRINTF("BenchMark Test [Start]\n");
-#ifdef __BENCHMARK_TEST__
+
     // 四則演算（整数）
     calc_test_int();
 
@@ -346,6 +347,7 @@ void benchmark_test(void)
 
     // GPIOのトグル
     benchmark(TEST_N, gpio_tgl_test, FUNC_SYMBOL(gpio_tgl_test));
-#endif /* __BENCHMARK_TEST__ */
+
     DEBUG_PRINTF("BenchMark Test [End]\n");
+#endif /* __BENCHMARK_TEST__ */
 }

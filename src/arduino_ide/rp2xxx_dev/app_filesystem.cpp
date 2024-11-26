@@ -10,7 +10,8 @@
  */
 
 #include "app_filesystem.hpp"
-#include "muc_board.hpp"
+
+#ifdef __SD_TF_ENABLE__
 #include <SD.h>
 
 const char *p_test_write_txt = "sd write test";
@@ -119,25 +120,30 @@ static void fs_dir_print(File dir, uint8_t tabs)
         DEBUG_PRINTF("No File Dir\n");
     }
 }
-
-void app_fs_init(void)
-{
-    fs_init();
-    // fs_test();
-}
-
 void app_fs_test(void)
 {
     fs_test();
 }
+#endif /* __SD_TF_ENABLE__ */
+
+void app_fs_init(void)
+{
+#ifdef __SD_TF_ENABLE__
+    fs_init();
+#endif /* __SD_TF_ENABLE__ */
+}
 
 void app_fs_wifi_config_read(char *p_ssid, char *p_password)
 {
+#ifdef __SD_TF_ENABLE__
     fs_wifi_config_read(p_ssid, p_password);
+#endif /* __SD_TF_ENABLE__ */
 }
 
 void app_fs_dir_print(void)
 {
+#ifdef __SD_TF_ENABLE__
     File root = SD.open("/");
     fs_dir_print(root, 0);
+#endif /* __SD_TF_ENABLE__ */
 }

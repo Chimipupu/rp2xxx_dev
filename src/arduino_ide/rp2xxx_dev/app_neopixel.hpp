@@ -12,7 +12,9 @@
 #define APP_NEOPIXEL_HPP
 
 #include "common.hpp"
+#if defined(__NEOPIXEL_ENABLE__)
 #include <Adafruit_NeoPixel.h>
+#endif /* __NEOPIXEL_ENABLE__ */
 
 typedef struct {
     uint8_t red;        // 赤色の輝度 (0-255)
@@ -27,5 +29,4 @@ void app_led_fade(uint8_t pin);
 void app_neopixel_fade(void);
 void app_neopixel_init(void);
 void app_neopixel_ctrl(uint8_t red,uint8_t green, uint8_t blue, uint8_t led_no, uint8_t onoff, bool is_fade);
-
 #endif /* APP_NEOPIXEL_HPP */

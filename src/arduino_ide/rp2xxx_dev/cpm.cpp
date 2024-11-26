@@ -94,9 +94,7 @@ static void cls(void)
 
 static void dir(void)
 {
-#if 1
     app_fs_dir_print();
-#endif
 }
 
 static void calculate(char *p_cmd)
@@ -162,14 +160,11 @@ static void dbg_cmd(char *p_cmd)
     DEBUG_PRINTF("DEBUG Command\n");
     rp2xxx_reg_info();
 
-    // FileSystem Test
-#if 1
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
     app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
-#endif
 }
-#endif
+#endif /* DEBUG_CMD */
 
 void cpm_op_msg(void)
 {
