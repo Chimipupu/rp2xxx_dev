@@ -22,6 +22,7 @@
 // #define OLED_LCD_USE
 // #define __IR_ENABLE__
 // #define __PWM_ENABLE__
+// #define __BTN_ENABLE__
 
 #ifndef __BENCHMARK_TEST__
 #define __BENCHMARK_TEST__

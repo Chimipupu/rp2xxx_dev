@@ -47,9 +47,12 @@ static void pwm_init(void)
 
 static void gpio_init(void)
 {
+#ifdef __BTN_ENABLE__
     app_btn_init();
+#endif
 }
 
+#ifdef __BTN_ENABLE__
 void vTaskCore0Btn(void *p_parameter)
 {
     ButtonState btnstate;
@@ -62,6 +65,7 @@ void vTaskCore0Btn(void *p_parameter)
         vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 }
+#endif
 
 #ifdef __IR_ENABLE__
 void vTaskCore0IR(void *p_parameter)
@@ -152,7 +156,6 @@ void app_main_init_core0(void)
     DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 
     // GPIO 初期化
-#ifndef __MCU_BOARD_PICO_W__
     gpio_init();
 
 #ifdef __PWM_ENABLE__
@@ -174,6 +177,7 @@ void app_main_init_core0(void)
     // 赤外線関連 アプリ初期化
     app_ir_init();
 
+    // FreeRTOS 初期化
     xTaskCreate(vTaskCore0IR,           // コールバック関数ポインタ
                 "vTaskCore0IR",         // タスク名
                 1024,                   // スタック
@@ -183,7 +187,7 @@ void app_main_init_core0(void)
                 );
 #endif /* __IR_ENABLE__ */
 
-    // FreeRTOS 初期化
+#ifdef __BTN_ENABLE__
     xTaskCreate(vTaskCore0Btn,          // コールバック関数ポインタ
                 "vTaskCore0Btn",        // タスク名
                 512,                    // スタック
@@ -191,7 +195,9 @@ void app_main_init_core0(void)
                 2,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore0Btn        // タスクハンドル
                 );
-#else
+#endif
+
+#if 0
     xTaskCreate(vTaskCore0BT,           // コールバック関数ポインタ
                 "vTaskCore0BT",         // タスク名
                 4096,                   // スタック

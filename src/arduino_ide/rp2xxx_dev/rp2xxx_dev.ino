@@ -1,7 +1,7 @@
 /**
- * @file dev.ino
+ * @file rp2xxx_dev.ino
  * @author ちみ/Chimi(https://github.com/Chimipupu)
- * @brief 評価プログラムの評価プログラム
+ * @brief Arduino IDEのプロジェクトファイル（*.ino）
  * @version 0.1
  * @date 2024-10-16
  * 

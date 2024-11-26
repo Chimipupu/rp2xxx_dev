@@ -173,7 +173,11 @@ static void dbg_cmd(char *p_cmd)
 
 void cpm_op_msg(void)
 {
+#ifdef MCU_RP2040
     DEBUG_PRINTF("Chimi Monitor Program for RP2040 Ver.1.0.0\n");
+#else
+    DEBUG_PRINTF("Chimi Monitor Program for RP2350 Ver.1.0.0\n");
+#endif
     DEBUG_PRINTF("Copyright(C) 2024, Chimi(");
     cpm_ansi_txt_color(ANSI_TXT_COLOR_BLUE);
     DEBUG_PRINTF("https://github.com/Chimipupu");
