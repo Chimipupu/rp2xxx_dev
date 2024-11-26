@@ -141,6 +141,27 @@
     #endif /* __MCU_EX_BOARD_PICO_VGA__ */
 #endif /* MCU_RP2040 */
 
+#ifdef MCU_RP2350
+    #define __MCU_BOARD_PICO_2__
+    #ifdef __MCU_BOARD_PICO_2__
+        // LED
+        #define OB_LED_PIN               25  // 緑色LED (GPIO 25)
+        #define RGBLED_PIN               6   // Neopixel (GPIO 6)
+        #define BUTTON_PIN               7   // ボタン (GPIO 7)
+        // I2C
+        #define I2C_SDA                  20  // I2C0 SDA (GPIO 20)
+        #define I2C_SCL                  21  // I2C0 SCL (GPIO 21)
+        // SPI
+        #define SPI_CS_PIN               5   // SPI0 CS
+        #define SPI_SCK_PIN              6   // SPI0 CLK
+        #define SPI_MISO_PIN             4   // SPI0 MOSI
+        #define SPI_MOSI_PIN             7   // SPI0 MISO
+        // UART
+        #define UART_TX_PIN              0   // UART0 TX(GPIO0)
+        #define UART_RX_PIN              1   // UART0 RX(GPIO1)
+    #endif /* __MCU_BOARD_PICO_2__ */
+#endif /* MCU_RP2350 */
+
 extern "C"
 {
     static inline void NOP(void)

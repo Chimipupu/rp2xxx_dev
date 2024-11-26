@@ -14,16 +14,21 @@
 #ifdef MCU_RP2350
     #include <stdint.h>
 
-    #define SYSINFO_REG_BASE            0x40000000
-    #define SYSINFO_CPUID_REG_OFFSET    0x00000000
-    #define M33_REG_BASE                0xE0000000
-    #define M33_REG_OFFSET              0x0000ED00
-    #define SIO_REG_BASE                0xD0000000
-    #define SIO_REG_OFFSET              0x00000000
+    #define SYSINFO_REG_BASE                          0x40000000
+    #define SYSINFO_CPUID_REG_OFFSET                  0x00000000
+    #define M33_REG_BASE                              0xE0000000
+    #define M33_REG_OFFSET                            0x0000ED00
+    #define SIO_REG_BASE                              0xD0000000
+    #define SIO_REG_OFFSET                            0x00000000
+    #define TRNG_REG_BASE                             0x400F0000
+    #define TRNG_VALID_OFFSET                         0x00000110
+    #define TRNG_RND_SOURCE_ENABLE_OFFSET             0x0000012C
 
-    #define SYSINFO_CPUID_REG_ADDR      (SYSINFO_REG_BASE + SYSINFO_CPUID_REG_OFFSET)
-    #define M33_CPUID_REG_ADDR          (M33_REG_BASE + M33_REG_OFFSET)
-    #define SIO_CPUID_REG_ADDR          (SIO_REG_BASE + SIO_REG_OFFSET)
+    #define SYSINFO_CPUID_REG_ADDR                   (SYSINFO_REG_BASE + SYSINFO_CPUID_REG_OFFSET)
+    #define M33_CPUID_REG_ADDR                       (M33_REG_BASE + M33_REG_OFFSET)
+    #define SIO_CPUID_REG_ADDR                       (SIO_REG_BASE + SIO_REG_OFFSET)
+    #define TRNG_VALID_ADDR                          (TRNG_REG_BASE + TRNG_VALID_OFFSET)
+    #define TRNG_RND_SOURCE_ENABLE_ADDR              (TRNG_REG_BASE + TRNG_RND_SOURCE_ENABLE_OFFSET)
 
     typedef union {
         uint32_t DWORD;
@@ -48,5 +53,21 @@
             uint32_t REVISION:4;         // bit[31:28]
         }BIT;
     } SYSINFO_CPUID;
+
+    typedef union {
+        uint32_t DWORD;
+        struct {
+            uint32_t EHR_VALID:1;        // bit[0] ... 1で乱数生成完了
+            uint32_t Reserved:31;        // bit[31:1]
+        }BIT;
+    } TRNG_VALID;
+
+    typedef union {
+        uint32_t DWORD;
+        struct {
+            uint32_t RND_SRC_EN:1;       // bit[0] ... 1で乱数生成開始
+            uint32_t Reserved:31;        // bit[31:1]
+        }BIT;
+    } TRNG_RND_SOURCE_ENABLE;
 #endif /* MCU_RP2350 */
 #endif /* RP2350_REG_H */

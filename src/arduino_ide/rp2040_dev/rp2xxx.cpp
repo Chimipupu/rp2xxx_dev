@@ -12,9 +12,9 @@
 #include "rp2xxx.hpp"
 #include "app_util.hpp"
 
-#if defined(MCU_RP2040) && !defined(RP2350)
+#if defined(MCU_RP2040) && !defined(MCU_RP2350)
     const char *p_cpu_name_str = "M0PLUS";
-#elif !defined(MCU_RP2040) && defined(RP2350)
+#elif !defined(MCU_RP2040) && defined(MCU_RP2350)
     const char *p_cpu_name_str = "M33";
 #endif
 
@@ -62,14 +62,33 @@ const char* get_pico_sdk_version(void)
 }
 
 /**
+ * @brief 乱数生成
+ * 
+ * @return uint32_t 乱数
+ */
+uint32_t rp2xxx_get_hwrng(void)
+{
+    uint32_t rng_num = 0;
+
+#if !defined(MCU_RP2040) && defined(MCU_RP2350)
+    // （TRNG 真正乱数）RP2350はTRNGIからH/Wで生成
+#elif defined(MCU_RP2040) && !defined(MCU_RP2350)
+    // （PRNG 擬似乱数）RP2040はarduino-picoのAPIから取得
+    rng_num = rp2040.hwrand32();
+#endif
+
+    return rng_num;
+}
+
+/**
  * @brief RP2040/RP2350のチップRevisonの表示
  * 
  */
 void rp2xxx_chip_rev_print(void)
 {
-#if defined(MCU_RP2040) && !defined(RP2350)
+#if defined(MCU_RP2040) && !defined(MCU_RP2350)
     DEBUG_PRINTF("RP2040 Chip Rev.B%d\n", rp2xxx_read_reg_chip_rev());
-#elif !defined(MCU_RP2040) && defined(RP2350)
+#elif !defined(MCU_RP2040) && defined(MCU_RP2350)
     DEBUG_PRINTF("RP2350 Chip Rev.A%d\n", rp2xxx_read_reg_chip_rev());
 #endif
 }
@@ -93,11 +112,18 @@ void rp2xxx_reg_info(void)
     uint32_t cpu_core = 0xFF;
     SYSINFO_CPUID SYSINFO_CPUID_REG; // Sysinfo CPUIDレジスタ
     SIO_CPUID SIO_CPUID_REG;         // SIO CPUIDレジスタ
+#ifdef MCU_RP2040
+    DEBUG_PRINTF("[Core%X] ... RP2040 Reg Info\n", cpu_core);
     M0PLUS_CPUID M0PLUS_CPUID_REG;   // M0PLUS CPUIDレジスタ
+    M0PLUS_CPUID_REG.DWORD = (*(volatile uint32_t *)M0PLUS_CPUID_REG_ADDR);
+#else
+    DEBUG_PRINTF("[Core%X] ... RP2350 Reg Info\n", cpu_core);
+    M33_CPUID M33_CPUID_REG;   // M33 CPUIDレジスタ
+    M33_CPUID_REG.DWORD = (*(volatile uint32_t *)M33_CPUID_REG_ADDR);
+#endif
 
     SIO_CPUID_REG.DWORD = (*(volatile uint32_t *)SIO_CPUID_REG_ADDR);
     SYSINFO_CPUID_REG.DWORD = (*(volatile uint32_t *)SYSINFO_CPUID_REG_ADDR);
-    M0PLUS_CPUID_REG.DWORD = (*(volatile uint32_t *)M0PLUS_CPUID_REG_ADDR);
     cpu_core = SIO_CPUID_REG.DWORD;
 
     // RP2040/RP2350のチップRevison
@@ -115,6 +141,7 @@ void rp2xxx_reg_info(void)
     DEBUG_PRINTF("[Core%X] ... SYSINFO CPUID Reg REVISION[31:28] = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.BIT.REVISION);
 
     // M0PLUS or M33 CPUIDレジスタ
+#ifdef MCU_RP2040
     DEBUG_PRINTF("[Core%X] ... %s CPUID Reg(0x%02X)\n", p_cpu_name_str, cpu_core, M0PLUS_CPUID_REG_ADDR);
     DEBUG_PRINTF("[Core%X] ... %s CPUID Reg Val = 0x%02X\n", p_cpu_name_str, cpu_core, M0PLUS_CPUID_REG.DWORD);
     DEBUG_PRINTF("[Core%X] ... %s CPUID Reg REVISION[3:0] = 0x%02X\n", p_cpu_name_str, cpu_core, M0PLUS_CPUID_REG.BIT.REVISION);
@@ -122,4 +149,13 @@ void rp2xxx_reg_info(void)
     DEBUG_PRINTF("[Core%X] ... %s CPUID Reg ARCHITECTURE[19:16] = 0x%02X\n", p_cpu_name_str, cpu_core, M0PLUS_CPUID_REG.BIT.ARCHITECTURE);
     DEBUG_PRINTF("[Core%X] ... %s CPUID Reg VARIANT[23:20] = 0x%02X\n", p_cpu_name_str, cpu_core, M0PLUS_CPUID_REG.BIT.VARIANT);
     DEBUG_PRINTF("[Core%X] ... %s CPUID Reg IMPLEMENTER[31:24] = 0x%02X\n", p_cpu_name_str, cpu_core, M0PLUS_CPUID_REG.BIT.IMPLEMENTER);
+#else
+    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg(0x%02X)\n", p_cpu_name_str, cpu_core, M33_CPUID_REG_ADDR);
+    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg Val = 0x%02X\n", p_cpu_name_str, cpu_core, M33_CPUID_REG.DWORD);
+    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg REVISION[3:0] = 0x%02X\n", p_cpu_name_str, cpu_core, M33_CPUID_REG.BIT.REVISION);
+    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg PARTNO[15:4] = 0x%02X\n", p_cpu_name_str, cpu_core, M33_CPUID_REG.BIT.PARTNO);
+    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg ARCHITECTURE[19:16] = 0x%02X\n", p_cpu_name_str, cpu_core, M33_CPUID_REG.BIT.ARCHITECTURE);
+    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg VARIANT[23:20] = 0x%02X\n", p_cpu_name_str, cpu_core, M33_CPUID_REG.BIT.VARIANT);
+    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg IMPLEMENTER[31:24] = 0x%02X\n", p_cpu_name_str, cpu_core, M33_CPUID_REG.BIT.IMPLEMENTER);
+#endif
 }

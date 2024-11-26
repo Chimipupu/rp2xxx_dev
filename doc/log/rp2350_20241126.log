@@ -1,0 +1,181 @@
+[2024-11-26 20:39:32.624] [Core1] ... Init
+[2024-11-26 20:39:32.624] [Core0] ... Init End
+[2024-11-26 20:39:32.624] [Core0] vTaskCore0Btn
+[2024-11-26 20:39:32.625] No SD Card. Plz, Insert SD & Reboot
+[2024-11-26 20:39:32.625] File System Init(@SD)
+[2024-11-26 20:39:32.640] [Core1] vTaskCore1monitor
+[2024-11-26 20:39:32.650] Chimi Monitor Program for RP2040 Ver.1.0.0
+[2024-11-26 20:39:32.650] Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+[2024-11-26 20:39:32.651] Pico SDK Ver.2.1.0
+[2024-11-26 20:39:32.651] RP2350 Chip Rev.A2
+[2024-11-26 20:39:32.651]    @                                     
+[2024-11-26 20:39:32.651]    @                                     
+[2024-11-26 20:39:32.651] @@@@@@@@     @@@@@        @@@@    @@@@@  
+[2024-11-26 20:39:32.651]    @             @       @    @  @     @ 
+[2024-11-26 20:39:32.651]   @              @  @   @      @ @     @ 
+[2024-11-26 20:39:32.651]   @ @@@         @   @   @      @  @@     
+[2024-11-26 20:39:32.651]  @@@   @     @@@@@@ @   @      @    @@   
+[2024-11-26 20:39:32.651]  @      @   @  @   @@@  @      @      @  
+[2024-11-26 20:39:32.651]         @  @  @     @ @ @      @ @     @ 
+[2024-11-26 20:39:32.651]         @  @  @     @    @    @  @     @ 
+[2024-11-26 20:39:32.669]       @@    @@     @      @@@@    @@@@@  
+[2024-11-26 20:39:32.669]    @@@           @@                      
+[2024-11-26 20:39:32.669]                                          
+[2024-11-26 20:39:32.670] Command List:
+[2024-11-26 20:39:32.670]   HELP   - This Command. Show Command List
+[2024-11-26 20:39:32.670]   CLS    - Display Clear Command
+[2024-11-26 20:39:32.670]   DIR    - List directory(SD or SPI Flash)
+[2024-11-26 20:39:32.670]   CALC   - Calc add(+), sun(-), mul(*), div(*), mod(), pow(^)
+[2024-11-26 20:39:32.670]   PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)
+[2024-11-26 20:39:32.670]   FIB    - Display Fibonacci (e.g., FIB 10)
+[2024-11-26 20:39:32.670]   PRIME  - Display prime numbers (e.g., PRIME 10)
+[2024-11-26 20:39:32.670]   MANDEL - Display Mandelbrot (e.g., MANDEL)
+[2024-11-26 20:39:32.671]   TIMER  - Timer Test
+[2024-11-26 20:39:32.671]   TEST   - Performance test cmd
+[2024-11-26 20:39:32.676]   DBG    - Develop cmd
+[2024-11-26 20:39:32.676] 
+[2024-11-26 20:39:32.676] > TEST
+[2024-11-26 20:39:40.572] Chimi Monitor Program for RP2040 Ver.1.0.0
+[2024-11-26 20:39:40.572] Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+[2024-11-26 20:39:40.572] Pico SDK Ver.2.1.0
+[2024-11-26 20:39:40.572] RP2350 Chip Rev.A2
+[2024-11-26 20:39:40.572] BenchMark Test [Start]
+[2024-11-26 20:39:40.572] add_test_int() Func (n=10)	Proc Time Avg = 103 [usec]
+[2024-11-26 20:39:40.575] sub_test_int() Func (n=10)	Proc Time Avg = 108 [usec]
+[2024-11-26 20:39:40.575] mul_test_int() Func (n=10)	Proc Time Avg = 106 [usec]
+[2024-11-26 20:39:40.577] div_test_int() Func (n=10)	Proc Time Avg = 105 [usec]
+[2024-11-26 20:39:40.580] add_test_float() Func (n=10)	Proc Time Avg = 125 [usec]
+[2024-11-26 20:39:40.582] sub_test_float() Func (n=10)	Proc Time Avg = 122 [usec]
+[2024-11-26 20:39:40.597] mul_test_float() Func (n=10)	Proc Time Avg = 121 [usec]
+[2024-11-26 20:39:40.597] div_test_float() Func (n=10)	Proc Time Avg = 129 [usec]
+[2024-11-26 20:39:40.598] add_test_double() Func (n=10)	Proc Time Avg = 438 [usec]
+[2024-11-26 20:39:40.598] sub_test_double() Func (n=10)	Proc Time Avg = 458 [usec]
+[2024-11-26 20:39:40.602] mul_test_double() Func (n=10)	Proc Time Avg = 450 [usec]
+[2024-11-26 20:39:40.605] div_test_double() Func (n=10)	Proc Time Avg = 536 [usec]
+[2024-11-26 20:39:40.613] sin_test() Func (n=10)	Proc Time Avg = 1754 [usec]
+[2024-11-26 20:39:40.635] cos_test() Func (n=10)	Proc Time Avg = 1742 [usec]
+[2024-11-26 20:39:40.650] tan_test() Func (n=10)	Proc Time Avg = 2656 [usec]
+[2024-11-26 20:39:40.677] atan2_test() Func (n=10)	Proc Time Avg = 2354 [usec]
+[2024-11-26 20:39:40.701] sqrt_test() Func (n=10)	Proc Time Avg = 331 [usec]
+[2024-11-26 20:39:40.713] gpio_tgl_test() Func (n=10)	Proc Time Avg = 826 [usec]
+[2024-11-26 20:39:40.716] BenchMark Test [End]
+[2024-11-26 20:39:40.716] 
+[2024-11-26 20:39:40.716] > TEST
+[2024-11-26 20:39:43.870] Chimi Monitor Program for RP2040 Ver.1.0.0
+[2024-11-26 20:39:43.870] Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+[2024-11-26 20:39:43.870] Pico SDK Ver.2.1.0
+[2024-11-26 20:39:43.870] RP2350 Chip Rev.A2
+[2024-11-26 20:39:43.870] BenchMark Test [Start]
+[2024-11-26 20:39:43.871] add_test_int() Func (n=10)	Proc Time Avg = 108 [usec]
+[2024-11-26 20:39:43.874] sub_test_int() Func (n=10)	Proc Time Avg = 104 [usec]
+[2024-11-26 20:39:43.874] mul_test_int() Func (n=10)	Proc Time Avg = 105 [usec]
+[2024-11-26 20:39:43.888] div_test_int() Func (n=10)	Proc Time Avg = 106 [usec]
+[2024-11-26 20:39:43.888] add_test_float() Func (n=10)	Proc Time Avg = 135 [usec]
+[2024-11-26 20:39:43.901] sub_test_float() Func (n=10)	Proc Time Avg = 127 [usec]
+[2024-11-26 20:39:43.901] mul_test_float() Func (n=10)	Proc Time Avg = 124 [usec]
+[2024-11-26 20:39:43.901] div_test_float() Func (n=10)	Proc Time Avg = 123 [usec]
+[2024-11-26 20:39:43.901] add_test_double() Func (n=10)	Proc Time Avg = 435 [usec]
+[2024-11-26 20:39:43.901] sub_test_double() Func (n=10)	Proc Time Avg = 461 [usec]
+[2024-11-26 20:39:43.901] mul_test_double() Func (n=10)	Proc Time Avg = 452 [usec]
+[2024-11-26 20:39:43.905] div_test_double() Func (n=10)	Proc Time Avg = 532 [usec]
+[2024-11-26 20:39:43.926] sin_test() Func (n=10)	Proc Time Avg = 1755 [usec]
+[2024-11-26 20:39:43.931] cos_test() Func (n=10)	Proc Time Avg = 1738 [usec]
+[2024-11-26 20:39:43.946] tan_test() Func (n=10)	Proc Time Avg = 2659 [usec]
+[2024-11-26 20:39:43.989] atan2_test() Func (n=10)	Proc Time Avg = 2352 [usec]
+[2024-11-26 20:39:43.998] sqrt_test() Func (n=10)	Proc Time Avg = 326 [usec]
+[2024-11-26 20:39:44.004] gpio_tgl_test() Func (n=10)	Proc Time Avg = 828 [usec]
+[2024-11-26 20:39:44.022] BenchMark Test [End]
+[2024-11-26 20:39:44.022] 
+[2024-11-26 20:39:44.022] > TEST
+[2024-11-26 20:39:45.708] Chimi Monitor Program for RP2040 Ver.1.0.0
+[2024-11-26 20:39:45.708] Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+[2024-11-26 20:39:45.708] Pico SDK Ver.2.1.0
+[2024-11-26 20:39:45.708] RP2350 Chip Rev.A2
+[2024-11-26 20:39:45.708] BenchMark Test [Start]
+[2024-11-26 20:39:45.708] add_test_int() Func (n=10)	Proc Time Avg = 103 [usec]
+[2024-11-26 20:39:45.712] sub_test_int() Func (n=10)	Proc Time Avg = 102 [usec]
+[2024-11-26 20:39:45.712] mul_test_int() Func (n=10)	Proc Time Avg = 103 [usec]
+[2024-11-26 20:39:45.715] div_test_int() Func (n=10)	Proc Time Avg = 103 [usec]
+[2024-11-26 20:39:45.716] add_test_float() Func (n=10)	Proc Time Avg = 123 [usec]
+[2024-11-26 20:39:45.731] sub_test_float() Func (n=10)	Proc Time Avg = 127 [usec]
+[2024-11-26 20:39:45.731] mul_test_float() Func (n=10)	Proc Time Avg = 127 [usec]
+[2024-11-26 20:39:45.738] div_test_float() Func (n=10)	Proc Time Avg = 132 [usec]
+[2024-11-26 20:39:45.738] add_test_double() Func (n=10)	Proc Time Avg = 437 [usec]
+[2024-11-26 20:39:45.738] sub_test_double() Func (n=10)	Proc Time Avg = 450 [usec]
+[2024-11-26 20:39:45.738] mul_test_double() Func (n=10)	Proc Time Avg = 447 [usec]
+[2024-11-26 20:39:45.742] div_test_double() Func (n=10)	Proc Time Avg = 535 [usec]
+[2024-11-26 20:39:45.751] sin_test() Func (n=10)	Proc Time Avg = 1747 [usec]
+[2024-11-26 20:39:45.769] cos_test() Func (n=10)	Proc Time Avg = 1736 [usec]
+[2024-11-26 20:39:45.786] tan_test() Func (n=10)	Proc Time Avg = 2651 [usec]
+[2024-11-26 20:39:45.810] atan2_test() Func (n=10)	Proc Time Avg = 2349 [usec]
+[2024-11-26 20:39:45.840] sqrt_test() Func (n=10)	Proc Time Avg = 333 [usec]
+[2024-11-26 20:39:45.845] gpio_tgl_test() Func (n=10)	Proc Time Avg = 824 [usec]
+[2024-11-26 20:39:45.860] BenchMark Test [End]
+[2024-11-26 20:39:45.871] 
+[2024-11-26 20:39:45.871] > DBG
+[2024-11-26 20:39:51.241] DEBUG Command
+[2024-11-26 20:39:51.241] [CoreFF] ... RP2350 Reg Info
+[2024-11-26 20:39:51.241] RP2350 Chip Rev.A2
+[2024-11-26 20:39:51.241] [Core1] ... SIO CPUID Reg(0xD0000000)
+[2024-11-26 20:39:51.241] [Core1] ... SIO CPUID Reg Val = 0x1
+[2024-11-26 20:39:51.241] [Core1] ... SYSINFO CPUID Reg(0x20004927)
+[2024-11-26 20:39:51.241] [Core1] ... SYSINFO CPUID Reg Val = 0x20004927
+[2024-11-26 20:39:51.241] [Core1] ... SYSINFO CPUID Reg MANUFACTURER[11:0] = 0x493
+[2024-11-26 20:39:51.241] [Core1] ... SYSINFO CPUID Reg PART[27:12] = 0x4
+[2024-11-26 20:39:51.241] [Core1] ... SYSINFO CPUID Reg REVISION[31:28] = 0x2
+[2024-11-26 20:39:51.241] [Core10025DC8] ...  CPUID Reg(0xE000ED00)
+[2024-11-26 20:39:51.241] [Core10025DC8] ...  CPUID Reg Val = 0x411FD210
+[2024-11-26 20:39:51.243] [Core10025DC8] ...  CPUID Reg REVISION[3:0] = 0x0
+[2024-11-26 20:39:51.243] [Core10025DC8] ...  CPUID Reg PARTNO[15:4] = 0xD21
+[2024-11-26 20:39:51.243] [Core10025DC8] ...  CPUID Reg ARCHITECTURE[19:16] = 0xF
+[2024-11-26 20:39:51.278] [Core10025DC8] ...  CPUID Reg VARIANT[23:20] = 0x1
+[2024-11-26 20:39:51.278] [Core10025DC8] ...  CPUID Reg IMPLEMENTER[31:24] = 0x41
+[2024-11-26 20:39:51.278] WiFi Config File Read(@SD)
+[2024-11-26 20:39:51.278] wifi_config.txt doesn't exist
+[2024-11-26 20:39:51.278] 
+[2024-11-26 20:39:51.278] > TIMER
+[2024-11-26 20:40:04.470] proc time : 92877 usec
+[2024-11-26 20:40:04.482] 
+[2024-11-26 20:40:04.482] > MANDEL
+[2024-11-26 20:40:09.801]                                                                                 
+[2024-11-26 20:40:09.812]                                                                                 
+[2024-11-26 20:40:09.813]                                                                                 
+[2024-11-26 20:40:09.813]                                                                                 
+[2024-11-26 20:40:09.814]                                                                                 
+[2024-11-26 20:40:09.814]                                                                                 
+[2024-11-26 20:40:09.822]                                                                                 
+[2024-11-26 20:40:09.822]                                                                                 
+[2024-11-26 20:40:09.823]                                                                                 
+[2024-11-26 20:40:09.823]                                                                                 
+[2024-11-26 20:40:09.823]                                         #                                       
+[2024-11-26 20:40:09.828]                                                                                 
+[2024-11-26 20:40:09.830]                                     ####                                        
+[2024-11-26 20:40:09.849]                                     ####                                        
+[2024-11-26 20:40:09.854]                               #  ##########                                     
+[2024-11-26 20:40:09.880]                               #################                                 
+[2024-11-26 20:40:09.912]                             ###################                                 
+[2024-11-26 20:40:09.944]                            #####################                                
+[2024-11-26 20:40:09.975]                  #######  ######################                                
+[2024-11-26 20:40:10.021]                 ######### ######################                                
+[2024-11-26 20:40:10.076] ##############################################                                  
+[2024-11-26 20:40:10.148]                 ######### ######################                                
+[2024-11-26 20:40:10.204]                  #######  ######################                                
+[2024-11-26 20:40:10.251]                            #####################                                
+[2024-11-26 20:40:10.287]                             ###################                                 
+[2024-11-26 20:40:10.320]                               #################                                 
+[2024-11-26 20:40:10.351]                               #  ##########                                     
+[2024-11-26 20:40:10.373]                                     ####                                        
+[2024-11-26 20:40:10.382]                                     ####                                        
+[2024-11-26 20:40:10.402]                                                                                 
+[2024-11-26 20:40:10.402]                                         #                                       
+[2024-11-26 20:40:10.403]                                                                                 
+[2024-11-26 20:40:10.407]                                                                                 
+[2024-11-26 20:40:10.407]                                                                                 
+[2024-11-26 20:40:10.411]                                                                                 
+[2024-11-26 20:40:10.413]                                                                                 
+[2024-11-26 20:40:10.430]                                                                                 
+[2024-11-26 20:40:10.430]                                                                                 
+[2024-11-26 20:40:10.431]                                                                                 
+[2024-11-26 20:40:10.431]                                                                                 
+[2024-11-26 20:40:10.432] 
+[2024-11-26 20:40:10.432] > 

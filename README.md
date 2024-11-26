@@ -1,9 +1,12 @@
-# 📍RP2040評価F/W by ちみ
-📍RP2040評価F/W 個人開発リポジトリ🥳
+# 📍RP2040 & RP2350 評価F/W開発
+📍RP2040 & RP2350 評価F/W 個人開発リポジトリ🥳
 
 - 📍CPU ... [RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
   - 📍CPU0 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
   - 📍CPU1 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
+- 📍CPU ... [RP2350🔗](https://www.raspberrypi.com/products/rp2350/)
+  - 📍CPU0 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
+  - 📍CPU1 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
 
 - 📍OS ... [FreeRTOS🔗](https://www.freertos.org/)
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
@@ -35,12 +38,16 @@
 
 - 📍基板
   - 📍RP2040
+    - 📍[Raspberry Pico🔗](https://www.raspberrypi.com/products/raspberry-pi-pico/)
     - 📍[Raspberry Pi Pico W🔗](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html#raspberry-pi-pico-w)
     - 📍[VCC-GND YD-RP2040🔗](https://www.aliexpress.us/item/1005004004120604.html?gatewayAdapt=4itemAdapt)
     - 📍[XIAO RP2040🔗](https://wiki.seeedstudio.com/XIAO-RP2040/)
-  - 📍拡張基板
-    - 📍[Pimoroni Pico VGA Demo Base🔗](https://shop.pimoroni.com/products/pimoroni-pico-vga-demo-base)
-    - 📍[XIAO Expansion Board🔗](https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/)
+  - 📍RP2350
+    - 📍[Raspberry Pico 2🔗](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
+
+- 📍拡張基板
+  - 📍[Pimoroni Pico VGA Demo Base🔗](https://shop.pimoroni.com/products/pimoroni-pico-vga-demo-base)
+  - 📍[XIAO Expansion Board🔗](https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/)
 
 ## 📍実装機能
 
@@ -48,7 +55,7 @@
 
 ### OS(FreeRTOS)
 
-- 📍CPU (ARM Cortex-M0+)(clk_sys = 133MHz)
+- 📍CPU
   - 📍Core0 ... ドライバCPU
     - 📍OS ... FreeRTOS
       - ✅Core0メインタスク

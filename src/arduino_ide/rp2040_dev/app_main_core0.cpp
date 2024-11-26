@@ -28,16 +28,12 @@ static xTaskHandle s_xTaskCore0Btn;
 static xTaskHandle s_xTaskCore0Main;
 
 static void gpio_init(void);
-static void pwm_init(void);
 
-static void gpio_init(void)
-{
-    app_btn_init();
-}
+#ifdef __PWM_ENABLE__
+static void pwm_init(void);
 
 static void pwm_init(void)
 {
-    // GPIO 22
     gpio_set_function(PWM_PIN, GPIO_FUNC_PWM);          // GPIOピンをPWM機能に設定
     uint slice_num = pwm_gpio_to_slice_num(PWM_PIN);    // GPIOに対応するPWMスライスを取得
     pwm_set_clkdiv(slice_num, 133.0f);                  // 分周比を133に設定して、PWMクロックを1MHzに
@@ -45,8 +41,13 @@ static void pwm_init(void)
     pwm_set_chan_level(slice_num, PWM_CHAN_A, 500);     // デューティ比を50%に設定（500/1000）
     pwm_set_enabled(slice_num, true);                   // PWMを有効化
 
-    // GPIO 21
     GPIO_PWM(PWM_PIN_2, 127);
+}
+#endif /* __PWM_ENABLE__ */
+
+static void gpio_init(void)
+{
+    app_btn_init();
 }
 
 void vTaskCore0Btn(void *p_parameter)
@@ -154,8 +155,10 @@ void app_main_init_core0(void)
 #ifndef __MCU_BOARD_PICO_W__
     gpio_init();
 
+#ifdef __PWM_ENABLE__
     // PWM 初期化
     pwm_init();
+#endif /* __PWM_ENABLE__ */
 
     // NeoPicel 初期化 初期化
     app_neopixel_init();
