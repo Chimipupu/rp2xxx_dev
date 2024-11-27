@@ -38,12 +38,12 @@
 
 - 📍基板
   - 📍RP2040
-    - 📍[Raspberry Pico🔗](https://www.raspberrypi.com/products/raspberry-pi-pico/)
+    - 📍[Raspberry Pi Pico🔗](https://www.raspberrypi.com/products/raspberry-pi-pico/)
     - 📍[Raspberry Pi Pico W🔗](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html#raspberry-pi-pico-w)
     - 📍[VCC-GND YD-RP2040🔗](https://www.aliexpress.us/item/1005004004120604.html?gatewayAdapt=4itemAdapt)
     - 📍[XIAO RP2040🔗](https://wiki.seeedstudio.com/XIAO-RP2040/)
   - 📍RP2350
-    - 📍[Raspberry Pico 2🔗](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
+    - 📍[Raspberry Pi Pico 2🔗](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
 
 - 📍拡張基板
   - 📍[Pimoroni Pico VGA Demo Base🔗](https://shop.pimoroni.com/products/pimoroni-pico-vga-demo-base)
@@ -84,14 +84,14 @@
         - ✅計算
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
         - ✅レジスタ
-          - SYSINFO/M0PLUS/SIOのCPUIDレジスタRead
+          - SYSINFO/M0PLUS or M33/SIOのCPUIDレジスタRead
 
 ### ペリフェラル
 
 - 📍SPI
   - ✅SDカードのR/W、ディレクトリ表示
 
-- 📍RGB LED (@GPIO 35)
+- 📍RGB LED (NeoPixel)
   - ✅赤🔴 : 初期化中、オフライン状態(WiFi,Bluetooth未接続)
   - ✅青🔵 : オンライン状態（WiFi,Bluetooth接続中）
   - ✅緑🟢 : F/W正常（FreeRTOSで処理中）
@@ -106,10 +106,10 @@
     - ✅アラーム 2 ⏰(TIMER_IRQ_2) ... 20ms周期
     - ✅アラーム 3 ⏰(TIMER_IRQ_3) ... 1000ms周期
   - ✅ボタンIRQ (@GPIO24)
-    - ✅ボタン単押し判定 ... ボタン一回押しを検知
-    - ✅ボタン複数押し判定 ... 短時間に複数回ボタン押しを検知
-    - ✅ボタン長押し判定 ... ボタン長押しを検知（1000ms = 1s）
-    - ✅ボタン超長押し判定 ... ボタン長押しを検知（3000ms = 3s)
+    - ✅ `ボタン単押し判定` ... ボタン一回押しを検知
+    - ✅ `ボタン複数押し判定` ... 短時間に複数回ボタン押しを検知
+    - ✅ `ボタン長押し判定` ... `ボタン長押し`= 1000ms = 1s
+    - ✅ `ボタン超長押し判定` ... `ボタン長押し` = 3000ms = 3s
 
 ### PIO
 
@@ -124,12 +124,17 @@
   - 🚩SM1
   - 🚩SM2
   - 🚩SM3
+- 📍PIO2(※RP2350)
+  - 🚩SM0
+  - 🚩SM1
+  - 🚩SM2
+  - 🚩SM3
 
-### Pimoroni Pico VGA Demo Base
+<!-- ### Pimoroni Pico VGA Demo Base
 
 - 📍Pimoroni Pico VGA Demo Base
   - 📍Audio📢
     - 📍DAC📢
     - 📍PWM📢
   - 📍VGA📺
-  - 📍SD/TF📚
+  - 📍SD/TF📚 -->

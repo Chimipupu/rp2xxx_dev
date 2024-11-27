@@ -21,8 +21,8 @@
     #include "rp2350_reg.hpp"
 #elif !defined(MCU_RP2040) && !defined(MCU_RP2350)
     #error "Plz,Define RP2040 or RP2350 in rpxxx.hpp!"
-// #else
-//     #error "Plz,Define either one (RP2040 or RP2350) in rpxxx.hpp!"
+#else
+    #error "Plz,Define either one (RP2040 or RP2350) in rpxxx.hpp!"
 #endif
 
 uint8_t rp2xxx_read_reg_chip_rev(void);

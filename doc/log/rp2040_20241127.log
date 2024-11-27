@@ -1,0 +1,254 @@
+[Core0] ... Init End
+[Core1] ... Init
+File System Init(@SD)
+[Core1] vTaskCore1oled
+[Core1] vTaskCore1monitor
+**************************************************************************
+Chimi Monitor Program for RP2040 Ver.1.0.0
+Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+Pico SDK Ver.2.1.0
+RP2040 Chip Rev.B1
+**************************************************************************
+   @                                     
+   @                                     
+@@@@@@@@     @@@@@        @@@@    @@@@@  
+   @             @       @    @  @     @ 
+  @              @  @   @      @ @     @ 
+  @ @@@         @   @   @      @  @@     
+ @@@   @     @@@@@@ @   @      @    @@   
+ @      @   @  @   @@@  @      @      @  
+        @  @  @     @ @ @      @ @     @ 
+        @  @  @     @    @    @  @     @ 
+      @@    @@     @      @@@@    @@@@@  
+   @@@           @@                      
+                                         
+**************************************************************************
+Command List:
+  HELP   - This Command. Show Command List
+  CLS    - Display Clear Command
+  DIR    - List directory(SD or SPI Flash)
+  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(), pow(^)
+  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)
+  FIB    - Display Fibonacci (e.g., FIB 10)
+  PRIME  - Display prime numbers (e.g., PRIME 10)
+  MANDEL - Display Mandelbrot (e.g., MANDEL)
+  TIMER  - Timer Test
+  TEST   - Performance test cmd
+  DBG    - Develop cmd
+**************************************************************************
+
+> TEST
+Chimi Monitor Program for RP2040 Ver.1.0.0
+Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+Pico SDK Ver.2.1.0
+RP2040 Chip Rev.B1
+**************************************************************************
+[BenchMark Test]
+**************************************************************************
+add_test_int() Func (n=10)	Proc Time Avg = 138 [usec]
+sub_test_int() Func (n=10)	Proc Time Avg = 134 [usec]
+mul_test_int() Func (n=10)	Proc Time Avg = 138 [usec]
+div_test_int() Func (n=10)	Proc Time Avg = 142 [usec]
+add_test_float() Func (n=10)	Proc Time Avg = 1704 [usec]
+sub_test_float() Func (n=10)	Proc Time Avg = 1756 [usec]
+mul_test_float() Func (n=10)	Proc Time Avg = 1698 [usec]
+div_test_float() Func (n=10)	Proc Time Avg = 1735 [usec]
+add_test_double() Func (n=10)	Proc Time Avg = 2306 [usec]
+sub_test_double() Func (n=10)	Proc Time Avg = 2353 [usec]
+mul_test_double() Func (n=10)	Proc Time Avg = 2345 [usec]
+div_test_double() Func (n=10)	Proc Time Avg = 2863 [usec]
+sin_test() Func (n=10)	Proc Time Avg = 14894 [usec]
+cos_test() Func (n=10)	Proc Time Avg = 14922 [usec]
+tan_test() Func (n=10)	Proc Time Avg = 17812 [usec]
+atan2_test() Func (n=10)	Proc Time Avg = 19292 [usec]
+sqrt_test() Func (n=10)	Proc Time Avg = 1467 [usec]
+gpio_tgl_test() Func (n=10)	Proc Time Avg = 2149 [usec]
+**************************************************************************
+**************************************************************************
+[Math App Test]
+**************************************************************************
+tan(355/226) = -7497258.179
+proc time : 0 usec
+pi = 3.141592653589794
+proc time : 124 usec
+e = 2.718281828459045
+phi = 1.618033988749895
+Fibonacci : 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 
+1's inv sqrt = 0.998307168483734
+2's inv sqrt = 0.706930041313171
+3's inv sqrt = 0.576846837997437
+4's inv sqrt = 0.499153584241867
+5's inv sqrt = 0.447141021490097
+6's inv sqrt = 0.407681375741959
+**************************************************************************
+
+> TEST
+Chimi Monitor Program for RP2040 Ver.1.0.0
+Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+Pico SDK Ver.2.1.0
+RP2040 Chip Rev.B1
+**************************************************************************
+[BenchMark Test]
+**************************************************************************
+add_test_int() Func (n=10)	Proc Time Avg = 137 [usec]
+sub_test_int() Func (n=10)	Proc Time Avg = 134 [usec]
+mul_test_int() Func (n=10)	Proc Time Avg = 135 [usec]
+div_test_int() Func (n=10)	Proc Time Avg = 134 [usec]
+add_test_float() Func (n=10)	Proc Time Avg = 1702 [usec]
+sub_test_float() Func (n=10)	Proc Time Avg = 1755 [usec]
+mul_test_float() Func (n=10)	Proc Time Avg = 1698 [usec]
+div_test_float() Func (n=10)	Proc Time Avg = 1737 [usec]
+add_test_double() Func (n=10)	Proc Time Avg = 2304 [usec]
+sub_test_double() Func (n=10)	Proc Time Avg = 2462 [usec]
+mul_test_double() Func (n=10)	Proc Time Avg = 2525 [usec]
+div_test_double() Func (n=10)	Proc Time Avg = 3133 [usec]
+sin_test() Func (n=10)	Proc Time Avg = 15021 [usec]
+cos_test() Func (n=10)	Proc Time Avg = 14941 [usec]
+tan_test() Func (n=10)	Proc Time Avg = 17803 [usec]
+atan2_test() Func (n=10)	Proc Time Avg = 19287 [usec]
+sqrt_test() Func (n=10)	Proc Time Avg = 1464 [usec]
+gpio_tgl_test() Func (n=10)	Proc Time Avg = 2145 [usec]
+**************************************************************************
+**************************************************************************
+[Math App Test]
+**************************************************************************
+tan(355/226) = -7497258.179
+proc time : 0 usec
+pi = 3.141592653589794
+proc time : 117 usec
+e = 2.718281828459045
+phi = 1.618033988749895
+Fibonacci : 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 
+1's inv sqrt = 0.998307168483734
+2's inv sqrt = 0.706930041313171
+3's inv sqrt = 0.576846837997437
+4's inv sqrt = 0.499153584241867
+5's inv sqrt = 0.447141021490097
+6's inv sqrt = 0.407681375741959
+**************************************************************************
+
+> TEST
+Chimi Monitor Program for RP2040 Ver.1.0.0
+Copyright(C) 2024, Chimi(https://github.com/Chimipupu)
+Pico SDK Ver.2.1.0
+RP2040 Chip Rev.B1
+**************************************************************************
+[BenchMark Test]
+**************************************************************************
+add_test_int() Func (n=10)	Proc Time Avg = 135 [usec]
+sub_test_int() Func (n=10)	Proc Time Avg = 134 [usec]
+mul_test_int() Func (n=10)	Proc Time Avg = 134 [usec]
+div_test_int() Func (n=10)	Proc Time Avg = 141 [usec]
+add_test_float() Func (n=10)	Proc Time Avg = 1705 [usec]
+sub_test_float() Func (n=10)	Proc Time Avg = 1757 [usec]
+mul_test_float() Func (n=10)	Proc Time Avg = 1697 [usec]
+div_test_float() Func (n=10)	Proc Time Avg = 1736 [usec]
+add_test_double() Func (n=10)	Proc Time Avg = 2311 [usec]
+sub_test_double() Func (n=10)	Proc Time Avg = 2356 [usec]
+mul_test_double() Func (n=10)	Proc Time Avg = 2349 [usec]
+div_test_double() Func (n=10)	Proc Time Avg = 2865 [usec]
+sin_test() Func (n=10)	Proc Time Avg = 14892 [usec]
+cos_test() Func (n=10)	Proc Time Avg = 14926 [usec]
+tan_test() Func (n=10)	Proc Time Avg = 17804 [usec]
+atan2_test() Func (n=10)	Proc Time Avg = 19292 [usec]
+sqrt_test() Func (n=10)	Proc Time Avg = 1463 [usec]
+gpio_tgl_test() Func (n=10)	Proc Time Avg = 2156 [usec]
+**************************************************************************
+**************************************************************************
+[Math App Test]
+**************************************************************************
+tan(355/226) = -7497258.179
+proc time : 0 usec
+pi = 3.141592653589794
+proc time : 123 usec
+e = 2.718281828459045
+phi = 1.618033988749895
+Fibonacci : 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 
+1's inv sqrt = 0.998307168483734
+2's inv sqrt = 0.706930041313171
+3's inv sqrt = 0.576846837997437
+4's inv sqrt = 0.499153584241867
+5's inv sqrt = 0.447141021490097
+6's inv sqrt = 0.407681375741959
+**************************************************************************
+
+> dbg
+DEBUG Command
+[CoreFF] ... RP2040 Reg Info
+RP2040 Chip Rev.B1
+[Core1] ... SIO CPUID Reg(0xD0000000)
+[Core1] ... SIO CPUID Reg Val = 0x1
+[Core1] ... SYSINFO CPUID Reg(0x10002927)
+[Core1] ... SYSINFO CPUID Reg Val = 0x10002927
+[Core1] ... SYSINFO CPUID Reg MANUFACTURER[11:0] = 0x927
+[Core1] ... SYSINFO CPUID Reg PART[27:12] = 0x2
+[Core1] ... SYSINFO CPUID Reg REVISION[31:28] = 0x1
+[Core1] ... M0PLUS CPUID Reg(0xE000ED00)
+[Core1] ... M0PLUS CPUID Reg Val = 0x410CC601
+[Core1] ... M0PLUS CPUID Reg REVISION[3:0] = 0x1
+[Core1] ... M0PLUS CPUID Reg PARTNO[15:4] = 0xC60
+[Core1] ... M0PLUS CPUID Reg ARCHITECTURE[19:16] = 0xC
+[Core1] ... M0PLUS CPUID Reg VARIANT[23:20] = 0x0
+[Core1] ... M0PLUS CPUID Reg IMPLEMENTER[31:24] = 0x41
+SD card Test
+test.txt exists
+SD card Write Test
+Writing to test.txt...
+SD card Read Test
+Read : SD Write Test
+
+> mandel
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                        #                                       
+                                                                                
+                                    ####                                        
+                                    ####                                        
+                              #  ##########                                     
+                              #################                                 
+                            ###################                                 
+                           #####################                                
+                 #######  ######################                                
+                ######### ######################                                
+##############################################                                  
+                ######### ######################                                
+                 #######  ######################                                
+                           #####################                                
+                            ###################                                 
+                              #################                                 
+                              #  ##########                                     
+                                    ####                                        
+                                    ####                                        
+                                                                                
+                                        #                                       
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+
+> pi 3
+pi = 3.141592653589794
+proc time : 164 usec
+
+> pi 3
+pi = 3.141592653589794
+proc time : 168 usec
+
+> pi 3
+pi = 3.141592653589794
+proc time : 154 usec
+
+> 

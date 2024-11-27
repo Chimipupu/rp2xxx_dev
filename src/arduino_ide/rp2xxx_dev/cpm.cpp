@@ -160,6 +160,8 @@ static void dbg_cmd(char *p_cmd)
     DEBUG_PRINTF("DEBUG Command\n");
     rp2xxx_reg_info();
 
+    app_fs_test();
+
 #ifdef __WIFI_ENABLE__
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
@@ -272,7 +274,7 @@ void cpm_main(void)
             // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
             dbg_cmd(p_cmd);
         }
-#endif
+#endif /* DEBUG_CMD */
         else {
             DEBUG_PRINTF("Bad command: %s\n", command);
         }

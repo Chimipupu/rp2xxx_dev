@@ -17,30 +17,63 @@
 
 #ifdef MCU_RP2040
     #define __DEBUG_MONITOR_ENABLE__
-
-    // #define __MCU_BOARD_PICO__
+    #define __MCU_BOARD_PICO__
     // #define __MCU_BOARD_PICO_W__
-    #define __MCU_BOARD_YD_RP2040__
+    // #define __MCU_BOARD_YD_RP2040__
     // #define __MCU_BOARD_XIAO_RP2040__
     // #define __MCU_EX_XIAO_EXPANSION__
     // #define __MCU_EX_BOARD_PICO_VGA__
+
+    #ifdef __MCU_BOARD_PICO__
+        // GPIO
+        #define OB_LED_PIN               25  // 基板の緑LED
+        #define RGBLED_PIN               22  // Neopixel
+        #define BUTTON_PIN               28  // ボタン
+        // I2C
+        #define I2C_SDA                  6   // I2C0 SDA
+        #define I2C_SCL                  7   // I2C0 SCL
+        #define I2C_1_SDA                10  // I2C1 SDA
+        #define I2C_1_SCL                11  // I2C1 SCL
+        // SPI
+        #define SPI_CS_PIN               1   // SPI0 CS
+        #define SPI_SCK_PIN              2   // SPI0 CLK
+        #define SPI_MISO_PIN             0   // SPI0 MISO
+        #define SPI_MOSI_PIN             3   // SPI0 MOSI
+        // UART
+        #define UART_TX_PIN              12  // UART0 TX
+        #define UART_RX_PIN              13  // UART0 RX
+        // その他
+        #define __SD_TF_ENABLE__
+        #define __LCD_ENABLE__
+        #define __DEBUG_MONITOR_ENABLE__
+        #define __BENCHMARK_TEST__
+    #endif /* __MCU_BOARD_PICO__ */
 
     // Pico W
     #ifdef __MCU_BOARD_PICO_W__
         #define RGBLED_PIN               20  // Neopixel (GPIO 20)
         #define OB_LED_PIN               0   // 緑色LED (GPIO 0)
         #define BUTTON_PIN               19  // ボタン (GPIO 19)
-        // PWM
-        #define PWM_PIN                  22
-        #define PWM_PIN_2                21
         // I2C
-        #define I2C_SDA                  6   // I2C SDA (GPIO 6)
-        #define I2C_SCL                  7   // I2C SCL (GPIO 7)
+        #define I2C_SDA                  6   // I2C0 SDA
+        #define I2C_SCL                  7   // I2C0 SCL
+        #define I2C_1_SDA                10  // I2C1 SDA
+        #define I2C_1_SCL                11  // I2C1 SCL
         // SPI
-        #define SPI_CS_PIN               5   // SPI CS
-        #define SPI_SCK_PIN              6   // SPI CLK
-        #define SPI_MISO_PIN             4   // SPI MOSI
-        #define SPI_MOSI_PIN             7   // SPI MISO
+        #define SPI_CS_PIN               1   // SPI0 CS
+        #define SPI_SCK_PIN              2   // SPI0 CLK
+        #define SPI_MISO_PIN             0   // SPI0 MISO
+        #define SPI_MOSI_PIN             3   // SPI0 MOSI
+        // UART
+        #define UART_TX_PIN              12  // UART0 TX
+        #define UART_RX_PIN              13  // UART0 RX
+        // その他
+        #define __SD_TF_ENABLE__
+        #define __LCD_ENABLE__
+        #define __NEOPIXEL_ENABLE__
+        #define __BTN_ENABLE__
+        #define __DEBUG_MONITOR_ENABLE__
+        #define __BENCHMARK_TEST__
     #endif /* __MCU_BOARD_PICO_W__ */
 
     // VCC-GND RP2040
@@ -48,17 +81,26 @@
         #define RGBLED_PIN               23  // Neopixel (GPIO 23)
         #define OB_LED_PIN               25  // 青色LED (GPIO 25)
         #define BUTTON_PIN               24  // ボタン (GPIO 24)
-        // PWM
-        #define PWM_PIN                  22
-        #define PWM_PIN_2                21
         // I2C
-        #define I2C_SDA                  6   // I2C SDA (GPIO 6)
-        #define I2C_SCL                  7   // I2C SCL (GPIO 7)
+        #define I2C_SDA                  6   // I2C0 SDA
+        #define I2C_SCL                  7   // I2C0 SCL
+        #define I2C_1_SDA                10  // I2C1 SDA
+        #define I2C_1_SCL                11  // I2C1 SCL
         // SPI
-        #define SPI_SCK_PIN              6   // SPI CLK
-        #define SPI_MISO_PIN             4   // SPI MISO
-        #define SPI_MOSI_PIN             7   // SPI MOSI
-        #define SPI_CS_PIN               5   // SPI CS
+        #define SPI_CS_PIN               1   // SPI0 CS
+        #define SPI_SCK_PIN              2   // SPI0 CLK
+        #define SPI_MISO_PIN             0   // SPI0 MISO
+        #define SPI_MOSI_PIN             3   // SPI0 MOSI
+        // UART
+        #define UART_TX_PIN              12  // UART0 TX
+        #define UART_RX_PIN              13  // UART0 RX
+        // その他
+        #define __SD_TF_ENABLE__
+        #define __LCD_ENABLE__
+        #define __BLUETOOTH_ENABLE__
+        // #define __WIFI_ENABLE__
+        #define __DEBUG_MONITOR_ENABLE__
+        #define __BENCHMARK_TEST__
     #endif /* __MCU_BOARD_YD_RP2040__ */
 
     // XIAO RP2040
@@ -68,14 +110,24 @@
         #define OB_LED_GREEN_PIN         16  // 緑色LED  (GPIO 16)
         #define OB_LED_PIN               25  // 青色LED  (GPIO 25)
         #define BUTTON_PIN               27  // ボタン (GPIO 27)
-
-        // PWM
-        #define PWM_PIN                  22
-        #define PWM_PIN_2                21
-
         // I2C
-        #define I2C_SDA                  6   // I2C SDA (GPIO 6)
-        #define I2C_SCL                  7   // I2C SCL (GPIO 7)
+        #define I2C_SDA                  6   // I2C0 SDA
+        #define I2C_SCL                  7   // I2C0 SCL
+        #define I2C_1_SDA                10  // I2C1 SDA
+        #define I2C_1_SCL                11  // I2C1 SCL
+        // SPI
+        #define SPI_CS_PIN               1   // SPI0 CS
+        #define SPI_SCK_PIN              2   // SPI0 CLK
+        #define SPI_MISO_PIN             0   // SPI0 MISO
+        #define SPI_MOSI_PIN             3   // SPI0 MOSI
+        // UART
+        #define UART_TX_PIN              12  // UART0 TX
+        #define UART_RX_PIN              13  // UART0 RX
+        // その他
+        #define __SD_TF_ENABLE__
+        #define __LCD_ENABLE__
+        #define __DEBUG_MONITOR_ENABLE__
+        #define __BENCHMARK_TEST__
     #endif /* __MCU_BOARD_XIAO_RP2040__ */
 
     // XIAO Expansion Board
