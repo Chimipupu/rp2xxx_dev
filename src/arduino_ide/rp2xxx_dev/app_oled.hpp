@@ -8,39 +8,33 @@
  * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
+
 #ifndef APP_OLED_HPP
 #define APP_OLED_HPP
 
 #include "common.hpp"
 
 #ifdef __LCD_ENABLE__
-#include <Wire.h>
-
-// #define LGFX_USE_V1
 #define LGFX_AUTODETECT
+// #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
 #include <LGFX_AUTODETECT.hpp>
+
+// #define LCD_SSD1306        // 0.96インチのOLED用
+#define LCD_SH110x         // 1.3インチのOLED用(128x64)
 
 #define I2C_NORMAL_FREQ     100000 // I2C @100KHz
 #define I2C_FAST_FREQ       400000 // I2C Fast Mode @400KHz
 // #define I2C_FREQ            I2C_NORMAL_FREQ
 #define I2C_FREQ            I2C_FAST_FREQ
 
-#define SCREEN_WIDTH        128 // OLED display width, in pixels
-#define SCREEN_HEIGHT       64  // OLED display height, in pixels
+#define SCREEN_WIDTH        130 // 128だと左端1列にゴミが出る
+#define SCREEN_HEIGHT       64
 #define OLED_RESET          -1
 
 #define OLED_BACK_COLOR     TFT_BLACK
 #define OLED_TXT_COLOR      TFT_WHITE
 #define OLED_TXT_SIZE       1
-
-#ifdef __MCU_EX_XIAO_EXPANSION__
-// 0.96インチのOLED用
-#define LCD_SSD1306
-#else
-// 1.3インチのOLED用(128x64)
-#define LCD_SH110x
-#endif /* __MCU_EX_XIAO_EXPANSION__ */
 
 #ifdef LCD_SSD1306
 class LGFX_SSD1306 : public lgfx::LGFX_Device
@@ -65,10 +59,24 @@ class LGFX_SSD1306 : public lgfx::LGFX_Device
 
             {
                 auto cfg = _panel_instance.config();
-                cfg.memory_width  = SCREEN_WIDTH;     // LCDのの幅
-                cfg.memory_height =  SCREEN_HEIGHT;   // LCDの高さ
+                // cfg.memory_width  = SCREEN_WIDTH;     // LCDのの幅
+                // cfg.memory_height =  SCREEN_HEIGHT;   // LCDの高さ
+                cfg.pin_cs           = -1;
+                cfg.pin_rst          = -1;
+                cfg.pin_busy         = -1;
+                cfg.panel_width      = SCREEN_WIDTH;
+                cfg.panel_height     = SCREEN_HEIGHT;
+                cfg.offset_x         = 0;
+                cfg.offset_y         = 0;
+                cfg.offset_rotation  = 0;
+                cfg.dummy_read_pixel = 8;
+                cfg.dummy_read_bits  = 1;
+                cfg.readable         = false;
+                cfg.invert           = false;
+                cfg.rgb_order        = false;
+                cfg.dlen_16bit       = false;
+                cfg.bus_shared       = false;
                 _panel_instance.config(cfg);
-                setPanel(&_panel_instance);
             }
             setPanel(&_panel_instance);
         }
@@ -98,8 +106,23 @@ class LGFX_SH110x : public lgfx::LGFX_Device
 
             {
                 auto cfg = _panel_instance.config();
-                cfg.memory_width  = SCREEN_WIDTH;    // LCDのの幅
-                cfg.memory_height = SCREEN_HEIGHT;   // LCDの高さ
+                // cfg.memory_width  = SCREEN_WIDTH;    // LCDのの幅
+                // cfg.memory_height = SCREEN_HEIGHT;   // LCDの高さ
+                cfg.pin_cs           = -1;
+                cfg.pin_rst          = -1;
+                cfg.pin_busy         = -1;
+                cfg.panel_width      = SCREEN_WIDTH;
+                cfg.panel_height     = SCREEN_HEIGHT;
+                cfg.offset_x         = 0;
+                cfg.offset_y         = 0;
+                cfg.offset_rotation  = 0;
+                cfg.dummy_read_pixel = 8;
+                cfg.dummy_read_bits  = 1;
+                cfg.readable         = false;
+                cfg.invert           = false;
+                cfg.rgb_order        = false;
+                cfg.dlen_16bit       = false;
+                cfg.bus_shared       = false;
                 _panel_instance.config(cfg);
             }
             setPanel(&_panel_instance);

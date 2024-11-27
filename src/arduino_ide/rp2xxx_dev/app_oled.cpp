@@ -12,6 +12,7 @@
 #include "app_oled.hpp"
 #ifdef __LCD_ENABLE__
 #include "math_uc.hpp"
+#include <Wire.h>
 
 #define DELAY_MS          2000
 #define MATH_PI_CALC_TIME 3
@@ -23,15 +24,15 @@ typedef enum
     ROTATION_B,     // USB (未調査)
     ROTATION_C,     // USB 左
     ROTATION_D,     // USB 左 画面反転
-}E_LCD_ROATATION;
+} E_LCD_ROATATION;
 
-#ifdef LCD_SSD1306
+#if defined(LCD_SSD1306) && !defined(LCD_SH110x)
 static LGFX_SSD1306 lcd;   // 0.96インチのOLED用
-#endif /* LCD_SSD1306 */
-
-#ifdef LCD_SH110x
+#elif !defined(LCD_SSD1306) && defined(LCD_SH110x)
 static LGFX_SH110x lcd;    // 1.3インチのOLED用
-#endif /* LCD_SH110x */
+#elif !defined(LCD_SSD1306) && !defined(LCD_SH110x)
+static LGFX lcd;
+#endif
 
 static LGFX_Sprite sprite(&lcd);
 
@@ -55,7 +56,7 @@ static void gfx_init(void)
 {
     lcd.init();
     lcd.setRotation(ROTATION_C);
-
+    lcd.fillScreen(TFT_BLACK);
     // sprite.setColorDepth(8);
     // sprite.setTextWrap(false);  // 改行をしない
     sprite.setTextSize(OLED_TXT_SIZE);
@@ -132,7 +133,11 @@ static void oled_math_txt_test(void)
 
     oled_clear();
     sprite.setFont(&fonts::Font0);
+#ifdef MCU_RP2040
     sprite.printf("RP2040 F/W Test\n");
+#else
+    sprite.printf("RP2350 F/W Test\n");
+#endif
 
     // tan(355/226)の計算（※期待値:-7497258.185...）
     result = math_calc_accuracy();
