@@ -12,8 +12,10 @@
 #include "app_main_core1.hpp"
 #include "app_filesystem.hpp"
 
+#ifdef __WIFI_ENABLE__
 char g_ssid[16] = {0};
 char g_password[32] = {0};
+#endif
 
 static uint8_t s_cpu_core = 0;
 static xTaskHandle s_xTaskCore1oled;
@@ -76,13 +78,14 @@ void app_main_init_core1(void)
     // ファイルシステム(SD/SPIFS/FATFS)
     app_fs_init();
 
-#if 0
+#ifdef __WIFI_ENABLE__
     // WiFi 初期化
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
     app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
-#endif
+
     // TODO:WiFi接続処理
+#endif /* __WIFI_ENABLE__ */
 
 #ifdef __LCD_ENABLE__
     app_oled_init();

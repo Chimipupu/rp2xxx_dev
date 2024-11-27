@@ -160,9 +160,11 @@ static void dbg_cmd(char *p_cmd)
     DEBUG_PRINTF("DEBUG Command\n");
     rp2xxx_reg_info();
 
+#ifdef __WIFI_ENABLE__
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
     memset(&g_password[0], 0x00, sizeof(g_password));
     app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
+#endif /* __WIFI_ENABLE__ */
 }
 #endif /* DEBUG_CMD */
 

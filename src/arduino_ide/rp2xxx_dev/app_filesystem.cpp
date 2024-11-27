@@ -21,7 +21,7 @@ constexpr char wifi_config_file_path[] = "/sys/wifi_config.txt";
 static void fs_init(void);
 static void fs_test(void);
 static void fs_dir_print(File dir, uint8_t tabs);
-static void fs_wifi_config_read(char *p_ssid, char *p_password);
+static bool fs_wifi_config_read(char *p_ssid, char *p_password);
 
 static void fs_init(void)
 {
@@ -62,35 +62,37 @@ static void fs_test(void)
     }
 }
 
-static void fs_wifi_config_read(char *p_ssid, char *p_password)
+static bool fs_wifi_config_read(char *p_ssid, char *p_password)
 {
+    bool result = false;
+
     DEBUG_PRINTF("WiFi Config File Read(@SD)\n");
 
     if (SD.exists(wifi_config_file_path)) {
         DEBUG_PRINTF("wifi_config.txt exists\n");
     } else {
         DEBUG_PRINTF("wifi_config.txt doesn't exist\n");
-        return;
+        return result;
     }
 
     File myFile = SD.open(wifi_config_file_path, FILE_READ);
     if (myFile) {
-        DEBUG_PRINTF("SSID:");
         String ssid = myFile.readStringUntil('\n');
         ssid.trim();
         ssid.toCharArray(p_ssid, ssid.length() + 1);
-        DEBUG_PRINTF("%s\n", p_ssid);
 
-        DEBUG_PRINTF("Password:");
         String password = myFile.readStringUntil('\n');
         ssid.trim();
         password.toCharArray(p_password, password.length() + 1);
-        DEBUG_PRINTF("%s\n", p_password);
 
-        myFile.close();
+        result = true;
     } else {
-        DEBUG_PRINTF("error opening wifi_config.txt\n");
+        result = false;
     }
+
+    myFile.close();
+
+    return result;
 }
 
 static void fs_dir_print(File dir, uint8_t tabs)
@@ -136,7 +138,17 @@ void app_fs_init(void)
 void app_fs_wifi_config_read(char *p_ssid, char *p_password)
 {
 #ifdef __SD_TF_ENABLE__
-    fs_wifi_config_read(p_ssid, p_password);
+    bool result = false;
+    result = fs_wifi_config_read(p_ssid, p_password);
+
+    if (result != false) {
+        DEBUG_PRINTF("SSID:");
+        DEBUG_PRINTF("%s\n", p_ssid);
+        DEBUG_PRINTF("Password:");
+        DEBUG_PRINTF("%s\n", p_password);
+    } else {
+        DEBUG_PRINTF("No data(SSID & Password)\n");
+    }
 #endif /* __SD_TF_ENABLE__ */
 }
 

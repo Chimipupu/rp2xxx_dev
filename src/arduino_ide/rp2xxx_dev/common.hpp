@@ -26,6 +26,8 @@
 // #define __IR_ENABLE__
 // #define __PWM_ENABLE__
 // #define __BTN_ENABLE__
+// #define __BLUETOOTH_ENABLE__
+// #define __WIFI_ENABLE__
 // #define __BENCHMARK_TEST__
 
 // #define __WDT_ENABLE__
