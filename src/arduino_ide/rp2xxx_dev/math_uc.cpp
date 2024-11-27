@@ -207,9 +207,9 @@ void math_uc_math_test(void)
     volatile double invsqrt;
     volatile double result;
 
-    DEBUG_PRINTF("*************************************\n");
+    DEBUG_PRINTF("**************************************************************************\n");
     DEBUG_PRINTF("[Math App Test]\n");
-    DEBUG_PRINTF("*************************************\n");
+    DEBUG_PRINTF("**************************************************************************\n");
 
     // tan(355/226)の計算（※期待値:-7497258.185...）
     __DI();
@@ -244,5 +244,5 @@ void math_uc_math_test(void)
         invsqrt = math_fast_inv_sqrt(i);
         DEBUG_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
     }
-    DEBUG_PRINTF("*************************************\n");
+    DEBUG_PRINTF("**************************************************************************\n");
 }

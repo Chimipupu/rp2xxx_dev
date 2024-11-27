@@ -186,11 +186,15 @@ void cpm_main(void)
     uint32_t idx = 0;
 
     cls();
+    DEBUG_PRINTF("**************************************************************************\n");
     cpm_op_msg();
     rp2xxx_develop_info_print();
+    DEBUG_PRINTF("**************************************************************************\n");
     ascii_art();
+    DEBUG_PRINTF("**************************************************************************\n");
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
     help();
+    DEBUG_PRINTF("**************************************************************************\n");
     // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
 
     while (1)
@@ -216,9 +220,12 @@ void cpm_main(void)
         }
 
         if (strcmp(command, "HELP") == 0) {
+            DEBUG_PRINTF("**************************************************************************\n");
             cpm_op_msg();
             rp2xxx_develop_info_print();
+            DEBUG_PRINTF("**************************************************************************\n");
             help();
+            DEBUG_PRINTF("**************************************************************************\n");
         } else if (strcmp(command, "CLS") == 0) {
             cls();
         } else if (strcmp(command, "DIR") == 0) {
