@@ -41,13 +41,13 @@ bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
  */
 bool TIMER_ALARM_1_ISR(repeating_timer_t *p_rt)
 {
+    app_led_fade(OB_LED_PIN);
+
 #ifdef __MCU_BOARD_XIAO_RP2040__
     app_led_fade(OB_LED_RED_PIN);
     app_led_fade(OB_LED_GREEN_PIN);
-    app_led_fade(OB_LED_PIN);
-#else
-    app_led_fade(OB_LED_PIN);
 #endif /* __MCU_BOARD_XIAO_RP2040__ */
+
     return true;
 }
 

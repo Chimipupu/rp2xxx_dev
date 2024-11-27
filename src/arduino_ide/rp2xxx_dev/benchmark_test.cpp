@@ -326,7 +326,10 @@ void benchmark_test(void)
 #ifdef __BENCHMARK_TEST__
     cpm_op_msg();
     rp2xxx_develop_info_print();
-    DEBUG_PRINTF("BenchMark Test [Start]\n");
+
+    DEBUG_PRINTF("*************************************\n");
+    DEBUG_PRINTF("[BenchMark Test]\n");
+    DEBUG_PRINTF("*************************************\n");
 
     // 四則演算（整数）
     calc_test_int();
@@ -348,6 +351,6 @@ void benchmark_test(void)
     // GPIOのトグル
     benchmark(TEST_N, gpio_tgl_test, FUNC_SYMBOL(gpio_tgl_test));
 
-    DEBUG_PRINTF("BenchMark Test [End]\n");
+    DEBUG_PRINTF("*************************************\n");
 #endif /* __BENCHMARK_TEST__ */
 }

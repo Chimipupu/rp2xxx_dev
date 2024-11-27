@@ -23,14 +23,15 @@ static uint8_t s_gree_fade_val = 0;     // 青のフェード値
 static uint8_t s_blue_fade_val = 0;     // 緑のフェード値
 static uint8_t s_fade_led_no = 0;       // フェードするNeoPixelの番号
 static bool s_is_fade = false;
-static bool s_led_fade_amount = false;
 static bool s_rgbled_fade_amount = false;
-static uint8_t s_led_pwm_val = 0;
 
 Adafruit_NeoPixel pixels(RGBLED_NUM,
                         RGBLED_PIN,
                         NEO_GRB + NEO_KHZ800);
 #endif /* __NEOPIXEL_ENABLE__ */
+
+static bool s_led_fade_amount = false;
+static uint8_t s_led_pwm_val = 0;
 
 /**
  * @brief 単色LEDのフェード
@@ -39,7 +40,6 @@ Adafruit_NeoPixel pixels(RGBLED_NUM,
  */
 void app_led_fade(uint8_t pin)
 {
-#ifdef __NEOPIXEL_ENABLE__
     GPIO_PWM(pin, s_led_pwm_val);
 
     if (s_led_fade_amount != true) {
@@ -53,7 +53,6 @@ void app_led_fade(uint8_t pin)
             s_led_fade_amount = !s_led_fade_amount;
         }
     }
-#endif /* __NEOPIXEL_ENABLE__ */
 }
 
 /**

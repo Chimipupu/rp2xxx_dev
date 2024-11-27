@@ -47,6 +47,8 @@ static void pwm_init(void)
 
 static void gpio_init(void)
 {
+    mcu_board_gpio_init();
+
 #ifdef __BTN_ENABLE__
     app_btn_init();
 #endif
@@ -114,9 +116,10 @@ void vTaskCore0Main(void *p_parameter)
                 break;
         }
 #endif
+
         WDT_TOGGLE;
         vTaskDelay(100 / portTICK_PERIOD_MS);
-        // vTaskSuspend(NULL);
+        // vTaskSuspend(NULL);#endif
     }
 }
 
@@ -140,21 +143,6 @@ void app_main_init_core0(void)
     app_wdt_init();
     WDT_TOGGLE;
 
-    // UART 初期化
-#ifdef __MCU_BOARD_PICO_W__
-    // app_bluetooth_init();
-    SerialBT.begin();
-    mcu_board_gpio_init();
-    GPIO_OUTPUT(OB_LED_PIN, HIGH);
-#endif /* __MCU_BOARD_PICO_W__ */
-    DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
-    while (!Serial) {
-        WDT_TOGGLE;
-    }
-    s_cpu_core = rp2xxx_get_cpu_core_num();
-    WDT_TOGGLE;
-    DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
-
     // GPIO 初期化
     gpio_init();
 
@@ -163,15 +151,34 @@ void app_main_init_core0(void)
     pwm_init();
 #endif /* __PWM_ENABLE__ */
 
-    // NeoPicel 初期化 初期化
+#ifdef __NEOPIXEL_ENABLE__
+    // NeoPixel 初期化
     app_neopixel_init();
     app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
+#endif /* __NEOPIXEL_ENABLE__ */
 
+#if 1
     // タイマー 初期化
     app_timer_set_alarm(0, 1);      // アラーム0, 1msec
     app_timer_set_alarm(1, 8);      // アラーム1, 8msec
     app_timer_set_alarm(2, 20);     // アラーム2, 20msec
     app_timer_set_alarm(3, 1000);   // アラーム3, 1000msec
+#endif
+
+    // UART 初期化
+#ifdef __MCU_BOARD_PICO_W__
+    // app_bluetooth_init();
+    SerialBT.begin();
+    GPIO_OUTPUT(OB_LED_PIN, HIGH);
+#endif /* __MCU_BOARD_PICO_W__ */
+    DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
+    while (!Serial) {
+        WDT_TOGGLE;
+    }
+
+    s_cpu_core = rp2xxx_get_cpu_core_num();
+    WDT_TOGGLE;
+    DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 
 #ifdef __IR_ENABLE__
     // 赤外線関連 アプリ初期化

@@ -38,8 +38,12 @@ static void sd_spi_init(void)
 
 void mcu_board_gpio_init(void)
 {
+#if defined(__MCU_BOARD_PICO__) || defined(__MCU_BOARD_PICO_2__)
     GPIO_PORT_DIR(OB_LED_PIN, OUTPUT);
-#if defined(__MCU_BOARD_XIAO_RP2040__)
+    GPIO_OUTPUT(OB_LED_PIN, HIGH);
+#endif
+
+#ifdef __MCU_BOARD_XIAO_RP2040__
     GPIO_PORT_DIR(OB_LED_RED_PIN, OUTPUT);
     GPIO_PORT_DIR(OB_LED_GREEN_PIN, OUTPUT);
     // GPIO_PORT_DIR(BUZZUER_PIN, OUTPUT);

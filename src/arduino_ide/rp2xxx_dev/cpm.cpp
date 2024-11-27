@@ -143,6 +143,7 @@ static void timer_test(void)
     __DI();
     uint32_t start_time = time_us_32();
 
+    // 2325000 = 処理時間 (RP2040:約97ms, RP2350:約92ms)
     for (uint32_t i = 0; i < 2325000; i++) {
         asm volatile("nop");
     }
@@ -150,7 +151,6 @@ static void timer_test(void)
     uint32_t end_time = time_us_32();
     __EI();
 
-    // 処理時間 約97.38ms
     DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
 }
 
@@ -248,9 +248,8 @@ void cpm_main(void)
         } else if (strcmp(command, "TEST") == 0) {
 #ifdef __BENCHMARK_TEST__
             benchmark_test();
-#else
-            math_uc_math_test();
 #endif /* __BENCHMARK_TEST__ */
+            math_uc_math_test();
         }
 #ifdef DEBUG_CMD
         else if (strstr(command, "DBG") == command)

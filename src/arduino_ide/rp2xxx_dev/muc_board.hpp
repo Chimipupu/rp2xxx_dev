@@ -18,6 +18,7 @@
 #ifdef MCU_RP2040
     #define __DEBUG_MONITOR_ENABLE__
 
+    // #define __MCU_BOARD_PICO__
     // #define __MCU_BOARD_PICO_W__
     #define __MCU_BOARD_YD_RP2040__
     // #define __MCU_BOARD_XIAO_RP2040__
