@@ -14,9 +14,12 @@
 #include "math_uc.hpp"
 #include <Wire.h>
 
-#define DELAY_MS          2000
 #define MATH_PI_CALC_TIME 3
 #define FIBONACCI_N       8
+
+#define OLED_ENG_TEST          0
+#define OLED_JPN_TEST          1
+#define OLED_MATH_TEST         2
 
 typedef enum
 {
@@ -35,6 +38,7 @@ static LGFX lcd;
 #endif
 
 static LGFX_Sprite sprite(&lcd);
+static uint8_t s_type = OLED_ENG_TEST;
 
 static void oled_i2c_init(void);
 static void gfx_init(void);
@@ -173,16 +177,30 @@ static void oled_math_txt_test(void)
 
 void app_oled_test(void)
 {
-    // 英数字 表示テスト
-    oled_en_txt_test();
-    delay(DELAY_MS);
+    switch (s_type)
+    {
+        // 英数字 表示テスト
+        case OLED_ENG_TEST:
+            oled_en_txt_test();
+            break;
 
-    // 日本語 表示テスト
-    oled_jp_txt_test();
-    delay(DELAY_MS);
+        // 日本語 表示テスト
+        case OLED_JPN_TEST:
+            oled_jp_txt_test();
+            break;
 
-    // 計算結果表示テスト
-    oled_math_txt_test();
-    delay(DELAY_MS);
+        // 計算結果表示テスト
+        case OLED_MATH_TEST:
+            oled_math_txt_test();
+            break;
+
+        default:
+            break;
+    }
+
+    s_type++;
+    if(s_type > OLED_MATH_TEST){
+        s_type = OLED_ENG_TEST;
+    }
 }
 #endif /* __LCD_ENABLE__ */

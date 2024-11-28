@@ -39,6 +39,7 @@ void vTaskCore1oled(void *p_parameter)
 #ifdef __DEBUG_MONITOR_ENABLE__
 void vTaskCore1monitor(void *p_parameter)
 {
+    cpm_init();
     DEBUG_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
 
     while (1)
@@ -67,10 +68,6 @@ void vTaskCore1Main(void *p_parameter)
 
 void app_main_init_core1(void)
 {
-    while (!Serial) {
-        WDT_TOGGLE;
-    }
-
     s_cpu_core = rp2xxx_get_cpu_core_num();
     WDT_TOGGLE;
     DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);

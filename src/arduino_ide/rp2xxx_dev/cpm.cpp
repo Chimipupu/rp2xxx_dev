@@ -16,9 +16,6 @@
 #include "benchmark_test.hpp"
 #include "rp2xxx.hpp"
 
-extern char g_ssid[16];
-extern char g_password[32];
-
 #define DEBUG_CMD
 #ifdef DEBUG_CMD
 #define DBG_CMD_ARG         4
@@ -27,6 +24,21 @@ extern char g_password[32];
 #include "math_uc.hpp"
 #define MAX_CMD_LEN         100
 #define CALC_CMD_ARG        4
+
+#ifdef __WIFI_ENABLE__
+extern char g_ssid[16];
+extern char g_password[32];
+#endif /* __WIFI_ENABLE__ */
+
+const char *p_cpm_version_str = "Ver1.0.1";
+#ifdef MCU_RP2040
+const char *p_mcu_str = "RP2040";
+#else
+const char *p_mcu_str = "RP2350";
+#endif
+
+static char s_cmd_buf[MAX_CMD_LEN] = {0};
+static uint32_t s_idx = 0;
 
 static void cpm_ansi_txt_color(const char *p_ansi_txt_color);
 static void ascii_art(void);
@@ -38,6 +50,7 @@ static void timer_test(void);
 #ifdef DEBUG_CMD
 static void dbg_cmd(char *p_cmd);
 #endif
+static void cmd_exec(char *p_cmd_buf, uint32_t idx);
 
 static void cpm_ansi_txt_color(const char *p_ansi_txt_color)
 {
@@ -170,13 +183,68 @@ static void dbg_cmd(char *p_cmd)
 }
 #endif /* DEBUG_CMD */
 
+static void cmd_exec(char *p_cmd_buf, uint32_t idx)
+{
+    if (strcmp(p_cmd_buf, "HELP") == 0) {
+        DEBUG_PRINTF("**************************************************************************\n");
+        cpm_op_msg();
+        rp2xxx_develop_info_print();
+        DEBUG_PRINTF("**************************************************************************\n");
+        help();
+        DEBUG_PRINTF("**************************************************************************\n");
+    } else if (strcmp(p_cmd_buf, "CLS") == 0) {
+        cls();
+    } else if (strcmp(p_cmd_buf, "DIR") == 0) {
+        dir();
+    } else if (strstr(p_cmd_buf, "CALC") == p_cmd_buf) {
+        char *p_cmd = p_cmd_buf + CALC_CMD_ARG;
+        while(*p_cmd == ' ') {
+            p_cmd++;
+            WDT_TOGGLE;
+        }
+        // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
+        calculate(p_cmd);
+    } else if (strstr(p_cmd_buf, "FIB") == p_cmd_buf) {
+        uint32_t n = atoi(p_cmd_buf + 4);
+        math_uc_fibonacci(n);
+    } else if (strstr(p_cmd_buf, "PRIME") == p_cmd_buf) {
+        uint32_t n = atoi(p_cmd_buf + 6);
+        math_uc_prime(n);
+    } else if (strstr(p_cmd_buf, "PI") == p_cmd_buf) {
+        uint32_t num = atoi(p_cmd_buf + 3);
+        math_uc_calc_pi(num);
+    } else if (strcmp(p_cmd_buf, "MANDEL") == 0) {
+        cls();
+        math_uc_mandelbrot();
+    } else if (strcmp(p_cmd_buf, "TIMER") == 0) {
+        timer_test();
+    } else if (strcmp(p_cmd_buf, "TEST") == 0) {
+#ifdef __BENCHMARK_TEST__
+        benchmark_test();
+#endif /* __BENCHMARK_TEST__ */
+        math_uc_math_test();
+    }
+#ifdef DEBUG_CMD
+    else if (strstr(p_cmd_buf, "DBG") == 0)
+    {
+        char *p_cmd = p_cmd_buf + DBG_CMD_ARG;
+        while (*p_cmd == ' ')
+        {
+            p_cmd++;
+            WDT_TOGGLE;
+        }
+        // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
+        dbg_cmd(p_cmd);
+    }
+#endif /* DEBUG_CMD */
+    else {
+        DEBUG_PRINTF("Bad p_cmd_buf: %s\n", p_cmd_buf);
+    }
+}
+
 void cpm_op_msg(void)
 {
-#ifdef MCU_RP2040
-    DEBUG_PRINTF("Chimi Monitor Program for RP2040 Ver.1.0.0\n");
-#else
-    DEBUG_PRINTF("Chimi Monitor Program for RP2350 Ver.1.0.0\n");
-#endif
+    DEBUG_PRINTF("Chimi Monitor Program for %s %s\n", p_mcu_str, p_cpm_version_str);
     DEBUG_PRINTF("Copyright(C) 2024, Chimi(");
     cpm_ansi_txt_color(ANSI_TXT_COLOR_BLUE);
     DEBUG_PRINTF("https://github.com/Chimipupu");
@@ -184,10 +252,10 @@ void cpm_op_msg(void)
     DEBUG_PRINTF(")\n");
 }
 
-void cpm_main(void)
+void cpm_init(void)
 {
-    char command[MAX_CMD_LEN];
-    uint32_t idx = 0;
+    memset(&s_cmd_buf[0], 0x00, sizeof(s_cmd_buf));
+    s_idx = 0;
 
     cls();
     DEBUG_PRINTF("**************************************************************************\n");
@@ -201,90 +269,25 @@ void cpm_main(void)
     DEBUG_PRINTF("**************************************************************************\n");
     // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
 
-    while (1)
-    {
+    DEBUG_PRINTF("\n> ");
+}
+
+void cpm_main(void)
+{
+    if (Serial.available()) {
+        char ch = Serial.read();
+        ch = app_util_eng_to_upper_case(ch);
+
+        if (ch == '\n') {                       // エンターキーが押された
+            s_cmd_buf[s_idx] = '\0';            // 文字列の終端
+        } else if (s_idx < MAX_CMD_LEN - 1) {   // バッファオーバーフローを防ぐ
+            s_cmd_buf[s_idx] = ch;              // 文字をコマンドに追加
+            s_idx++;
+        }
+
+        cmd_exec(&s_cmd_buf[0], s_idx);
+
         DEBUG_PRINTF("\n> ");
-        idx = 0;
-
-        while (true)
-        {
-            if (Serial.available()) {
-                // cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
-                char ch = Serial.read();
-                ch = app_util_eng_to_upper_case(ch);
-                if (ch == '\n') { // エンターキーが押された
-                    command[idx] = '\0'; // 文字列の終端
-                    break; // 入力完了
-                }
-                else if (idx < MAX_CMD_LEN - 1) { // バッファオーバーフローを防ぐ
-                    command[idx++] = ch; // 文字をコマンドに追加
-                }
-            }
-            WDT_TOGGLE;
-        }
-
-        if (strcmp(command, "HELP") == 0) {
-            DEBUG_PRINTF("**************************************************************************\n");
-            cpm_op_msg();
-            rp2xxx_develop_info_print();
-            DEBUG_PRINTF("**************************************************************************\n");
-            help();
-            DEBUG_PRINTF("**************************************************************************\n");
-        } else if (strcmp(command, "CLS") == 0) {
-            cls();
-        } else if (strcmp(command, "DIR") == 0) {
-            dir();
-        } else if (strstr(command, "CALC") == command) {
-            char *p_cmd = command + CALC_CMD_ARG;
-            while (*p_cmd == ' '){
-                p_cmd++;
-                WDT_TOGGLE;
-            }
-            // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
-            calculate(p_cmd);
-        } else if (strstr(command, "FIB") == command) {
-            int n = atoi(command + 4);
-            math_uc_fibonacci(n);
-        } else if (strstr(command, "PRIME") == command) {
-            int n = atoi(command + 6);
-            math_uc_prime(n);
-        } else if (strstr(command, "PI") == command) {
-            uint32_t num = atoi(command + 3);
-            math_uc_calc_pi(num);
-        } else if (strcmp(command, "MANDEL") == 0) {
-            cls();
-            math_uc_mandelbrot();
-        } else if (strcmp(command, "TIMER") == 0) {
-            timer_test();
-        } else if (strcmp(command, "TEST") == 0) {
-#ifdef __BENCHMARK_TEST__
-            benchmark_test();
-#endif /* __BENCHMARK_TEST__ */
-            math_uc_math_test();
-        }
-#ifdef DEBUG_CMD
-        else if (strstr(command, "DBG") == command)
-        {
-            char *p_cmd = command + DBG_CMD_ARG;
-            while (*p_cmd == ' ')
-            {
-                p_cmd++;
-                WDT_TOGGLE;
-            }
-            // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
-            dbg_cmd(p_cmd);
-        }
-#endif /* DEBUG_CMD */
-        else {
-            DEBUG_PRINTF("Bad command: %s\n", command);
-        }
-        WDT_TOGGLE;
-    }
-
-    DEBUG_PRINTF("rebooting ...\n");
-    while (1)
-    {
-        // WDTが泣くのを待つ
-        NOP;
+        s_idx = 0;
     }
 }

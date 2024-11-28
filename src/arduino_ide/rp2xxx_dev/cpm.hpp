@@ -29,6 +29,7 @@
 #define ANSI_TXT_COLOR_MAGENTA  "\e[36m"
 
 void cpm_op_msg(void);
+void cpm_init(void);
 void cpm_main(void);
 
 #endif /* CPM_HPP */
