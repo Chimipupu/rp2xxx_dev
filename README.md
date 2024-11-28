@@ -1,6 +1,5 @@
-# 📍RP2040 & RP2350 評価F/W開発
-📍RP2040 & RP2350 評価F/W 個人開発リポジトリ🥳
-
+# 📍RP2040 & RP2350 評価F/W
+## Ver1.0.3
 - 📍CPU ... [RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
   - 📍CPU0 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
   - 📍CPU1 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
@@ -12,15 +11,11 @@
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
-<!-- <table>
-  <tr>
-    <td><img width="500" src="/doc/img/chimi_os_opmsg.png"></td>
-    <td><img width="500" src="/doc/img/chimi_os_opmsg.gif"></td>
-  </tr>
-</table> -->
+- 📍センサ
+  - 📍 ... [BME280 (湿度、温度、気圧センサ)🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/)
 
 <div align="center">
-  <img width="500" src="/doc/img/chimi_os_opmsg.png">
+  <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.3.png">
 </div>
 
 <table>
@@ -72,19 +67,20 @@
     - 📍OS ... FreeRTOS
       - ✅Core1メインタスク
         - 🚩TODO
-      - ✅OLEDタスク(@OLED画面)
-        - 英語、日本語、科学計算の結果を画面表示
+      - ✅センサータスク
+        - ✅BME280 湿度、温度、気圧センサ (@I2C)
+      - ✅OLEDタスク
+        - 英語、日本語、科学計算の結果をOLEDに表示(@I2C)
       - ✅モニタプログラムタスク(@USBシリアル)
         - ✅ベンチマークテスト
-          - 🚩四則演算（整数、浮動小数 float & double）
-          - 🚩sin, cos, tan, atan2, sqrt
-          - 🚩メモリ, GPIOトグル
-        - ✅SDカードのR/W
-          - ✅WiFi設定情報
+          - ✅四則演算（整数、浮動小数 float & double）
+          - ✅sin, cos, tan, atan2, sqrt
+          - ✅メモリ, GPIOトグル
         - ✅計算
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
         - ✅レジスタ
           - SYSINFO/M0PLUS or M33/SIOのCPUIDレジスタRead
+        - ✅SDカードのR/W(@SPI)
 
 ### ペリフェラル
 
