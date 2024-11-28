@@ -12,6 +12,7 @@
 #include "app_main_core1.hpp"
 #include "app_filesystem.hpp"
 #include "app_sensor.hpp"
+#include "app_wdt.hpp"
 
 #ifdef __WIFI_ENABLE__
 char g_ssid[16] = {0};
@@ -28,7 +29,7 @@ static xTaskHandle s_xTaskCore1Sensor;
 void vTaskCore1oled(void *p_parameter)
 {
     app_oled_init();
-    // DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
 
     while (1)
     {
@@ -46,7 +47,7 @@ void vTaskCore1oled(void *p_parameter)
 void vTaskCore1Sensor(void *p_parameter)
 {
     app_sensor_init();
-    // DEBUG_PRINTF("[Core%X] vTaskCore1Sensor\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore1Sensor\n", s_cpu_core);
 
     while (1)
     {
@@ -67,7 +68,7 @@ void vTaskCore1monitor(void *p_parameter)
         WDT_TOGGLE;
     }
     cpm_init();
-    // DEBUG_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
 
     while (1)
     {
@@ -81,7 +82,7 @@ void vTaskCore1monitor(void *p_parameter)
 #if 0
 void vTaskCore1Main(void *p_parameter)
 {
-    // DEBUG_PRINTF("[Core%X] vTaskCore1Main\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore1Main\n", s_cpu_core);
 
     while (1)
     {
@@ -97,7 +98,7 @@ void app_main_init_core1(void)
 {
     s_cpu_core = rp2xxx_get_cpu_core_num();
     WDT_TOGGLE;
-    // DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
     // ファイルシステム(SD/SPIFS/FATFS)
     app_fs_init();
@@ -156,7 +157,7 @@ void app_main_init_core1(void)
 
 void app_main_core1(void)
 {
-    // DEBUG_PRINTF("[Core1]Core1 Loop Task\n");
+    // DEBUG_RTOS_PRINTF("[Core1]Core1 Loop Task\n");
     WDT_TOGGLE;
     vTaskSuspend(NULL);
 }

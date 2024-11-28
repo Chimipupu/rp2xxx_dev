@@ -134,28 +134,28 @@ void math_uc_fibonacci(uint32_t n)
 {
     uint32_t i,fib;
 
-    DEBUG_PRINTF("Fibonacci : ");
+    DEBUG_RTOS_PRINTF("Fibonacci : ");
     for(uint8_t i = 1; i < n; i++)
     {
         fib = math_fibonacci_calc(i);
-        DEBUG_PRINTF("%d ", fib);
+        DEBUG_RTOS_PRINTF("%d ", fib);
     }
-    DEBUG_PRINTF("\n");
+    DEBUG_RTOS_PRINTF("\n");
 }
 
 void math_uc_prime(uint32_t n)
 {
-    DEBUG_PRINTF("Prime Numbers: ");
+    DEBUG_RTOS_PRINTF("Prime Numbers: ");
     uint32_t count = 0;
     for (int i = 2; count < n; i++)
     {
         if (math_is_prime_num(i))
         {
-            DEBUG_PRINTF("%d ", i);
+            DEBUG_RTOS_PRINTF("%d ", i);
             count++;
         }
     }
-    DEBUG_PRINTF("\n");
+    DEBUG_RTOS_PRINTF("\n");
 }
 
 void math_uc_calc_pi(uint32_t n)
@@ -166,8 +166,8 @@ void math_uc_calc_pi(uint32_t n)
     double pi = math_pi_calc(n);
     uint32_t end_time = time_us_32();
     __EI();
-    DEBUG_PRINTF("pi = %.15f\n", pi);
-    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
+    DEBUG_RTOS_PRINTF("pi = %.15f\n", pi);
+    DEBUG_RTOS_PRINTF("proc time : %d usec\n", end_time - start_time);
 }
 
 void math_uc_mandelbrot(void)
@@ -192,9 +192,9 @@ void math_uc_mandelbrot(void)
             }
 
             char symbol = (iteration == MAX_ITER) ? '#' : ' ';
-            DEBUG_PRINTF("%c", symbol);
+            DEBUG_RTOS_PRINTF("%c", symbol);
         }
-        DEBUG_PRINTF("\n");
+        DEBUG_RTOS_PRINTF("\n");
     }
 }
 
@@ -207,9 +207,9 @@ void math_uc_math_test(void)
     volatile double invsqrt;
     volatile double result;
 
-    DEBUG_PRINTF("**************************************************************************\n");
-    DEBUG_PRINTF("[Math App Test]\n");
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("[Math App Test]\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 
     // tan(355/226)の計算（※期待値:-7497258.185...）
     __DI();
@@ -217,15 +217,15 @@ void math_uc_math_test(void)
     result = math_calc_accuracy();
     uint32_t end_time = time_us_32();
     __EI();
-    DEBUG_PRINTF("tan(355/226) = %.3f\n", result);
-    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
+    DEBUG_RTOS_PRINTF("tan(355/226) = %.3f\n", result);
+    DEBUG_RTOS_PRINTF("proc time : %d usec\n", end_time - start_time);
 
     // 円周率π
     math_uc_calc_pi(MATH_PI_CALC_TIME);
 
     // ネイピアe
     napier = math_napier_calc();
-    DEBUG_PRINTF("e = %.15f\n", napier);
+    DEBUG_RTOS_PRINTF("e = %.15f\n", napier);
 
     // 黄金比φ
     __DI();
@@ -233,7 +233,7 @@ void math_uc_math_test(void)
     phi = math_goldenratio_calc();
     end_time = time_us_32();
     __EI();
-    DEBUG_PRINTF("phi = %.15f\n", phi);
+    DEBUG_RTOS_PRINTF("phi = %.15f\n", phi);
 
     // フィボナッチ数列
     math_uc_fibonacci(FIBONACCI_N);
@@ -242,7 +242,7 @@ void math_uc_math_test(void)
     for(i = 1; i < INVSQRT_N; i++)
     {
         invsqrt = math_fast_inv_sqrt(i);
-        DEBUG_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
+        DEBUG_RTOS_PRINTF("%d's inv sqrt = %.15f\n", i, invsqrt);
     }
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 }

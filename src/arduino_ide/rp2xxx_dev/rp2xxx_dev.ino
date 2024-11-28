@@ -42,7 +42,6 @@ void core0_main(void)
 {
     // DEBUG_PRINT("[Core0]app_main_core0\n");
     // SW_DELAY_MS(MAIN_DELAY);
-    WDT_TOGGLE;
     vTaskSuspend(NULL);
 }
 
@@ -50,6 +49,5 @@ void core1_main(void)
 {
     // DEBUG_PRINT("[Core1]app_main_core1\n");
     // SW_DELAY_MS(MAIN_DELAY);
-    WDT_TOGGLE;
     vTaskSuspend(NULL);
 }

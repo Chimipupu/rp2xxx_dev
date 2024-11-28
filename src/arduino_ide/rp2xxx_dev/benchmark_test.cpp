@@ -303,7 +303,7 @@ static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name)
     uint32_t proc_time_buf[n] = {0};
     uint32_t proc_time_avg = 0;
 
-    DEBUG_PRINTF("%s() Func (n=%d)\t", p_func_name, TEST_N);
+    DEBUG_RTOS_PRINTF("%s() Func (n=%d)\t", p_func_name, TEST_N);
     memset(&proc_time_buf[0], 0x00, sizeof(proc_time_buf));
 
     for(uint32_t i = 0; i < n; i++)
@@ -313,7 +313,7 @@ static void benchmark(uint32_t n, void (*p_func)(), const char *p_func_name)
     }
 
     proc_time_avg = proc_time_avg / n;
-    DEBUG_PRINTF("Proc Time Avg = %d [usec]\n", proc_time_avg);
+    DEBUG_RTOS_PRINTF("Proc Time Avg = %d [usec]\n", proc_time_avg);
 }
 #endif /* __BENCHMARK_TEST__ */
 
@@ -327,9 +327,9 @@ void benchmark_test(void)
     cpm_op_msg();
     rp2xxx_develop_info_print();
 
-    DEBUG_PRINTF("**************************************************************************\n");
-    DEBUG_PRINTF("[BenchMark Test]\n");
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("[BenchMark Test]\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 
     // 四則演算（整数）
     calc_test_int();
@@ -351,6 +351,6 @@ void benchmark_test(void)
     // GPIOのトグル
     benchmark(TEST_N, gpio_tgl_test, FUNC_SYMBOL(gpio_tgl_test));
 
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 #endif /* __BENCHMARK_TEST__ */
 }

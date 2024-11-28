@@ -30,39 +30,39 @@ static void fs_init(void)
 
 static void fs_test(void)
 {
-    DEBUG_PRINTF("**************************************************************************\n");
-    DEBUG_PRINTF("SD card Test\n");
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("SD card Test\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
     if (SD.exists(p_test_file_path)) {
-        DEBUG_PRINTF("test.txt exists\n");
+        DEBUG_RTOS_PRINTF("test.txt exists\n");
     } else {
-        DEBUG_PRINTF("test.txt doesn't exist\n");
-        DEBUG_PRINTF("Creating test.txt\n");
+        DEBUG_RTOS_PRINTF("test.txt doesn't exist\n");
+        DEBUG_RTOS_PRINTF("Creating test.txt\n");
     }
 
-    DEBUG_PRINTF("SD card Write Test\n");
+    DEBUG_RTOS_PRINTF("SD card Write Test\n");
     File myFile = SD.open(p_test_file_path, FILE_WRITE);
     if (myFile) {
-        DEBUG_PRINTF("Writing to test.txt...\n");
+        DEBUG_RTOS_PRINTF("Writing to test.txt...\n");
         myFile.seek(0);
         myFile.println("SD Write Test");
         myFile.close();
     } else {
-        DEBUG_PRINTF("error opening test.txt\n");
+        DEBUG_RTOS_PRINTF("error opening test.txt\n");
     }
 
-    DEBUG_PRINTF("--------------------------------------------------------------------------\n");
+    DEBUG_RTOS_PRINTF("--------------------------------------------------------------------------\n");
 
-    DEBUG_PRINTF("SD card Read Test\n");
+    DEBUG_RTOS_PRINTF("SD card Read Test\n");
     myFile = SD.open(p_test_file_path, FILE_READ);
     if (myFile) {
-        DEBUG_PRINTF("Read : ");
+        DEBUG_RTOS_PRINTF("Read : ");
         while (myFile.available()) {
-            DEBUG_PRINTF("%c", myFile.read());
+            DEBUG_RTOS_PRINTF("%c", myFile.read());
         }
         myFile.close();
     } else {
-        DEBUG_PRINTF("error opening /test.txt\n");
+        DEBUG_RTOS_PRINTF("error opening /test.txt\n");
     }
 }
 
@@ -71,9 +71,9 @@ static bool fs_wifi_config_read(char *p_ssid, char *p_password)
     bool result = false;
 
     if (SD.exists(p_wifi_config_file_path)) {
-        DEBUG_PRINTF("wifi_config.txt exists\n");
+        DEBUG_RTOS_PRINTF("wifi_config.txt exists\n");
     } else {
-        DEBUG_PRINTF("wifi_config.txt doesn't exist\n");
+        DEBUG_RTOS_PRINTF("wifi_config.txt doesn't exist\n");
         return result;
     }
 
@@ -108,19 +108,19 @@ static void fs_dir_print(File dir, uint8_t tabs)
                 break;
             }
 
-            DEBUG_PRINTF("%s", entry.name());
+            DEBUG_RTOS_PRINTF("%s", entry.name());
             if (entry.isDirectory()) {
-                DEBUG_PRINTF("/");
+                DEBUG_RTOS_PRINTF("/");
                 fs_dir_print(entry, tabs + 1);
             } else {
-                DEBUG_PRINTF("\n");
+                DEBUG_RTOS_PRINTF("\n");
             }
             entry.close();
         }
 
         entry.close();
     } else {
-        DEBUG_PRINTF("No File Dir\n");
+        DEBUG_RTOS_PRINTF("No File Dir\n");
     }
 }
 
@@ -142,21 +142,21 @@ void app_fs_wifi_config_read(char *p_ssid, char *p_password)
 #ifdef __SD_TF_ENABLE__
     bool result = false;
 
-    DEBUG_PRINTF("**************************************************************************\n");
-    DEBUG_PRINTF("WiFi Config File Read(@SD)\n");
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("WiFi Config File Read(@SD)\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 
     result = fs_wifi_config_read(p_ssid, p_password);
 
     if (result != false) {
-        DEBUG_PRINTF("SSID : %s\n", p_ssid);
-        DEBUG_PRINTF("--------------------------------------------------------------------------\n");
-        DEBUG_PRINTF("Password : %s\n", p_password);
+        DEBUG_RTOS_PRINTF("SSID : %s\n", p_ssid);
+        DEBUG_RTOS_PRINTF("--------------------------------------------------------------------------\n");
+        DEBUG_RTOS_PRINTF("Password : %s\n", p_password);
     } else {
-        DEBUG_PRINTF("[ERR] No data(SSID & Password)\n");
+        DEBUG_RTOS_PRINTF("[ERR] No data(SSID & Password)\n");
     }
 
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 #endif /* __SD_TF_ENABLE__ */
 }
 

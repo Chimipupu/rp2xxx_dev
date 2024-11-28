@@ -14,7 +14,7 @@
 void app_wdt_init(void)
 {
     if (watchdog_caused_reboot()) {
-        DEBUG_PRINTF("Rebooted by WDT wanwan\n");
+        DEBUG_RTOS_PRINTF("Rebooted by WDT wanwan\n");
     }
 
 #ifdef __WDT_ENABLE__

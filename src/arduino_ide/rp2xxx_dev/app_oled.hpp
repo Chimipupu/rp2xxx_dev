@@ -15,6 +15,7 @@
 #include "common.hpp"
 
 #ifdef __LCD_ENABLE__
+#define OLED_I2C_ADDR       0x3C
 #define LGFX_AUTODETECT
 // #define LGFX_USE_V1
 #include <LovyanGFX.hpp>

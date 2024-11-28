@@ -88,9 +88,9 @@ uint32_t rp2xxx_get_hwrng(void)
 void rp2xxx_chip_rev_print(void)
 {
 #if defined(MCU_RP2040) && !defined(MCU_RP2350)
-    DEBUG_PRINTF("RP2040 Chip Rev.B%d\n", rp2xxx_read_reg_chip_rev());
+    DEBUG_RTOS_PRINTF("RP2040 Chip Rev.B%d\n", rp2xxx_read_reg_chip_rev());
 #elif !defined(MCU_RP2040) && defined(MCU_RP2350)
-    DEBUG_PRINTF("RP2350 Chip Rev.A%d\n", rp2xxx_read_reg_chip_rev());
+    DEBUG_RTOS_PRINTF("RP2350 Chip Rev.A%d\n", rp2xxx_read_reg_chip_rev());
 #endif
 }
 
@@ -100,7 +100,7 @@ void rp2xxx_chip_rev_print(void)
  */
 void rp2xxx_develop_info_print(void)
 {
-    DEBUG_PRINTF("Pico SDK Ver.%s\n", get_pico_sdk_version());
+    DEBUG_RTOS_PRINTF("Pico SDK Ver.%s\n", get_pico_sdk_version());
     rp2xxx_chip_rev_print();
 }
 
@@ -118,49 +118,49 @@ void rp2xxx_reg_info(void)
     SYSINFO_CPUID_REG.DWORD = (*(volatile uint32_t *)SYSINFO_CPUID_REG_ADDR);
     cpu_core = SIO_CPUID_REG.DWORD;
 
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 #ifdef MCU_RP2040
-    DEBUG_PRINTF("[Core%X] ... RP2040 Reg Info\n", cpu_core);
+    DEBUG_RTOS_PRINTF("[Core%X] ... RP2040 Reg Info\n", cpu_core);
     M0PLUS_CPUID M0PLUS_CPUID_REG;   // M0PLUS CPUIDレジスタ
     M0PLUS_CPUID_REG.DWORD = (*(volatile uint32_t *)M0PLUS_CPUID_REG_ADDR);
 #else
-    DEBUG_PRINTF("[Core%X] ... RP2350 Reg Info\n", cpu_core);
+    DEBUG_RTOS_PRINTF("[Core%X] ... RP2350 Reg Info\n", cpu_core);
     M33_CPUID M33_CPUID_REG;   // M33 CPUIDレジスタ
     M33_CPUID_REG.DWORD = (*(volatile uint32_t *)M33_CPUID_REG_ADDR);
 #endif
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 
     // SIO CPUIDレジスタ(Core0 or Core1のチェック)
-    DEBUG_PRINTF("[Core%X] ... SIO CPUID Reg(0x%02X)\n", cpu_core, SIO_CPUID_REG_ADDR);
-    DEBUG_PRINTF("[Core%X] ... SIO CPUID Reg Val = 0x%08X\n", cpu_core, SIO_CPUID_REG.DWORD);
-    DEBUG_PRINTF("--------------------------------------------------------------------------\n");
+    DEBUG_RTOS_PRINTF("[Core%X] ... SIO CPUID Reg(0x%02X)\n", cpu_core, SIO_CPUID_REG_ADDR);
+    DEBUG_RTOS_PRINTF("[Core%X] ... SIO CPUID Reg Val = 0x%08X\n", cpu_core, SIO_CPUID_REG.DWORD);
+    DEBUG_RTOS_PRINTF("--------------------------------------------------------------------------\n");
 
     // SYSINFO CPUIDレジスタ
-    DEBUG_PRINTF("[Core%X] ... SYSINFO CPUID Reg(0x%02X)\n", cpu_core, SYSINFO_CPUID_REG);
-    DEBUG_PRINTF("[Core%X] ... SYSINFO CPUID Reg Val = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.DWORD);
-    DEBUG_PRINTF("[Core%X] ... SYSINFO CPUID Reg MANUFACTURER[11:0] = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.BIT.MANUFACTURER);
-    DEBUG_PRINTF("[Core%X] ... SYSINFO CPUID Reg PART[27:12] = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.BIT.PART);
-    DEBUG_PRINTF("[Core%X] ... SYSINFO CPUID Reg REVISION[31:28] = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.BIT.REVISION);
-    DEBUG_PRINTF("--------------------------------------------------------------------------\n");
+    DEBUG_RTOS_PRINTF("[Core%X] ... SYSINFO CPUID Reg(0x%02X)\n", cpu_core, SYSINFO_CPUID_REG);
+    DEBUG_RTOS_PRINTF("[Core%X] ... SYSINFO CPUID Reg Val = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.DWORD);
+    DEBUG_RTOS_PRINTF("[Core%X] ... SYSINFO CPUID Reg MANUFACTURER[11:0] = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.BIT.MANUFACTURER);
+    DEBUG_RTOS_PRINTF("[Core%X] ... SYSINFO CPUID Reg PART[27:12] = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.BIT.PART);
+    DEBUG_RTOS_PRINTF("[Core%X] ... SYSINFO CPUID Reg REVISION[31:28] = 0x%02X\n", cpu_core, SYSINFO_CPUID_REG.BIT.REVISION);
+    DEBUG_RTOS_PRINTF("--------------------------------------------------------------------------\n");
     rp2xxx_chip_rev_print(); // RP2040/RP2350のチップRevison
 
     // M0PLUS or M33 CPUIDレジスタ
 #ifdef MCU_RP2040
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg(0x%02X)\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG_ADDR);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg Val = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.DWORD);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg REVISION[3:0] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.REVISION);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg PARTNO[15:4] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.PARTNO);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg ARCHITECTURE[19:16] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.ARCHITECTURE);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg VARIANT[23:20] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.VARIANT);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg IMPLEMENTER[31:24] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.IMPLEMENTER);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg(0x%02X)\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG_ADDR);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg Val = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.DWORD);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg REVISION[3:0] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.REVISION);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg PARTNO[15:4] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.PARTNO);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg ARCHITECTURE[19:16] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.ARCHITECTURE);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg VARIANT[23:20] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.VARIANT);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg IMPLEMENTER[31:24] = 0x%02X\n", cpu_core, p_cpu_name_str, M0PLUS_CPUID_REG.BIT.IMPLEMENTER);
 #else
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg(0x%02X)\n", cpu_core, p_cpu_name_str, M33_CPUID_REG_ADDR);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg Val = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.DWORD);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg REVISION[3:0] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.REVISION);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg PARTNO[15:4] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.PARTNO);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg ARCHITECTURE[19:16] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.ARCHITECTURE);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg VARIANT[23:20] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.VARIANT);
-    DEBUG_PRINTF("[Core%X] ... %s CPUID Reg IMPLEMENTER[31:24] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.IMPLEMENTER);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg(0x%02X)\n", cpu_core, p_cpu_name_str, M33_CPUID_REG_ADDR);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg Val = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.DWORD);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg REVISION[3:0] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.REVISION);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg PARTNO[15:4] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.PARTNO);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg ARCHITECTURE[19:16] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.ARCHITECTURE);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg VARIANT[23:20] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.VARIANT);
+    DEBUG_RTOS_PRINTF("[Core%X] ... %s CPUID Reg IMPLEMENTER[31:24] = 0x%02X\n", cpu_core, p_cpu_name_str, M33_CPUID_REG.BIT.IMPLEMENTER);
 #endif
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 }

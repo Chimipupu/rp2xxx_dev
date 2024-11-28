@@ -43,6 +43,8 @@
         #define UART_TX_PIN              12  // UART0 TX
         #define UART_RX_PIN              13  // UART0 RX
         // その他
+        #define __RTC_ENABLE__
+        #define __SENSOR_ENABLE__
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
         #define __DEBUG_MONITOR_ENABLE__
@@ -218,6 +220,7 @@
         #define UART_TX_PIN              12  // UART0 TX
         #define UART_RX_PIN              13  // UART0 RX
         // その他
+        #define __RTC_ENABLE__
         #define __SENSOR_ENABLE__
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
@@ -225,14 +228,6 @@
         #define __BENCHMARK_TEST__
     #endif /* __MCU_BOARD_PICO_2__ */
 #endif /* MCU_RP2350 */
-
-extern "C"
-{
-    static inline void NOP(void)
-    {
-        asm volatile("nop");
-    }
-}
 
 void mcu_board_gpio_init(void);
 void mcu_board_fs_init(void);

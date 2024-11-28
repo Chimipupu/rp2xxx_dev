@@ -40,14 +40,14 @@ void drv_bme280_init(void)
 
 void drv_bme280_data_print(void)
 {
-    DEBUG_PRINTF("**************************************************************************\n");
-    DEBUG_PRINTF("BME280 Sensor Data Dump\n");
-    DEBUG_PRINTF("**************************************************************************\n");
-    DEBUG_PRINTF("temperature : %.03f °C\n", g_bme280_data.temperature);
-    DEBUG_PRINTF("humidity : %.03f %%\n", g_bme280_data.humidity);
-    DEBUG_PRINTF("pressure : %.03f hPa\n", g_bme280_data.pressure);
-    DEBUG_PRINTF("altitude : %.03f m\n", g_bme280_data.altitude);
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("BME280 Sensor Data Dump\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("temperature : %.03f °C\n", g_bme280_data.temperature);
+    DEBUG_RTOS_PRINTF("humidity : %.03f %%\n", g_bme280_data.humidity);
+    DEBUG_RTOS_PRINTF("pressure : %.03f hPa\n", g_bme280_data.pressure);
+    DEBUG_RTOS_PRINTF("altitude : %.03f m\n", g_bme280_data.altitude);
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 
 }
 

@@ -24,55 +24,55 @@ static void ir_decode(uint16_t command)
     switch (command)
     {
         case IR_RX_BTN_COMMAND_0:
-            DEBUG_PRINTF("IR RX BTN0 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN0 Command\n");
             break;
         case IR_RX_BTN_COMMAND_1:
-            DEBUG_PRINTF("IR RX BTN1 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN1 Command\n");
             break;
         case IR_RX_BTN_COMMAND_2:
-            DEBUG_PRINTF("IR RX BTN2 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN2 Command\n");
             break;
         case IR_RX_BTN_COMMAND_3:
-            DEBUG_PRINTF("IR RX BTN3 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN3 Command\n");
             break;
         case IR_RX_BTN_COMMAND_4:
-            DEBUG_PRINTF("IR RX BTN4 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN4 Command\n");
             break;
         case IR_RX_BTN_COMMAND_5:
-            DEBUG_PRINTF("IR RX BTN5 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN5 Command\n");
             break;
         case IR_RX_BTN_COMMAND_6:
-            DEBUG_PRINTF("IR RX BTN6 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN6 Command\n");
             break;
         case IR_RX_BTN_COMMAND_7:
-            DEBUG_PRINTF("IR RX BTN7 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN7 Command\n");
             break;
         case IR_RX_BTN_COMMAND_8:
-            DEBUG_PRINTF("IR RX BTN8 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN8 Command\n");
             break;
         case IR_RX_BTN_COMMAND_9:
-            DEBUG_PRINTF("IR RX BTN9 Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN9 Command\n");
             break;
         case IR_RX_BTN_COMMAND_kome_:
-            DEBUG_PRINTF("IR RX BTN * Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN * Command\n");
             break;
         case IR_RX_BTN_COMMAND_SHARP:
-            DEBUG_PRINTF("IR RX BTN # Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN # Command\n");
             break;
         case IR_RX_BTN_COMMAND_UP:
-            DEBUG_PRINTF("IR RX BTN UP Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN UP Command\n");
             break;
         case IR_RX_BTN_COMMAND_DOWN:
-            DEBUG_PRINTF("IR RX BTN DOWN Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN DOWN Command\n");
             break;
         case IR_RX_BTN_COMMAND_LEFT:
-            DEBUG_PRINTF("IR RX BTN LEFT Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN LEFT Command\n");
             break;
         case IR_RX_BTN_COMMAND_RIGHT:
-            DEBUG_PRINTF("IR RX BTN RIGHT Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN RIGHT Command\n");
             break;
         case IR_RX_BTN_COMMAND_OK:
-            DEBUG_PRINTF("IR RX BTN OK Command\n");
+            DEBUG_RTOS_PRINTF("IR RX BTN OK Command\n");
             break;
         default:
             break;

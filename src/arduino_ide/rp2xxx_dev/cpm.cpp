@@ -26,6 +26,10 @@ const char *p_cpm_version_str = "Ver1.0.3";
 #include "benchmark_test.hpp"
 #include "rp2xxx.hpp"
 
+#ifdef __RTC_ENABLE__
+#include "app_rtc.hpp"
+#endif /* __RTC_ENABLE__ */
+
 #ifdef __SENSOR_ENABLE__
 #include "drv_bme280.hpp"
 #endif /* __SENSOR_ENABLE__ */
@@ -53,6 +57,7 @@ static void help(void);
 static void cls(void);
 static void dir(void);
 static void calculate(char *p_cmd);
+static void rtc(void);
 static void timer_test(void);
 #ifdef DEBUG_CMD
 static void dbg_cmd(char *p_cmd);
@@ -85,23 +90,24 @@ static void help(void)
 {
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
 
-    DEBUG_PRINTF("Command List:\n");
-    DEBUG_PRINTF("  HELP   - This Command. Show Command List\n");
-    DEBUG_PRINTF("  CLS    - Display Clear Command\n");
-    DEBUG_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
-    DEBUG_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
-    DEBUG_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)\n");
-    DEBUG_PRINTF("  FIB    - Display Fibonacci (e.g., FIB 10)\n");
-    DEBUG_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
-    DEBUG_PRINTF("  MANDEL - Display Mandelbrot (e.g., MANDEL)\n");
-    DEBUG_PRINTF("  TIMER  - Timer Test\n");
-    DEBUG_PRINTF("  TEST   - Performance test cmd\n");
+    DEBUG_RTOS_PRINTF("Command List:\n");
+    DEBUG_RTOS_PRINTF("  HELP   - This Command. Show Command List\n");
+    DEBUG_RTOS_PRINTF("  CLS    - Display Clear Command\n");
+    DEBUG_RTOS_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
+    DEBUG_RTOS_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
+    DEBUG_RTOS_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)\n");
+    DEBUG_RTOS_PRINTF("  FIB    - Display Fibonacci (e.g., FIB 10)\n");
+    DEBUG_RTOS_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
+    DEBUG_RTOS_PRINTF("  MANDEL - Display Mandelbrot (e.g., MANDEL)\n");
+    DEBUG_RTOS_PRINTF("  RTC    - RTC Timer Command\n");
+    DEBUG_RTOS_PRINTF("  TIMER  - Timer Test\n");
+    DEBUG_RTOS_PRINTF("  TEST   - Performance test cmd\n");
 #ifdef DEBUG_CMD
 #if 0
-    DEBUG_PRINTF("  REGR   - Register Read (e.g., REGR <Address>)\n");
-    DEBUG_PRINTF("  REGW   - Register Write (e.g., REGW <Address> <Val>)\n");
+    DEBUG_RTOS_PRINTF("  REGR   - Register Read (e.g., REGR <Address>)\n");
+    DEBUG_RTOS_PRINTF("  REGW   - Register Write (e.g., REGW <Address> <Val>)\n");
 #endif
-    DEBUG_PRINTF("  DBG    - Develop cmd\n");
+    DEBUG_RTOS_PRINTF("  DBG    - Develop cmd\n");
 #endif
 
     // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
@@ -123,39 +129,46 @@ static void calculate(char *p_cmd)
     double num1, num2;
 
     if (sscanf(p_cmd, "%lf %c %lf", &num1, &op, &num2) == 3) {
-        DEBUG_PRINTF("Debug: num1 = %.2lf, op = %c, num2 = %.2lf\n", num1, op, num2);
+        DEBUG_RTOS_PRINTF("Debug: num1 = %.2lf, op = %c, num2 = %.2lf\n", num1, op, num2);
         switch (op) {
             case '+':
-                DEBUG_PRINTF("Result: %.2lf\n", num1 + num2);
+                DEBUG_RTOS_PRINTF("Result: %.2lf\n", num1 + num2);
                 break;
             case '-':
-                DEBUG_PRINTF("Result: %.2lf\n", num1 - num2);
+                DEBUG_RTOS_PRINTF("Result: %.2lf\n", num1 - num2);
                 break;
             case '*':
-                DEBUG_PRINTF("Result: %.2lf\n", num1 * num2);
+                DEBUG_RTOS_PRINTF("Result: %.2lf\n", num1 * num2);
                 break;
             case '/':
                 if (num2 != 0) {
-                    DEBUG_PRINTF("Result: %.2lf\n", num1 / num2);
+                    DEBUG_RTOS_PRINTF("Result: %.2lf\n", num1 / num2);
                 } else {
-                    DEBUG_PRINTF("Error: Division by zero!\n");
+                    DEBUG_RTOS_PRINTF("Error: Division by zero!\n");
                 }
                 break;
             case '%':
-                DEBUG_PRINTF("Result: %.0lf\n", fmod(num1, num2));
+                DEBUG_RTOS_PRINTF("Result: %.0lf\n", fmod(num1, num2));
                 break;
             case '^':
-                DEBUG_PRINTF("Result: %.2lf\n", pow(num1, num2));
+                DEBUG_RTOS_PRINTF("Result: %.2lf\n", pow(num1, num2));
                 break;
             default:
-                DEBUG_PRINTF("Unknown op: %c\n", op);
+                DEBUG_RTOS_PRINTF("Unknown op: %c\n", op);
                 break;
         }
     }
     else
     {
-        DEBUG_PRINTF("Invalid format. Use: CALC <num1> <op> <num2>\n");
+        DEBUG_RTOS_PRINTF("Invalid format. Use: CALC <num1> <op> <num2>\n");
     }
+}
+
+static void rtc(void)
+{
+#ifdef __RTC_ENABLE__
+    app_rtc_date_print();
+#endif /* __RTC_ENABLE__ */
 }
 
 static void timer_test(void)
@@ -171,13 +184,13 @@ static void timer_test(void)
     uint32_t end_time = time_us_32();
     __EI();
 
-    DEBUG_PRINTF("proc time : %d usec\n", end_time - start_time);
+    DEBUG_RTOS_PRINTF("proc time : %d usec\n", end_time - start_time);
 }
 
 #ifdef DEBUG_CMD
 static void dbg_cmd(char *p_cmd)
 {
-    DEBUG_PRINTF("DEBUG Command\n");
+    DEBUG_RTOS_PRINTF("DEBUG Command\n");
     rp2xxx_reg_info();
 
     app_fs_test();
@@ -197,14 +210,14 @@ static void dbg_cmd(char *p_cmd)
 static void init_msg(void)
 {
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
     cpm_op_msg();
     rp2xxx_develop_info_print();
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
     ascii_art();
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
     help();
-    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_RTOS_PRINTF("**************************************************************************\n");
 }
 
 static void cmd_exec(char *p_cmd_buf, uint32_t idx)
@@ -219,9 +232,8 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
         char *p_cmd = p_cmd_buf + CALC_CMD_ARG;
         while(*p_cmd == ' ') {
             p_cmd++;
-            WDT_TOGGLE;
         }
-        // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
+        // DEBUG_RTOS_PRINTF("Debug: Expression = '%s'\n", p_cmd);
         calculate(p_cmd);
     } else if (strstr(p_cmd_buf, "FIB") == p_cmd_buf) {
         uint32_t n = atoi(p_cmd_buf + 4);
@@ -235,6 +247,8 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
     } else if (strcmp(p_cmd_buf, "MANDEL") == 0) {
         cls();
         math_uc_mandelbrot();
+    } else if (strcmp(p_cmd_buf, "RTC") == 0) {
+        rtc();
     } else if (strcmp(p_cmd_buf, "TIMER") == 0) {
         timer_test();
     } else if (strcmp(p_cmd_buf, "TEST") == 0) {
@@ -250,25 +264,28 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
         while (*p_cmd == ' ')
         {
             p_cmd++;
-            WDT_TOGGLE;
         }
-        // DEBUG_PRINTF("Debug: Expression = '%s'\n", p_cmd);
+        // DEBUG_RTOS_PRINTF("Debug: Expression = '%s'\n", p_cmd);
         dbg_cmd(p_cmd);
     }
 #endif /* DEBUG_CMD */
     else {
-        DEBUG_PRINTF("Bad Command: %s\n", p_cmd_buf);
+        DEBUG_RTOS_PRINTF("Bad Command: %s\n", p_cmd_buf);
     }
 }
 
 void cpm_op_msg(void)
 {
-    DEBUG_PRINTF("Chimi Monitor Program for %s %s\n", p_mcu_str, p_cpm_version_str);
-    DEBUG_PRINTF("Copyright(C) 2024, Chimi(");
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_BLUE);
-    DEBUG_PRINTF("https://github.com/Chimipupu");
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
-    DEBUG_PRINTF(")\n");
+    DEBUG_RTOS_PRINTF("Chimi Monitor Program for %s ", p_mcu_str);
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_RED);
+    DEBUG_RTOS_PRINTF("%s\n", p_cpm_version_str);
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
+    DEBUG_RTOS_PRINTF("Copyright(C) 2024, Chimi(");
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_BLUE);
+    DEBUG_RTOS_PRINTF("https://github.com/Chimipupu");
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
+    DEBUG_RTOS_PRINTF(")\n");
 }
 
 void cpm_init(void)
@@ -278,7 +295,7 @@ void cpm_init(void)
 
     cls();
     init_msg();
-    DEBUG_PRINTF("\n> ");
+    DEBUG_RTOS_PRINTF("\n> ");
 }
 
 void cpm_main(void)
@@ -290,7 +307,7 @@ void cpm_main(void)
         if (val == '\n') {
             s_cmd_buf[s_idx] = '\0';
             cmd_exec(&s_cmd_buf[0], s_idx);
-            DEBUG_PRINTF("\n> ");
+            DEBUG_RTOS_PRINTF("\n> ");
             memset(&s_cmd_buf[0], 0x00, sizeof(s_cmd_buf));
             s_idx = 0;
         } else if (s_idx < MAX_CMD_LEN - 1) {   // バッファオーバーフロー防止

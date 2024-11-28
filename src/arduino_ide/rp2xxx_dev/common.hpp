@@ -12,13 +12,24 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
-#include <Arduino.h>
+// C/C++ std
 #include <stdint.h>
+#include <string.h>
+
+// Arduino IDE
+#include <Arduino.h>
+
+// SDK
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
 
+// APP
 #include "muc_board.hpp"
+#ifdef __WDT_ENABLE__
+#include "app_wdt.hpp"
+#endif /* __WDT_ENABLE__ */
 
+// #define __RTC_ENABLE__
 // #define __SENSOR_ENABLE__
 // #define __DEBUG_MONITOR_ENABLE__
 // #define __NEOPIXEL_ENABLE__
@@ -30,9 +41,6 @@
 // #define __BLUETOOTH_ENABLE__
 // #define __WIFI_ENABLE__
 // #define __BENCHMARK_TEST__
-
-// #define __WDT_ENABLE__
-#include "app_wdt.hpp"
 
 typedef enum {
     FW_INIT = 0x00,
@@ -54,16 +62,10 @@ typedef enum {
 extern e_firmware_info g_firmware_info;
 
 // 割込みマスク・許可
-#define __DI            taskENTER_CRITICAL
-#define __EI            taskEXIT_CRITICAL
-#define __DI_ISR        taskENTER_CRITICAL_FROM_ISR
-#define __EI_ISR        taskEXIT_CRITICAL_FROM_ISR
-
-// typedef enum {
-//     CPU_CORE_0 = 0x00,
-//     CPU_CORE_1,
-//     CPU_CORE_UNKNOWN = 0xFF
-// } E_CPU_CORE;
+#define __DI                taskENTER_CRITICAL
+#define __EI                taskEXIT_CRITICAL
+#define __DI_ISR            taskENTER_CRITICAL_FROM_ISR
+#define __EI_ISR            taskEXIT_CRITICAL_FROM_ISR
 
 #define DUAL_CORE_BUILD
 
@@ -73,20 +75,13 @@ extern e_firmware_info g_firmware_info;
 #define core1_main          loop1
 #define DEBUG_PRINT         Serial.print
 #define DEBUG_PRINTLN       Serial.println
-#define DEBUG_PRINTF        safeSerialPrintf
+#define DEBUG_RTOS_PRINTF        safeSerialPrintf
 #define DEBUG_PRINT_INIT    Serial.begin
 
 #define SW_DELAY_MS         delay
 
 #define ON                  0x00    // ON ... Active Low
 #define OFF                 0x01
-
-// I2Cスレーブ
-#define QMC5883_I2C_ADDR    0x0D  // HMC5883のパチモン
-#define HMC5883_I2C_ADDR    0x1E
-#define MPU9250_I2C_ADDR    0x68
-#define MPU6050_I2C_ADDR    0x69  // ADOピンをHIGH = 0x69(Low/HiZ = 0x68)
-#define OLED_I2C_ADDR       0x3C
 
 // GPIO
 #define GPIO_PORT_DIR       pinMode
@@ -95,6 +90,11 @@ extern e_firmware_info g_firmware_info;
 
 extern "C"
 {
+    static inline void NOP(void)
+    {
+        asm volatile("nop");
+    }
+
     static inline void GPIO_TOGGLE(uint8_t port)
     {
         static bool s_port_val = OFF;
@@ -128,14 +128,16 @@ extern "C"
             va_list args;
             va_start(args, format);
 
-            for (const char *p = format; *p != '\0'; p++) {
+            for(const char *p = format; *p != '\0'; p++)
+            {
                 if (*p == '%') {
                     p++;  // '%'の次の文字を見る
                     int width = 0;
                     int precision = -1;
 
                     // 幅の取得
-                    while (*p >= '0' && *p <= '9') {
+                    while(*p >= '0' && *p <= '9')
+                    {
                         width = width * 10 + (*p - '0');
                         p++;
                     }
@@ -151,7 +153,8 @@ extern "C"
                     }
 
                     // フォーマット指定子に基づいて処理
-                    switch (*p) {
+                    switch(*p)
+                    {
                         case 'd':  // 整数
                             Serial.print(va_arg(args, int));
                             break;

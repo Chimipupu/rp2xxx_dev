@@ -11,17 +11,24 @@
 
 #include "app_main_core0.hpp"
 #include "muc_board.hpp"
+#include "app_wdt.hpp"
+
+#ifdef __RTC_ENABLE__
+#include "app_rtc.hpp"
+static tmElements_t s_time_date;
+static xTaskHandle s_xTaskCore0RTC;
+#endif /* __RTC_ENABLE__ */
 
 #ifdef __IR_ENABLE__
 #include "app_ir.hpp"
 static xTaskHandle s_xTaskCore0IR;
 #endif /* __IR_ENABLE__ */
 
-#ifdef __MCU_BOARD_PICO_W__
+#ifdef __BLUETOOTH_ENABLE__
 #include "SerialBT.h"
 #include "app_bluetooth.hpp"
 static xTaskHandle s_xTaskCore0BT;
-#endif /* __MCU_BOARD_PICO_W__ */
+#endif /* __BLUETOOTH_ENABLE__ */
 
 static uint8_t s_cpu_core = 0;
 static xTaskHandle s_xTaskCore0Btn;
@@ -58,7 +65,7 @@ static void gpio_init(void)
 void vTaskCore0Btn(void *p_parameter)
 {
     ButtonState btnstate;
-    // DEBUG_PRINTF("[Core%X] vTaskCore0Btn\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore0Btn\n", s_cpu_core);
 
     while (1)
     {
@@ -73,7 +80,7 @@ void vTaskCore0Btn(void *p_parameter)
 void vTaskCore0IR(void *p_parameter)
 {
     ButtonState btnstate;
-    DEBUG_PRINTF("[Core%X] vTaskCore0IR\n", s_cpu_core);
+    DEBUG_RTOS_PRINTF("[Core%X] vTaskCore0IR\n", s_cpu_core);
 
     while (1)
     {
@@ -84,9 +91,38 @@ void vTaskCore0IR(void *p_parameter)
 }
 #endif /* __IR_ENABLE__ */
 
+#ifdef __BLUETOOTH_ENABLE__
+void vTaskCore0BT(void *p_parameter)
+{
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore0BT\n", s_cpu_core);
+
+    while (1)
+    {
+        app_bluetooth_main();
+        WDT_TOGGLE;
+        vTaskDelay(300 / portTICK_PERIOD_MS);
+    }
+}
+#endif /* __BLUETOOTH_ENABLE__ */
+
+#ifdef __RTC_ENABLE__
+void vTaskCore0RTC(void *p_parameter)
+{
+    app_rtc_init();
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore0RTC\n", s_cpu_core);
+
+    while (1)
+    {
+        s_time_date = app_rtc_read();
+        WDT_TOGGLE;
+        vTaskDelay(USEC_TO_TICKS(1000));
+    }
+}
+#endif /* __RTC_ENABLE__ */
+
 void vTaskCore0Main(void *p_parameter)
 {
-    // DEBUG_PRINTF("[Core%X] vTaskCore0Main\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore0Main\n", s_cpu_core);
 
     while (1)
     {
@@ -122,20 +158,6 @@ void vTaskCore0Main(void *p_parameter)
         // vTaskSuspend(NULL);#endif
     }
 }
-
-#ifdef __MCU_BOARD_PICO_W__
-void vTaskCore0BT(void *p_parameter)
-{
-    // DEBUG_PRINTF("[Core%X] vTaskCore0BT\n", s_cpu_core);
-
-    while (1)
-    {
-        app_bluetooth_main();
-        WDT_TOGGLE;
-        vTaskDelay(300 / portTICK_PERIOD_MS);
-    }
-}
-#endif /* __MCU_BOARD_PICO_W__ */
 
 void app_main_init_core0(void)
 {
@@ -178,7 +200,7 @@ void app_main_init_core0(void)
 
     s_cpu_core = rp2xxx_get_cpu_core_num();
     WDT_TOGGLE;
-    // DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
+    // DEBUG_RTOS_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 
 #ifdef __IR_ENABLE__
     // 赤外線関連 アプリ初期化
@@ -204,7 +226,7 @@ void app_main_init_core0(void)
                 );
 #endif
 
-#if 0
+#ifdef __BLUETOOTH_ENABLE__
     xTaskCreate(vTaskCore0BT,           // コールバック関数ポインタ
                 "vTaskCore0BT",         // タスク名
                 4096,                   // スタック
@@ -212,7 +234,17 @@ void app_main_init_core0(void)
                 5,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore0BT         // タスクハンドル
                 );
-#endif
+#endif /* __BLUETOOTH_ENABLE__ */
+
+#ifdef __RTC_ENABLE__
+    xTaskCreate(vTaskCore0RTC,         // コールバック関数ポインタ
+                "vTaskCore0RTC",       // タスク名
+                2048,                   // スタック
+                nullptr,                // パラメータ
+                3,                      // 優先度(0～7、7が最優先)
+                &s_xTaskCore0RTC       // タスクハンドル
+                );
+#endif /* __RTC_ENABLE__ */
 
 #if 0
     xTaskCreate(vTaskCore0Main,         // コールバック関数ポインタ
@@ -227,7 +259,7 @@ void app_main_init_core0(void)
 
 void app_main_core0(void)
 {
-    // DEBUG_PRINTF("[Core0]Core0 Loop Task\n");
+    // DEBUG_RTOS_PRINTF("[Core0]Core0 Loop Task\n");
     WDT_TOGGLE;
     vTaskSuspend(NULL);
 }

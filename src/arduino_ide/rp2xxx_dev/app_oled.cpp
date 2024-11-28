@@ -10,16 +10,18 @@
  */
 
 #include "app_oled.hpp"
+
 #ifdef __LCD_ENABLE__
 #include "math_uc.hpp"
 #include <Wire.h>
 
-#define MATH_PI_CALC_TIME 3
-#define FIBONACCI_N       8
 
-#define OLED_ENG_TEST          0
-#define OLED_JPN_TEST          1
-#define OLED_MATH_TEST         2
+#define MATH_PI_CALC_TIME   3
+#define FIBONACCI_N         8
+
+#define OLED_ENG_TEST       0
+#define OLED_JPN_TEST       1
+#define OLED_MATH_TEST      2
 
 typedef enum
 {
