@@ -16,6 +16,10 @@
 #include "benchmark_test.hpp"
 #include "rp2xxx.hpp"
 
+#ifdef __SENSOR_ENABLE__
+#include "drv_bme280.hpp"
+#endif /* __SENSOR_ENABLE__ */
+
 #define DEBUG_CMD
 #ifdef DEBUG_CMD
 #define DBG_CMD_ARG         4
@@ -181,6 +185,10 @@ static void dbg_cmd(char *p_cmd)
     memset(&g_password[0], 0x00, sizeof(g_password));
     app_fs_wifi_config_read(&g_ssid[0], &g_password[0]);
 #endif /* __WIFI_ENABLE__ */
+
+#ifdef __SENSOR_ENABLE__
+    drv_bme280_data_print();
+#endif /* __SENSOR_ENABLE__ */
 }
 #endif /* DEBUG_CMD */
 

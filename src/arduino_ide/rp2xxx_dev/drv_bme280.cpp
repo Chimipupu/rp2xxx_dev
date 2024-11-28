@@ -38,14 +38,17 @@ void drv_bme280_init(void)
 #endif /* __SENSOR_ENABLE__ */
 }
 
-void drv_bme280_main(void)
+void drv_bme280_data_print(void)
 {
-#ifdef __SENSOR_ENABLE__
-    bme280_read_data(&g_bme280_data);
-
     DEBUG_PRINTF("temperature : %.03f °C\n", g_bme280_data.temperature);
     DEBUG_PRINTF("humidity : %.03f %%\n", g_bme280_data.humidity);
     DEBUG_PRINTF("pressure : %.03f hPa\n", g_bme280_data.pressure);
     DEBUG_PRINTF("altitude : %.03f m\n", g_bme280_data.altitude);
+}
+
+void drv_bme280_main(void)
+{
+#ifdef __SENSOR_ENABLE__
+    bme280_read_data(&g_bme280_data);
 #endif /* __SENSOR_ENABLE__ */
 }
