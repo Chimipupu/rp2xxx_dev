@@ -25,7 +25,7 @@ static xTaskHandle s_xTaskCore1Main;
 #ifdef __LCD_ENABLE__
 void vTaskCore1oled(void *p_parameter)
 {
-    DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
 
     while (1)
     {
@@ -39,8 +39,11 @@ void vTaskCore1oled(void *p_parameter)
 #ifdef __DEBUG_MONITOR_ENABLE__
 void vTaskCore1monitor(void *p_parameter)
 {
+    while (!Serial) {
+        WDT_TOGGLE;
+    }
     cpm_init();
-    DEBUG_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
 
     while (1)
     {
@@ -54,7 +57,7 @@ void vTaskCore1monitor(void *p_parameter)
 #if 0
 void vTaskCore1Main(void *p_parameter)
 {
-    DEBUG_PRINTF("[Core%X] vTaskCore1Main\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] vTaskCore1Main\n", s_cpu_core);
 
     while (1)
     {
@@ -70,7 +73,7 @@ void app_main_init_core1(void)
 {
     s_cpu_core = rp2xxx_get_cpu_core_num();
     WDT_TOGGLE;
-    DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
     // ファイルシステム(SD/SPIFS/FATFS)
     app_fs_init();

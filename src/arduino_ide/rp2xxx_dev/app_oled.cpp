@@ -29,6 +29,16 @@ typedef enum
     ROTATION_D,     // USB 左 画面反転
 } E_LCD_ROATATION;
 
+#ifdef MCU_RP2040
+    #ifdef __MCU_BOARD_PICO__
+        const char *p_board_str = "Raspberry Pi Pico";
+    #endif /* __MCU_BOARD_PICO__ */
+#else
+    #ifdef __MCU_BOARD_PICO_2__
+        const char *p_board_str = "Raspberry Pi Pico 2";
+    #endif /* __MCU_BOARD_PICO_2__ */
+#endif
+
 #if defined(LCD_SSD1306) && !defined(LCD_SH110x)
 static LGFX_SSD1306 lcd;   // 0.96インチのOLED用
 #elif !defined(LCD_SSD1306) && defined(LCD_SH110x)
@@ -84,30 +94,26 @@ void app_oled_init(void)
 static void oled_en_txt_test(void)
 {
     oled_clear();
-
-#ifdef MCU_RP2040
     sprite.setFont(&fonts::Font0);
+#ifdef MCU_RP2040
     sprite.printf("RP2040 F/W Test\n");
     sprite.printf("by Chimi\n");
     sprite.printf("github.com/Chimipupu\n");
-    sprite.printf("RP2040=CPU x2@133MHz\n");
-    sprite.printf("CPU=ARM Cortex-M0+\n");
-    sprite.printf("Flash:16MB sSRAM:264KB\n");
-    sprite.printf("Very Good! ARM MUC!\n");
-    sprite.printf("pi=%.15f\n", MATH_PI);
-    sprite.pushSprite(0, 0);
+    sprite.printf("%s\n", p_board_str);
+    sprite.printf("2Core ARM CPU @133MHz\n");
+    sprite.printf("ARM Cortex-M0+\n");
+    sprite.printf("Flash:2MB SRAM:264KB\n");
 #else
-    sprite.setFont(&fonts::Font0);
     sprite.printf("RP2350 F/W Test\n");
     sprite.printf("by Chimi\n");
     sprite.printf("github.com/Chimipupu\n");
-    sprite.printf("RP2350=CPU x2@150MHz\n");
-    sprite.printf("CPU=ARM Cortex-M33\n");
+    sprite.printf("%s\n", p_board_str);
+    sprite.printf("2Core ARM CPU @133MHz\n");
+    sprite.printf("ARM Cortex-M33\n");
     sprite.printf("Flash:4MB SRAM:520KB\n");
-    sprite.printf("Very Good! ARM MUC!\n");
+#endif
     sprite.printf("pi=%.15f\n", MATH_PI);
     sprite.pushSprite(0, 0);
-#endif
 }
 
 static void oled_jp_txt_test(void)

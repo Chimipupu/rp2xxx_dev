@@ -58,7 +58,7 @@ static void gpio_init(void)
 void vTaskCore0Btn(void *p_parameter)
 {
     ButtonState btnstate;
-    DEBUG_PRINTF("[Core%X] vTaskCore0Btn\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] vTaskCore0Btn\n", s_cpu_core);
 
     while (1)
     {
@@ -86,7 +86,7 @@ void vTaskCore0IR(void *p_parameter)
 
 void vTaskCore0Main(void *p_parameter)
 {
-    DEBUG_PRINTF("[Core%X] vTaskCore0Main\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] vTaskCore0Main\n", s_cpu_core);
 
     while (1)
     {
@@ -126,7 +126,7 @@ void vTaskCore0Main(void *p_parameter)
 #ifdef __MCU_BOARD_PICO_W__
 void vTaskCore0BT(void *p_parameter)
 {
-    DEBUG_PRINTF("[Core%X] vTaskCore0BT\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] vTaskCore0BT\n", s_cpu_core);
 
     while (1)
     {
@@ -178,7 +178,7 @@ void app_main_init_core0(void)
 
     s_cpu_core = rp2xxx_get_cpu_core_num();
     WDT_TOGGLE;
-    DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
+    // DEBUG_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 
 #ifdef __IR_ENABLE__
     // 赤外線関連 アプリ初期化

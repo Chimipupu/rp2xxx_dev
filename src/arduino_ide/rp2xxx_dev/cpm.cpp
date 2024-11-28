@@ -30,11 +30,12 @@ extern char g_ssid[16];
 extern char g_password[32];
 #endif /* __WIFI_ENABLE__ */
 
-const char *p_cpm_version_str = "Ver1.0.1";
+const char *p_cpm_version_str = "Ver1.0.2";
+
 #ifdef MCU_RP2040
-const char *p_mcu_str = "RP2040";
+    const char *p_mcu_str = "RP2040";
 #else
-const char *p_mcu_str = "RP2350";
+    const char *p_mcu_str = "RP2350";
 #endif
 
 static char s_cmd_buf[MAX_CMD_LEN] = {0};
@@ -183,15 +184,23 @@ static void dbg_cmd(char *p_cmd)
 }
 #endif /* DEBUG_CMD */
 
+static void init_msg(void)
+{
+    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
+    DEBUG_PRINTF("**************************************************************************\n");
+    cpm_op_msg();
+    rp2xxx_develop_info_print();
+    DEBUG_PRINTF("**************************************************************************\n");
+    ascii_art();
+    DEBUG_PRINTF("**************************************************************************\n");
+    help();
+    DEBUG_PRINTF("**************************************************************************\n");
+}
+
 static void cmd_exec(char *p_cmd_buf, uint32_t idx)
 {
     if (strcmp(p_cmd_buf, "HELP") == 0) {
-        DEBUG_PRINTF("**************************************************************************\n");
-        cpm_op_msg();
-        rp2xxx_develop_info_print();
-        DEBUG_PRINTF("**************************************************************************\n");
-        help();
-        DEBUG_PRINTF("**************************************************************************\n");
+        init_msg();
     } else if (strcmp(p_cmd_buf, "CLS") == 0) {
         cls();
     } else if (strcmp(p_cmd_buf, "DIR") == 0) {
@@ -225,7 +234,7 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
         math_uc_math_test();
     }
 #ifdef DEBUG_CMD
-    else if (strstr(p_cmd_buf, "DBG") == 0)
+    else if (strstr(p_cmd_buf, "DBG") == p_cmd_buf)
     {
         char *p_cmd = p_cmd_buf + DBG_CMD_ARG;
         while (*p_cmd == ' ')
@@ -238,7 +247,7 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
     }
 #endif /* DEBUG_CMD */
     else {
-        DEBUG_PRINTF("Bad p_cmd_buf: %s\n", p_cmd_buf);
+        DEBUG_PRINTF("Bad Command: %s\n", p_cmd_buf);
     }
 }
 
@@ -258,36 +267,25 @@ void cpm_init(void)
     s_idx = 0;
 
     cls();
-    DEBUG_PRINTF("**************************************************************************\n");
-    cpm_op_msg();
-    rp2xxx_develop_info_print();
-    DEBUG_PRINTF("**************************************************************************\n");
-    ascii_art();
-    DEBUG_PRINTF("**************************************************************************\n");
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
-    help();
-    DEBUG_PRINTF("**************************************************************************\n");
-    // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
-
+    init_msg();
     DEBUG_PRINTF("\n> ");
 }
 
 void cpm_main(void)
 {
     if (Serial.available()) {
-        char ch = Serial.read();
-        ch = app_util_eng_to_upper_case(ch);
+        char val = Serial.read();
+        val = app_util_eng_to_upper_case(val);
 
-        if (ch == '\n') {                       // エンターキーが押された
-            s_cmd_buf[s_idx] = '\0';            // 文字列の終端
-        } else if (s_idx < MAX_CMD_LEN - 1) {   // バッファオーバーフローを防ぐ
-            s_cmd_buf[s_idx] = ch;              // 文字をコマンドに追加
+        if (val == '\n') {
+            s_cmd_buf[s_idx] = '\0';
+            cmd_exec(&s_cmd_buf[0], s_idx);
+            DEBUG_PRINTF("\n> ");
+            memset(&s_cmd_buf[0], 0x00, sizeof(s_cmd_buf));
+            s_idx = 0;
+        } else if (s_idx < MAX_CMD_LEN - 1) {   // バッファオーバーフロー防止
+            s_cmd_buf[s_idx] = val;
             s_idx++;
         }
-
-        cmd_exec(&s_cmd_buf[0], s_idx);
-
-        DEBUG_PRINTF("\n> ");
-        s_idx = 0;
     }
 }
