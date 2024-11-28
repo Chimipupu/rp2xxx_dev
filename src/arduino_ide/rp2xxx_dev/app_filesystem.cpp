@@ -30,8 +30,9 @@ static void fs_init(void)
 
 static void fs_test(void)
 {
+    DEBUG_PRINTF("**************************************************************************\n");
     DEBUG_PRINTF("SD card Test\n");
-
+    DEBUG_PRINTF("**************************************************************************\n");
     if (SD.exists(p_test_file_path)) {
         DEBUG_PRINTF("test.txt exists\n");
     } else {
@@ -50,6 +51,8 @@ static void fs_test(void)
         DEBUG_PRINTF("error opening test.txt\n");
     }
 
+    DEBUG_PRINTF("--------------------------------------------------------------------------\n");
+
     DEBUG_PRINTF("SD card Read Test\n");
     myFile = SD.open(p_test_file_path, FILE_READ);
     if (myFile) {
@@ -66,8 +69,6 @@ static void fs_test(void)
 static bool fs_wifi_config_read(char *p_ssid, char *p_password)
 {
     bool result = false;
-
-    DEBUG_PRINTF("WiFi Config File Read(@SD)\n");
 
     if (SD.exists(p_wifi_config_file_path)) {
         DEBUG_PRINTF("wifi_config.txt exists\n");
@@ -140,16 +141,22 @@ void app_fs_wifi_config_read(char *p_ssid, char *p_password)
 {
 #ifdef __SD_TF_ENABLE__
     bool result = false;
+
+    DEBUG_PRINTF("**************************************************************************\n");
+    DEBUG_PRINTF("WiFi Config File Read(@SD)\n");
+    DEBUG_PRINTF("**************************************************************************\n");
+
     result = fs_wifi_config_read(p_ssid, p_password);
 
     if (result != false) {
-        DEBUG_PRINTF("SSID:");
-        DEBUG_PRINTF("%s\n", p_ssid);
-        DEBUG_PRINTF("Password:");
-        DEBUG_PRINTF("%s\n", p_password);
+        DEBUG_PRINTF("SSID : %s\n", p_ssid);
+        DEBUG_PRINTF("--------------------------------------------------------------------------\n");
+        DEBUG_PRINTF("Password : %s\n", p_password);
     } else {
-        DEBUG_PRINTF("No data(SSID & Password)\n");
+        DEBUG_PRINTF("[ERR] No data(SSID & Password)\n");
     }
+
+    DEBUG_PRINTF("**************************************************************************\n");
 #endif /* __SD_TF_ENABLE__ */
 }
 

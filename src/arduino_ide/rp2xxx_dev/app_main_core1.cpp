@@ -32,7 +32,10 @@ void vTaskCore1oled(void *p_parameter)
 
     while (1)
     {
-        app_oled_test();
+        if (xSemaphoreTake(xI2CMutex, portMAX_DELAY) == pdTRUE) {
+            app_oled_test();
+            xSemaphoreGive(xI2CMutex);
+        }
         WDT_TOGGLE;
         vTaskDelay(1100 / portTICK_PERIOD_MS);
     }
@@ -47,7 +50,10 @@ void vTaskCore1Sensor(void *p_parameter)
 
     while (1)
     {
-        app_sensor_main();
+        if (xSemaphoreTake(xI2CMutex, portMAX_DELAY) == pdTRUE) {
+            app_sensor_main();
+            xSemaphoreGive(xI2CMutex);
+        }
         WDT_TOGGLE;
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }

@@ -23,6 +23,7 @@
 
 e_firmware_info g_firmware_info = FW_INIT;
 SemaphoreHandle_t xSerialMutex;
+SemaphoreHandle_t xI2CMutex;
 // portMUX_TYPE g_mux = portMUX_INITIALIZER_UNLOCKED;
 
 void core0_init(void)
@@ -33,6 +34,7 @@ void core0_init(void)
 void core1_init(void)
 {
     xSerialMutex = xSemaphoreCreateMutex();
+    xI2CMutex = xSemaphoreCreateMutex();
     app_main_init_core1();
 }
 

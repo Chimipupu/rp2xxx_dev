@@ -8,7 +8,17 @@
  * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
+
 #include "cpm.hpp"
+
+const char *p_cpm_version_str = "Ver1.0.3";
+
+#ifdef MCU_RP2040
+    const char *p_mcu_str = "RP2040";
+#else
+    const char *p_mcu_str = "RP2350";
+#endif
+
 #include "app_timer.hpp"
 #include "app_util.hpp"
 #include "app_filesystem.hpp"
@@ -33,14 +43,6 @@
 extern char g_ssid[16];
 extern char g_password[32];
 #endif /* __WIFI_ENABLE__ */
-
-const char *p_cpm_version_str = "Ver1.0.2";
-
-#ifdef MCU_RP2040
-    const char *p_mcu_str = "RP2040";
-#else
-    const char *p_mcu_str = "RP2350";
-#endif
 
 static char s_cmd_buf[MAX_CMD_LEN] = {0};
 static uint32_t s_idx = 0;

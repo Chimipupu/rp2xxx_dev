@@ -115,6 +115,7 @@ extern "C"
 #define USEC_TO_TICKS(us) ((us) / (1000000 / TICKS_PER_SECOND))
 
 extern SemaphoreHandle_t xSerialMutex;
+extern SemaphoreHandle_t xI2CMutex;
 
 // FreeRTOS用のprintf
 #define DEBUG_PRINTF_RTOS   safeSerialPrintf
