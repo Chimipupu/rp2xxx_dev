@@ -11,6 +11,7 @@
 
 #include "app_main_core1.hpp"
 #include "app_filesystem.hpp"
+#include "app_sensor.hpp"
 
 #ifdef __WIFI_ENABLE__
 char g_ssid[16] = {0};
@@ -21,20 +22,37 @@ static uint8_t s_cpu_core = 0;
 static xTaskHandle s_xTaskCore1oled;
 static xTaskHandle s_xTaskCore1monitor;
 static xTaskHandle s_xTaskCore1Main;
+static xTaskHandle s_xTaskCore1Sensor;
 
 #ifdef __LCD_ENABLE__
 void vTaskCore1oled(void *p_parameter)
 {
+    app_oled_init();
     // DEBUG_PRINTF("[Core%X] vTaskCore1oled\n", s_cpu_core);
 
     while (1)
     {
         app_oled_test();
         WDT_TOGGLE;
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        vTaskDelay(1100 / portTICK_PERIOD_MS);
     }
 }
 #endif /* __LCD_ENABLE__ */
+
+#ifdef __SENSOR_ENABLE__
+void vTaskCore1Sensor(void *p_parameter)
+{
+    app_sensor_init();
+    // DEBUG_PRINTF("[Core%X] vTaskCore1Sensor\n", s_cpu_core);
+
+    while (1)
+    {
+        app_sensor_main();
+        WDT_TOGGLE;
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+#endif /* __SENSOR_ENABLE__ */
 
 #ifdef __DEBUG_MONITOR_ENABLE__
 void vTaskCore1monitor(void *p_parameter)
@@ -87,18 +105,27 @@ void app_main_init_core1(void)
     // TODO:WiFi接続処理
 #endif /* __WIFI_ENABLE__ */
 
-#ifdef __LCD_ENABLE__
-    app_oled_init();
-
     // FreeRTOS初期化
+
+#ifdef __LCD_ENABLE__
     xTaskCreate(vTaskCore1oled,         // コールバック関数ポインタ
                 "vTaskCore1oled",       // タスク名
-                1024,                    // スタック
+                1024,                   // スタック
                 nullptr,                // パラメータ
-                2,                      // 優先度(0～7、7が最優先)
+                3,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore1oled       // タスクハンドル
                 );
 #endif /* __LCD_ENABLE__ */
+
+#ifdef __SENSOR_ENABLE__
+    xTaskCreate(vTaskCore1Sensor,       // コールバック関数ポインタ
+                "vTaskCore1Sensor",     // タスク名
+                1024,                   // スタック
+                nullptr,                // パラメータ
+                2,                      // 優先度(0～7、7が最優先)
+                &s_xTaskCore1Sensor     // タスクハンドル
+                );
+#endif /* __SENSOR_ENABLE__ */
 
 #ifdef __DEBUG_MONITOR_ENABLE__
     xTaskCreate(vTaskCore1monitor,      // コールバック関数ポインタ
@@ -108,7 +135,7 @@ void app_main_init_core1(void)
                 5,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore1monitor    // タスクハンドル
                 );
-#endif
+#endif /* __DEBUG_MONITOR_ENABLE__ */
 
 #if 0
     xTaskCreate(vTaskCore1Main,         // コールバック関数ポインタ

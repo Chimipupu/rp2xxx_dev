@@ -19,6 +19,7 @@
 
 #include "muc_board.hpp"
 
+// #define __SENSOR_ENABLE__
 // #define __DEBUG_MONITOR_ENABLE__
 // #define __NEOPIXEL_ENABLE__
 // #define __SD_TF_ENABLE__
