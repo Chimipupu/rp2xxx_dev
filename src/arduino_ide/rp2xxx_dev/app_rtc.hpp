@@ -13,11 +13,11 @@
 #define APP_RTC_HPP
 
 #include "common.hpp"
-#include <TimeLib.h>
+#include <Time.h>
 
 void app_rtc_init(void);
-tmElements_t app_rtc_read(void);
-void app_rtc_write(tmElements_t *p_tm);
+tm app_rtc_read(void);
+void app_rtc_write(tm *p_tm);
 void app_rtc_date_print(void);
 
 #endif /* APP_RTC_HPP */

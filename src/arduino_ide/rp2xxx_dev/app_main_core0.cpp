@@ -15,7 +15,7 @@
 
 #ifdef __RTC_ENABLE__
 #include "app_rtc.hpp"
-static tmElements_t s_time_date;
+static tm s_time_date;
 static xTaskHandle s_xTaskCore0RTC;
 #endif /* __RTC_ENABLE__ */
 
@@ -113,7 +113,7 @@ void vTaskCore0RTC(void *p_parameter)
 
     while (1)
     {
-        s_time_date = app_rtc_read();
+        // s_time_date = app_rtc_read();
         WDT_TOGGLE;
         vTaskDelay(USEC_TO_TICKS(1000));
     }
