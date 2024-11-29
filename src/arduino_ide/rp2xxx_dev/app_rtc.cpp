@@ -14,9 +14,7 @@
 #ifdef __RTC_ENABLE__
 #include "drv_ds3231.hpp"
 
-const char *p_weekday_str[] = {"None", "Sun.", "Mon.",
-                                "Tue.", "Wed.", "Thu.",
-                                "Fri.", "Sat." };
+const char *p_weekday_str[] = {"Sun.", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat." };
 
 static tm s_tm;
 #endif /* __RTC_ENABLE__ */
@@ -46,8 +44,8 @@ void app_rtc_date_print(void)
 #ifdef __RTC_ENABLE__
     s_tm = app_rtc_read();
     DEBUG_RTOS_PRINTF("%d/%02d/%02d %02d:%02d:%02d %s\n",
-                    s_tm.tm_year + 1900,
-                    s_tm.tm_mon + 1,
+                    s_tm.tm_year + 2000,
+                    s_tm.tm_mon,
                     s_tm.tm_mday,
                     s_tm.tm_hour,
                     s_tm.tm_min,

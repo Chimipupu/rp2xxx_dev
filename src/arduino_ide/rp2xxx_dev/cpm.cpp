@@ -167,7 +167,10 @@ static void calculate(char *p_cmd)
 static void rtc(void)
 {
 #ifdef __RTC_ENABLE__
-    app_rtc_date_print();
+    if (xSemaphoreTake(xI2CMutex, portMAX_DELAY) == pdTRUE) {
+        app_rtc_date_print();
+        xSemaphoreGive(xI2CMutex);
+    }
 #endif /* __RTC_ENABLE__ */
 }
 
