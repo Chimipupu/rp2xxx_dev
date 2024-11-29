@@ -14,16 +14,25 @@
 
 #include <stdint.h>
 #include <string.h>
-#include <time.h>
 #include <Wire.h>
 
-#define I2C_DS3231_SLAVE_ADDR     0x68 // DS3231 RTCのI2Cスレーブアドレス
-#define I2C_AT24C32_SLAVE_ADDR    0x57 // 32Kbit EEPROM AT24C32のI2Cスレーブアドレス
+typedef struct {
+    uint8_t sec;     // 秒[0~59]
+    uint8_t min;     // 分[0~59]
+    uint8_t hour;    // 時[0~24]
+    uint8_t wday;    // 曜日[日曜日~土曜日]
+    uint8_t mday;    // 日[1~31]
+    uint8_t mon;     // 月[1~12]
+    uint8_t year;    // 年[0~99 ※2000年から数えて]
+} rtc_time_date_t;
+
+#define I2C_DS3231_SLAVE_ADDR      0x68 // DS3231 RTCのI2Cスレーブアドレス
+#define I2C_AT24C32_SLAVE_ADDR     0x57 // 32Kbit EEPROM AT24C32のI2Cスレーブアドレス
 
 #define DS3231_REG_SECONDS_ADDR    0x00
 
 void drv_ds3231_init(void);
-void drv_ds3231_get_time_date(tm *p_tm);
-void drv_ds3231_set_time_date(tm *p_tm);
+void drv_ds3231_get_time_date(rtc_time_date_t *p_tm);
+void drv_ds3231_set_time_date(rtc_time_date_t *p_tm);
 
 #endif /* DRV_DS3231_HPP */

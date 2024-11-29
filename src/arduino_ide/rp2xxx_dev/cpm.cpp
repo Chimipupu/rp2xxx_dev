@@ -99,7 +99,7 @@ static void help(void)
     DEBUG_RTOS_PRINTF("  FIB    - Display Fibonacci (e.g., FIB 10)\n");
     DEBUG_RTOS_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
     DEBUG_RTOS_PRINTF("  MANDEL - Display Mandelbrot (e.g., MANDEL)\n");
-    DEBUG_RTOS_PRINTF("  RTC    - RTC Timer Command\n");
+    DEBUG_RTOS_PRINTF("  RTC    - RTC Command\n");
     DEBUG_RTOS_PRINTF("  TIMER  - Timer Test\n");
     DEBUG_RTOS_PRINTF("  TEST   - Performance test cmd\n");
 #ifdef DEBUG_CMD

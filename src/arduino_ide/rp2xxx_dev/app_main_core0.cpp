@@ -15,7 +15,7 @@
 
 #ifdef __RTC_ENABLE__
 #include "app_rtc.hpp"
-static tm s_time_date;
+static rtc_time_date_t s_time_date;
 static xTaskHandle s_xTaskCore0RTC;
 #endif /* __RTC_ENABLE__ */
 
