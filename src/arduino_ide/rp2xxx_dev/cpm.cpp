@@ -26,14 +26,6 @@ const char *p_cpm_version_str = "Ver1.0.3";
 #include "benchmark_test.hpp"
 #include "rp2xxx.hpp"
 
-#ifdef __RTC_ENABLE__
-#include "app_rtc.hpp"
-#endif /* __RTC_ENABLE__ */
-
-#ifdef __SENSOR_ENABLE__
-#include "drv_bme280.hpp"
-#endif /* __SENSOR_ENABLE__ */
-
 #define DEBUG_CMD
 #ifdef DEBUG_CMD
 #define DBG_CMD_ARG         4
@@ -42,6 +34,15 @@ const char *p_cpm_version_str = "Ver1.0.3";
 #include "math_uc.hpp"
 #define MAX_CMD_LEN         100
 #define CALC_CMD_ARG        4
+
+#ifdef __RTC_ENABLE__
+#include "app_rtc.hpp"
+#define RTC_CMD_ARG         4
+#endif /* __RTC_ENABLE__ */
+
+#ifdef __SENSOR_ENABLE__
+#include "drv_bme280.hpp"
+#endif /* __SENSOR_ENABLE__ */
 
 #ifdef __WIFI_ENABLE__
 extern char g_ssid[16];
@@ -54,10 +55,12 @@ static uint32_t s_idx = 0;
 static void cpm_ansi_txt_color(const char *p_ansi_txt_color);
 static void ascii_art(void);
 static void help(void);
+static void rst(void);
 static void cls(void);
 static void dir(void);
 static void calculate(char *p_cmd);
-static void rtc(void);
+static void rtc_cmd_parse_(char *p_cmd);
+static void rtc(char *p_cmd);
 static void timer_test(void);
 #ifdef DEBUG_CMD
 static void dbg_cmd(char *p_cmd);
@@ -92,6 +95,7 @@ static void help(void)
 
     DEBUG_RTOS_PRINTF("Command List:\n");
     DEBUG_RTOS_PRINTF("  HELP   - This Command. Show Command List\n");
+    DEBUG_RTOS_PRINTF("  RST    - S/W Reset Command\n");
     DEBUG_RTOS_PRINTF("  CLS    - Display Clear Command\n");
     DEBUG_RTOS_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
     DEBUG_RTOS_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
@@ -99,7 +103,7 @@ static void help(void)
     DEBUG_RTOS_PRINTF("  FIB    - Display Fibonacci (e.g., FIB 10)\n");
     DEBUG_RTOS_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
     DEBUG_RTOS_PRINTF("  MANDEL - Display Mandelbrot (e.g., MANDEL)\n");
-    DEBUG_RTOS_PRINTF("  RTC    - RTC Command\n");
+    DEBUG_RTOS_PRINTF("  RTC    - RTC Command  (e.g., RTC R, RTC W 24/11/30/7/12:00:00)\n");
     DEBUG_RTOS_PRINTF("  TIMER  - Timer Test\n");
     DEBUG_RTOS_PRINTF("  TEST   - Performance test cmd\n");
 #ifdef DEBUG_CMD
@@ -111,6 +115,12 @@ static void help(void)
 #endif
 
     // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
+}
+
+static void rst(void)
+{
+    DEBUG_PRINTF_RTOS("S/W Reset!\n");
+    rp2xxx_sw_reset();
 }
 
 static void cls(void)
@@ -157,18 +167,54 @@ static void calculate(char *p_cmd)
                 DEBUG_RTOS_PRINTF("Unknown op: %c\n", op);
                 break;
         }
-    }
-    else
-    {
+    } else {
         DEBUG_RTOS_PRINTF("Invalid format. Use: CALC <num1> <op> <num2>\n");
     }
 }
 
-static void rtc(void)
+static void rtc_cmd_parse_(char *p_cmd)
+{
+#ifdef __RTC_ENABLE__
+    rtc_time_date_t rtc_date;
+    uint8_t year_dat = 0, mon_dat = 0, mday_dat = 0, wday_dat = 0;
+    uint8_t hour_dat = 0, min_dat = 0, sec_dat = 0;
+
+    // `RTC W` コマンド (RTC W YYYY/MM/DD/DOW/HH:MM:SS)
+    // 例) RTC W 24/11/30/7/12:00:00 ※7 = 土曜日
+    if(strstr(p_cmd, "RTC W") == p_cmd) {
+        if (sscanf(p_cmd, "RTC W %d/%d/%d/%d/%d:%d:%d",
+                &year_dat, &mon_dat, &mday_dat, &wday_dat,
+                &hour_dat, &min_dat, &sec_dat) == 7) {
+            DEBUG_RTOS_PRINTF("cmd args : %d/%d/%d/%d/%d:%d:%d\n",
+                                year_dat, mon_dat, mday_dat, wday_dat,
+                                hour_dat, min_dat, sec_dat);
+            rtc_date.year = year_dat;
+            rtc_date.mon = mon_dat;
+            rtc_date.mday = mday_dat;
+            rtc_date.wday = wday_dat;
+            rtc_date.hour = hour_dat;
+            rtc_date.min = min_dat;
+            rtc_date.sec = sec_dat;
+            DEBUG_RTOS_PRINTF("RTC Write Date : ");
+            app_rtc_date_print(&rtc_date);
+            app_rtc_write(&rtc_date);
+        } else {
+            DEBUG_RTOS_PRINTF("Invalid RTC W format\n");
+        }
+    // `RTC R` コマンド
+    } else if(strstr(p_cmd, "RTC R") == p_cmd) {
+        app_rtc_read_date_print();
+    } else {
+        DEBUG_RTOS_PRINTF("Invalid RTC command format\n");
+    }
+#endif /* __RTC_ENABLE__ */
+}
+
+static void rtc(char *p_cmd)
 {
 #ifdef __RTC_ENABLE__
     if (xSemaphoreTake(xI2CMutex, portMAX_DELAY) == pdTRUE) {
-        app_rtc_date_print();
+        rtc_cmd_parse_(p_cmd);
         xSemaphoreGive(xI2CMutex);
     }
 #endif /* __RTC_ENABLE__ */
@@ -227,6 +273,8 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
 {
     if (strcmp(p_cmd_buf, "HELP") == 0) {
         init_msg();
+    } else if (strcmp(p_cmd_buf, "RST") == 0) {
+        rst();
     } else if (strcmp(p_cmd_buf, "CLS") == 0) {
         cls();
     } else if (strcmp(p_cmd_buf, "DIR") == 0) {
@@ -236,7 +284,6 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
         while(*p_cmd == ' ') {
             p_cmd++;
         }
-        // DEBUG_RTOS_PRINTF("Debug: Expression = '%s'\n", p_cmd);
         calculate(p_cmd);
     } else if (strstr(p_cmd_buf, "FIB") == p_cmd_buf) {
         uint32_t n = atoi(p_cmd_buf + 4);
@@ -250,8 +297,8 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
     } else if (strcmp(p_cmd_buf, "MANDEL") == 0) {
         cls();
         math_uc_mandelbrot();
-    } else if (strcmp(p_cmd_buf, "RTC") == 0) {
-        rtc();
+    } else if (strstr(p_cmd_buf, "RTC") == p_cmd_buf) {
+        rtc(p_cmd_buf);
     } else if (strcmp(p_cmd_buf, "TIMER") == 0) {
         timer_test();
     } else if (strcmp(p_cmd_buf, "TEST") == 0) {
@@ -261,15 +308,8 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
         math_uc_math_test();
     }
 #ifdef DEBUG_CMD
-    else if (strstr(p_cmd_buf, "DBG") == p_cmd_buf)
-    {
-        char *p_cmd = p_cmd_buf + DBG_CMD_ARG;
-        while (*p_cmd == ' ')
-        {
-            p_cmd++;
-        }
-        // DEBUG_RTOS_PRINTF("Debug: Expression = '%s'\n", p_cmd);
-        dbg_cmd(p_cmd);
+    else if (strstr(p_cmd_buf, "DBG") == p_cmd_buf) {
+        dbg_cmd(p_cmd_buf);
     }
 #endif /* DEBUG_CMD */
     else {

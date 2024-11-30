@@ -164,3 +164,13 @@ void rp2xxx_reg_info(void)
 #endif
     DEBUG_RTOS_PRINTF("**************************************************************************\n");
 }
+
+/**
+ * @brief S/Wリセット
+ * 
+ */
+void rp2xxx_sw_reset(void)
+{
+    rp2040.rebootToBootloader();
+    // rp2040.reboot();
+}

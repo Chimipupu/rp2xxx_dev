@@ -18,6 +18,7 @@
 void app_rtc_init(void);
 rtc_time_date_t app_rtc_read(void);
 void app_rtc_write(rtc_time_date_t *p_tm);
-void app_rtc_date_print(void);
+void app_rtc_date_print(rtc_time_date_t *p_tm);
+void app_rtc_read_date_print(void);
 
 #endif /* APP_RTC_HPP */

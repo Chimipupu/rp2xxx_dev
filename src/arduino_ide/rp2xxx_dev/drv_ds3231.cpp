@@ -50,12 +50,12 @@ void drv_ds3231_set_time_date(rtc_time_date_t *p_tm)
 {
     Wire1.beginTransmission(I2C_DS3231_SLAVE_ADDR);
     Wire1.write(0x00);
-    Wire1.write(dec_to_bcd(p_tm->sec));
-    Wire1.write(dec_to_bcd(p_tm->min));
-    Wire1.write(dec_to_bcd(p_tm->hour));
-    Wire1.write(dec_to_bcd(p_tm->wday));
-    Wire1.write(dec_to_bcd(p_tm->mday));
-    Wire1.write(dec_to_bcd(p_tm->mon));
-    Wire1.write(dec_to_bcd(p_tm->year));
+    Wire1.write(dec_to_bcd(p_tm->sec)  & 0x7F);
+    Wire1.write(dec_to_bcd(p_tm->min)  & 0x7F);
+    Wire1.write(dec_to_bcd(p_tm->hour) & 0x1F);
+    Wire1.write(dec_to_bcd(p_tm->wday) & 0x07);
+    Wire1.write(dec_to_bcd(p_tm->mday) & 0x3F);
+    Wire1.write(dec_to_bcd(p_tm->mon)  & 0x1F);
+    Wire1.write(dec_to_bcd(p_tm->year) & 0xFF);
     Wire1.endTransmission();
 }

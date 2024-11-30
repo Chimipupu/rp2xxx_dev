@@ -12,7 +12,8 @@
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
 - 📍センサ
-  - 📍 ... [BME280 (湿度、温度、気圧センサ)🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/)
+  - 📍[BME280🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/)  (湿度、温度、気圧センサ)
+  - 📍[DS3231🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/)  (RTC⏰️)
 
 <div align="center">
   <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.3.png">
@@ -55,6 +56,8 @@
     - 📍OS ... FreeRTOS
       - ✅Core0メインタスク
         - 🚩TODO
+      - ✅センサータスク
+        - ✅BME280から湿度、温度、気圧を取得
       - ✅Bluetoothタスク📶
         - ✅Bluetoothシリアル
       - ✅ボタンタスク
@@ -72,17 +75,22 @@
       - ✅OLEDタスク
         - 英語、日本語、科学計算の結果をOLEDに表示(@I2C)
       - ✅モニタプログラムタスク(@USBシリアル)
+        - ✅RTCのR/W
+        - ✅S/Wリセット
+        - ✅計算アプリ
+          - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
+        - ✅システムレジスタ表示
+          - SYSINFO/M0PLUS or M33/SIOのCPUIDレジスタRead
+        - ✅SDカードのR/W(@SPI)
         - ✅ベンチマークテスト
           - ✅四則演算（整数、浮動小数 float & double）
           - ✅sin, cos, tan, atan2, sqrt
           - ✅メモリ, GPIOトグル
-        - ✅計算
-          - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
-        - ✅レジスタ
-          - SYSINFO/M0PLUS or M33/SIOのCPUIDレジスタRead
-        - ✅SDカードのR/W(@SPI)
-
 ### ペリフェラル
+
+- 📍I2C
+  - ✅(センサー)BME280から湿度、温度、気圧を取得
+  - ✅(RTC)DS3231からRTCの時刻をR/W
 
 - 📍SPI
   - ✅SDカードのR/W、ディレクトリ表示
@@ -94,7 +102,7 @@
   - ✅白⚪ : F/W正常（FreeRTOSはアイドル状態）
   - ✅紫🟣 : F/Wエラー
 
-- 📍割込み(IRQ)）
+- 📍割込み(IRQ)
   - ✅タイマーIRQ⏰
     - ✅アラーム 0 ⏰(TIMER_IRQ_0) ... 1ms周期
     - ✅アラーム 1 ⏰(TIMER_IRQ_1) ... 8ms周期
