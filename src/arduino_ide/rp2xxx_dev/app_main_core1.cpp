@@ -132,7 +132,6 @@ void app_main_init_core1(void)
 #endif /* __WIFI_ENABLE__ */
 
     // FreeRTOS初期化
-
 #ifdef __LCD_ENABLE__
     xTaskCreate(vTaskCore1oled,         // コールバック関数ポインタ
                 "vTaskCore1oled",       // タスク名

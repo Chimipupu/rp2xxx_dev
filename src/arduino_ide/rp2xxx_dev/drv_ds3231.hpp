@@ -27,8 +27,6 @@ typedef struct {
 } rtc_time_date_t;
 
 #define I2C_DS3231_SLAVE_ADDR      0x68 // DS3231 RTCのI2Cスレーブアドレス
-#define I2C_AT24C32_SLAVE_ADDR     0x57 // 32Kbit EEPROM AT24C32のI2Cスレーブアドレス
-
 #define DS3231_REG_SECONDS_ADDR    0x00
 
 void drv_ds3231_init(void);

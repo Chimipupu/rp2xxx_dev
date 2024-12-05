@@ -1,5 +1,5 @@
 # 📍RP2040 & RP2350 評価F/W
-## Ver1.0.3
+## Ver1.0.4
 - 📍CPU ... [RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
   - 📍CPU0 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
   - 📍CPU1 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
@@ -11,12 +11,13 @@
   - 📍CPU0 ... ✅FreeRTOS (搭載済み)
   - 📍CPU1 ... ✅FreeRTOS (搭載済み)
 
-- 📍センサ
-  - 📍[BME280🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/)  (湿度、温度、気圧センサ)
-  - 📍[DS3231🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/)  (RTC⏰️)
+- 📍I2C
+  - 📍[BME280🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (湿度、温度、気圧センサ)
+  - 📍[AT24C32🔗](https://www.microchip.com/en-us/product/AT24C32) (32Kbit EEPROM)
+  - 📍[DS3231🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (TCXO ±2ppm RTC⏰️)
 
 <div align="center">
-  <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.3.png">
+  <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.4.png">
 </div>
 
 <table>
@@ -29,8 +30,8 @@
 ## 📍開発環境
 
 - 📍IDE
-  - 📍[Arduino IDE v2.33🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.3)
-    - 📍[Raspberry Pi Pico/RP2040/RP2350 by Earle F. Philhower, III🔗](https://github.com/earlephilhower/arduino-pico)
+  - 📍[Arduino IDE v2.34🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.4)
+  - 📍[arduino-pico v4.3.1🔗](https://github.com/earlephilhower/arduino-pico)
 
 - 📍基板
   - 📍RP2040
@@ -76,6 +77,7 @@
         - 英語、日本語、科学計算の結果をOLEDに表示(@I2C)
       - ✅モニタプログラムタスク(@USBシリアル)
         - ✅RTCのR/W
+        - ✅EEPROMのR/W
         - ✅S/Wリセット
         - ✅計算アプリ
           - マンデルブロ集合、円周率π、自然数の底e、黄金比、フィボナッチ数列、高速逆平方根
@@ -90,17 +92,19 @@
 
 - 📍I2C
   - ✅(センサー)BME280から湿度、温度、気圧を取得
+  - ✅(EEPROM)AT24C32のR/W
   - ✅(RTC)DS3231からRTCの時刻をR/W
 
 - 📍SPI
   - ✅SDカードのR/W、ディレクトリ表示
 
-- 📍RGB LED (NeoPixel)
-  - ✅赤🔴 : 初期化中、オフライン状態(WiFi,Bluetooth未接続)
-  - ✅青🔵 : オンライン状態（WiFi,Bluetooth接続中）
-  - ✅緑🟢 : F/W正常（FreeRTOSで処理中）
-  - ✅白⚪ : F/W正常（FreeRTOSはアイドル状態）
-  - ✅紫🟣 : F/Wエラー
+- 📍GPIO
+  - 📍RGB LED (NeoPixel)　
+    - ✅赤🔴 : 初期化中、オフライン状態(WiFi,Bluetooth未接続)
+    - ✅青🔵 : オンライン状態（WiFi,Bluetooth接続中）
+    - ✅緑🟢 : F/W正常（FreeRTOSで処理中）
+    - ✅白⚪ : F/W正常（FreeRTOSはアイドル状態）
+    - ✅紫🟣 : F/Wエラー
 
 - 📍割込み(IRQ)
   - ✅タイマーIRQ⏰
@@ -112,10 +116,10 @@
   - ✅ボタンIRQ (@GPIO24)
     - ✅ `ボタン単押し判定` ... ボタン一回押しを検知
     - ✅ `ボタン複数押し判定` ... 短時間に複数回ボタン押しを検知
-    - ✅ `ボタン長押し判定` ... `ボタン長押し`= 1000ms = 1s
-    - ✅ `ボタン超長押し判定` ... `ボタン長押し` = 3000ms = 3s
+    - ✅ `ボタン長押し判定` ... `ボタン長押し`= 1000ms = 1sec
+    - ✅ `ボタン超長押し判定` ... `ボタン長押し` = 3000ms = 3sec
 
-### PIO
+<!-- ### PIO
 
 - 📍PIO0
   - ✅SM0
@@ -132,7 +136,7 @@
   - 🚩SM0
   - 🚩SM1
   - 🚩SM2
-  - 🚩SM3
+  - 🚩SM3 -->
 
 <!-- ### Pimoroni Pico VGA Demo Base
 

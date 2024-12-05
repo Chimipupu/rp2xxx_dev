@@ -10,6 +10,7 @@
  */
 
 #include "app_filesystem.hpp"
+#include "drv_at24cxx.hpp"
 
 #ifdef __SD_TF_ENABLE__
 #include <SD.h>
@@ -126,7 +127,22 @@ static void fs_dir_print(File dir, uint8_t tabs)
 
 void app_fs_test(void)
 {
+    uint8_t data = 0;
+
+    // SD,Flash Test
     fs_test();
+
+    // EEPROM Test
+    if (xSemaphoreTake(xI2CMutex, portMAX_DELAY) == pdTRUE) {
+        // ダミーデータ書き込み
+        for (uint16_t addr = 0x0000; addr < 0x003; addr++) {
+            data = addr + 1;
+            drv_at24cxx_write(addr, data);
+        }
+        // ダンプ
+        app_fs_eeprom_print(0x0010);
+        xSemaphoreGive(xI2CMutex);
+    }
 }
 #endif /* __SD_TF_ENABLE__ */
 
@@ -166,4 +182,29 @@ void app_fs_dir_print(void)
     File root = SD.open("/");
     fs_dir_print(root, 0);
 #endif /* __SD_TF_ENABLE__ */
+}
+
+void app_fs_eeprom_print(uint16_t size)
+{
+    DEBUG_RTOS_PRINTF("EEPROM Dump (%dByte)\n", size);
+    for (uint16_t addr = 0; addr < size; addr++) {
+        if (addr % COL_SIZE == 0) {
+            if (addr != 0) Serial.println();
+                DEBUG_RTOS_PRINTF("0x");
+                for (uint8_t i = String(addr, HEX).length(); i < 4; i++)
+                {
+                    DEBUG_RTOS_PRINTF("0");
+                }
+                DEBUG_RTOS_PRINTF("%2X", addr);
+                DEBUG_RTOS_PRINTF(": ");
+        }
+        uint8_t val = drv_at24cxx_read(addr);
+        if (val < 0x10) {
+            DEBUG_RTOS_PRINTF("0");
+        } else {
+            DEBUG_RTOS_PRINTF("%2X", val);
+        }
+        DEBUG_RTOS_PRINTF(" ");
+    }
+    DEBUG_RTOS_PRINTF("\n");
 }

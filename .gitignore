@@ -30,3 +30,4 @@
 *.exe
 *.out
 *.app
+/src/arduino_ide/rp2xxx_dev/build

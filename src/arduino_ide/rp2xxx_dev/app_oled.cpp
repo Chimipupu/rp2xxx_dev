@@ -53,7 +53,8 @@ static uint8_t s_type = OLED_ENG_TEST;
 
 static void oled_i2c_init(void);
 static void gfx_init(void);
-void oled_clear(void);
+static void oled_clear(void);
+static void oled_muc_type_print(void);
 static void oled_en_txt_test(void);
 static void oled_jp_txt_test(void);
 static void oled_math_txt_test(void);
@@ -78,7 +79,7 @@ static void gfx_init(void)
     sprite.createSprite(lcd.width(), lcd.height());
 }
 
-void oled_clear(void)
+static void oled_clear(void)
 {
     sprite.fillScreen(OLED_BACK_COLOR);
     sprite.setTextColor(OLED_TXT_COLOR);
@@ -96,8 +97,8 @@ static void oled_en_txt_test(void)
 {
     oled_clear();
     sprite.setFont(&fonts::Font0);
+    oled_muc_type_print();
 #ifdef MCU_RP2040
-    sprite.printf("RP2040 F/W Test\n");
     sprite.printf("by Chimi\n");
     sprite.printf("github.com/Chimipupu\n");
     sprite.printf("%s\n", p_board_str);
@@ -105,7 +106,6 @@ static void oled_en_txt_test(void)
     sprite.printf("ARM Cortex-M0+\n");
     sprite.printf("Flash:2MB SRAM:264KB\n");
 #else
-    sprite.printf("RP2350 F/W Test\n");
     sprite.printf("by Chimi\n");
     sprite.printf("github.com/Chimipupu\n");
     sprite.printf("%s\n", p_board_str);
@@ -132,6 +132,15 @@ static void oled_jp_txt_test(void)
     sprite.pushSprite(0, 0);
 }
 
+static void oled_muc_type_print(void)
+{
+#ifdef MCU_RP2040
+    sprite.printf("RP2040 F/W Test\n");
+#else
+    sprite.printf("RP2350 F/W Test\n");
+#endif
+}
+
 static void oled_math_txt_test(void)
 {
     uint32_t i, cnt;
@@ -144,11 +153,7 @@ static void oled_math_txt_test(void)
 
     oled_clear();
     sprite.setFont(&fonts::Font0);
-#ifdef MCU_RP2040
-    sprite.printf("RP2040 F/W Test\n");
-#else
-    sprite.printf("RP2350 F/W Test\n");
-#endif
+    oled_muc_type_print();
 
     // tan(355/226)の計算（※期待値:-7497258.185...）
     result = math_calc_accuracy();
@@ -223,9 +228,10 @@ void app_oled_main(oled_app_data_t *p_oled_dat)
 {
     sprite.setCursor(0, 0);
     sprite.fillScreen(OLED_BACK_COLOR);
-    sprite.printf("[System Data Info]\n");
+    oled_muc_type_print();
 
     // 時刻データ
+    sprite.printf("RTC(DS3231) Time\n");
     sprite.printf("%4d/%2d/%2d ",
                     p_oled_dat->rtc_dat.year + 2000,
                     p_oled_dat->rtc_dat.mon,
@@ -235,11 +241,12 @@ void app_oled_main(oled_app_data_t *p_oled_dat)
                     p_oled_dat->rtc_dat.min,
                     p_oled_dat->rtc_dat.sec);
 
-    // センサデータ（湿度、温度、気圧）
+    // センサデータ（湿度、温度、気圧、標高）
+    sprite.printf("BME280 Data\n");
     sprite.printf("temp=%.2fC\n", p_oled_dat->sensor_dat.bme280_dat.temperature);
     sprite.printf("humi=%.2f%%\n", p_oled_dat->sensor_dat.bme280_dat.humidity);
     sprite.printf("press=%.2fhPa\n", p_oled_dat->sensor_dat.bme280_dat.pressure);
-    sprite.printf("alti=%.2fm\n", p_oled_dat->sensor_dat.bme280_dat.altitude);
+    // sprite.printf("alti=%.2fm\n", p_oled_dat->sensor_dat.bme280_dat.altitude);
 
     sprite.pushSprite(0, 0);
 }

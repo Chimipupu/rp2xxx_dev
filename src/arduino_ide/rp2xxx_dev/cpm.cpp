@@ -105,16 +105,10 @@ static void help(void)
     DEBUG_RTOS_PRINTF("  MANDEL - Display Mandelbrot (e.g., MANDEL)\n");
     DEBUG_RTOS_PRINTF("  RTC    - RTC Command  (e.g., RTC R, RTC W 24/11/30/7/12:00:00)\n");
     DEBUG_RTOS_PRINTF("  TIMER  - Timer Test\n");
-    DEBUG_RTOS_PRINTF("  TEST   - Performance test cmd\n");
+    DEBUG_RTOS_PRINTF("  TEST   - Performance Test Command\n");
 #ifdef DEBUG_CMD
-#if 0
-    DEBUG_RTOS_PRINTF("  REGR   - Register Read (e.g., REGR <Address>)\n");
-    DEBUG_RTOS_PRINTF("  REGW   - Register Write (e.g., REGW <Address> <Val>)\n");
+    DEBUG_RTOS_PRINTF("  DBG    - Debug Command\n");
 #endif
-    DEBUG_RTOS_PRINTF("  DBG    - Develop cmd\n");
-#endif
-
-    // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
 }
 
 static void rst(char *p_cmd)
