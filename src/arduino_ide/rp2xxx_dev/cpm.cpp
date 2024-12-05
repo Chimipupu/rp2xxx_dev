@@ -11,7 +11,7 @@
 
 #include "cpm.hpp"
 
-const char *p_cpm_version_str = "Ver1.0.3";
+const char *p_cpm_version_str = "Ver1.0.4";
 
 #ifdef MCU_RP2040
     const char *p_mcu_str = "RP2040";
@@ -55,7 +55,7 @@ static uint32_t s_idx = 0;
 static void cpm_ansi_txt_color(const char *p_ansi_txt_color);
 static void ascii_art(void);
 static void help(void);
-static void rst(void);
+static void rst(char *p_cmd);
 static void cls(void);
 static void dir(void);
 static void calculate(char *p_cmd);
@@ -95,7 +95,7 @@ static void help(void)
 
     DEBUG_RTOS_PRINTF("Command List:\n");
     DEBUG_RTOS_PRINTF("  HELP   - This Command. Show Command List\n");
-    DEBUG_RTOS_PRINTF("  RST    - S/W Reset Command\n");
+    DEBUG_RTOS_PRINTF("  RST    - S/W Reset Command (e.g., RST S, RST U)\n");
     DEBUG_RTOS_PRINTF("  CLS    - Display Clear Command\n");
     DEBUG_RTOS_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
     DEBUG_RTOS_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
@@ -117,10 +117,17 @@ static void help(void)
     // cpm_ansi_txt_color(ANSI_TXT_COLOR_WHITE);
 }
 
-static void rst(void)
+static void rst(char *p_cmd)
 {
-    DEBUG_PRINTF_RTOS("S/W Reset!\n");
-    rp2xxx_sw_reset();
+    if(strstr(p_cmd, "RST S") == p_cmd) {
+        DEBUG_PRINTF_RTOS("S/W Reset!\n");
+        rp2xxx_sw_reset();
+    } else if(strstr(p_cmd, "RST U") == p_cmd) {
+        DEBUG_PRINTF_RTOS("U2F Download Wait!\n");
+        rp2xxx_u2f_download_wait_reset();
+    } else {
+        DEBUG_RTOS_PRINTF("Invalid RST Command\n");
+    }
 }
 
 static void cls(void)
@@ -273,8 +280,8 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
 {
     if (strcmp(p_cmd_buf, "HELP") == 0) {
         init_msg();
-    } else if (strcmp(p_cmd_buf, "RST") == 0) {
-        rst();
+    } else if (strstr(p_cmd_buf, "RST") == p_cmd_buf) {
+        rst(p_cmd_buf);
     } else if (strcmp(p_cmd_buf, "CLS") == 0) {
         cls();
     } else if (strcmp(p_cmd_buf, "DIR") == 0) {

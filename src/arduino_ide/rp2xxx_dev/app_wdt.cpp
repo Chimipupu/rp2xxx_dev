@@ -10,14 +10,15 @@
  */
 
 #include "app_wdt.hpp"
+#include "rp2xxx.hpp"
 
 void app_wdt_init(void)
 {
+#ifdef __WDT_ENABLE__
     if (watchdog_caused_reboot()) {
-        DEBUG_RTOS_PRINTF("Rebooted by WDT wanwan\n");
+        rp2xxx_u2f_download_wait_reset();
     }
 
-#ifdef __WDT_ENABLE__
     watchdog_enable(WDT_TIME_OUT, true);
 #endif /* __WDT_ENABLE__ */
 }

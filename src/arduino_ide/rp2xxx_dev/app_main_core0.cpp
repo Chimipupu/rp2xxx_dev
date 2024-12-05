@@ -10,6 +10,10 @@
  */
 
 #include "app_main_core0.hpp"
+#include "app_timer.hpp"
+#include "app_btn.hpp"
+#include "app_neopixel.hpp"
+#include "app_util.hpp"
 #include "muc_board.hpp"
 #include "app_wdt.hpp"
 
@@ -161,9 +165,11 @@ void vTaskCore0Main(void *p_parameter)
 
 void app_main_init_core0(void)
 {
+#ifdef __WDT_ENABLE__
     // WDT 初期化
     app_wdt_init();
     WDT_TOGGLE;
+#endif /* __WDT_ENABLE__ */
 
     // GPIO 初期化
     gpio_init();
@@ -236,7 +242,8 @@ void app_main_init_core0(void)
                 );
 #endif /* __BLUETOOTH_ENABLE__ */
 
-#ifdef __RTC_ENABLE__
+// #ifdef __RTC_ENABLE__
+#if 0
     xTaskCreate(vTaskCore0RTC,         // コールバック関数ポインタ
                 "vTaskCore0RTC",       // タスク名
                 2048,                   // スタック

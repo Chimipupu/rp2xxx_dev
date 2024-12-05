@@ -15,7 +15,6 @@
 #include "math_uc.hpp"
 #include <Wire.h>
 
-
 #define MATH_PI_CALC_TIME   3
 #define FIBONACCI_N         8
 
@@ -183,9 +182,13 @@ static void oled_math_txt_test(void)
     sprite.pushSprite(0, 0);
 }
 
+/**
+ * @brief OLED LCDの表示テスト
+ * 
+ */
 void app_oled_test(void)
 {
-    switch (s_type)
+    switch(s_type)
     {
         // 英数字 表示テスト
         case OLED_ENG_TEST:
@@ -210,5 +213,34 @@ void app_oled_test(void)
     if(s_type > OLED_MATH_TEST){
         s_type = OLED_ENG_TEST;
     }
+}
+
+/**
+ * @brief OLED LCDメイン関数
+ * 
+ */
+void app_oled_main(oled_app_data_t *p_oled_dat)
+{
+    sprite.setCursor(0, 0);
+    sprite.fillScreen(OLED_BACK_COLOR);
+    sprite.printf("[System Data Info]\n");
+
+    // 時刻データ
+    sprite.printf("%4d/%2d/%2d ",
+                    p_oled_dat->rtc_dat.year + 2000,
+                    p_oled_dat->rtc_dat.mon,
+                    p_oled_dat->rtc_dat.mday);
+    sprite.printf("%2d:%2d:%2d\n",
+                    p_oled_dat->rtc_dat.hour,
+                    p_oled_dat->rtc_dat.min,
+                    p_oled_dat->rtc_dat.sec);
+
+    // センサデータ（湿度、温度、気圧）
+    sprite.printf("temp=%.2fC\n", p_oled_dat->sensor_dat.bme280_dat.temperature);
+    sprite.printf("humi=%.2f%%\n", p_oled_dat->sensor_dat.bme280_dat.humidity);
+    sprite.printf("press=%.2fhPa\n", p_oled_dat->sensor_dat.bme280_dat.pressure);
+    sprite.printf("alti=%.2fm\n", p_oled_dat->sensor_dat.bme280_dat.altitude);
+
+    sprite.pushSprite(0, 0);
 }
 #endif /* __LCD_ENABLE__ */

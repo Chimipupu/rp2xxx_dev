@@ -18,17 +18,15 @@
 // #define WDT_TIME_OUT        6 * 1000 // WDTを6秒に設定
 #define WDT_TIME_OUT        0x7fffff // WDTを8.3秒に設定(8.3秒 = 0x7fffff)
 
-extern "C"
+static inline void WDT_TOGGLE(void)
 {
-    static inline void WDT_TOGGLE(void)
-    {
 #ifdef __WDT_ENABLE__
-        watchdog_update();
+    watchdog_update();
 #else
-        asm volatile("nop");
+    asm volatile("nop");
 #endif /* __WDT_ENABLE__ */
-    }
 }
+
 
 void app_wdt_init(void);
 

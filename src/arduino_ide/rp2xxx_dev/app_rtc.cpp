@@ -21,7 +21,7 @@ static void rtc_date_print(rtc_time_date_t *p_tm);
 
 static void rtc_date_print(rtc_time_date_t *p_tm)
 {
-    DEBUG_RTOS_PRINTF("%d/%02d/%02d %02d:%02d:%02d %s\n",
+    DEBUG_RTOS_PRINTF("%d/%2d/%2d %2d:%2d:%2d %s\n",
                     p_tm->year + 2000,
                     p_tm->mon,
                     p_tm->mday,

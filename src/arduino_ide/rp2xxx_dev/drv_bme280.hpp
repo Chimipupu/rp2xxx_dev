@@ -27,6 +27,6 @@ typedef struct {
 
 void drv_bme280_init(void);
 void drv_bme280_data_print(void);
-void drv_bme280_main(void);
+bme280_data_t drv_bme280_main(void);
 
 #endif /* DRV_BME280_HPP */

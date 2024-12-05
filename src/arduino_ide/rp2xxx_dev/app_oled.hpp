@@ -131,7 +131,15 @@ class LGFX_SH110x : public lgfx::LGFX_Device
 };
 #endif /* LCD_SH110x */
 
+#include "app_rtc.hpp"
+#include "app_sensor.hpp"
+typedef struct {
+    sensor_app_data_t sensor_dat;
+    rtc_time_date_t rtc_dat;
+} oled_app_data_t;
+
 void app_oled_init(void);
 void app_oled_test(void);
+void app_oled_main(oled_app_data_t *p_oled_dat);
 #endif /* __LCD_ENABLE__ */
 #endif /* APP_OLED_HPP */

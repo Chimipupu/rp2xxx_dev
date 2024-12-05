@@ -32,6 +32,7 @@ uint32_t rp2xxx_get_hwrng(void);
 void rp2xxx_chip_rev_print(void);
 void rp2xxx_develop_info_print(void);
 void rp2xxx_reg_info(void);
+void rp2xxx_u2f_download_wait_reset(void);
 void rp2xxx_sw_reset(void);
 
 #endif /* RP2XXX_HPP */

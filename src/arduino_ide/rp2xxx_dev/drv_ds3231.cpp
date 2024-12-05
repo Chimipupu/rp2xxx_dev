@@ -39,7 +39,7 @@ void drv_ds3231_get_time_date(rtc_time_date_t *p_tm)
 
     p_tm->sec  = bcd_to_dec(Wire1.read() & 0x7F);
     p_tm->min  = bcd_to_dec(Wire1.read() & 0x7F);
-    p_tm->hour = bcd_to_dec(Wire1.read() & 0x1F);
+    p_tm->hour = bcd_to_dec(Wire1.read() & 0x3F);
     p_tm->wday = bcd_to_dec(Wire1.read() & 0x07);
     p_tm->mday = bcd_to_dec(Wire1.read() & 0x3F);
     p_tm->mon  = bcd_to_dec(Wire1.read() & 0x1F);
@@ -52,7 +52,7 @@ void drv_ds3231_set_time_date(rtc_time_date_t *p_tm)
     Wire1.write(0x00);
     Wire1.write(dec_to_bcd(p_tm->sec)  & 0x7F);
     Wire1.write(dec_to_bcd(p_tm->min)  & 0x7F);
-    Wire1.write(dec_to_bcd(p_tm->hour) & 0x1F);
+    Wire1.write(dec_to_bcd(p_tm->hour) & 0x3F);
     Wire1.write(dec_to_bcd(p_tm->wday) & 0x07);
     Wire1.write(dec_to_bcd(p_tm->mday) & 0x3F);
     Wire1.write(dec_to_bcd(p_tm->mon)  & 0x1F);

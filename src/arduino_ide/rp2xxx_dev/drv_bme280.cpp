@@ -51,9 +51,10 @@ void drv_bme280_data_print(void)
 
 }
 
-void drv_bme280_main(void)
+bme280_data_t drv_bme280_main(void)
 {
 #ifdef __SENSOR_ENABLE__
     bme280_read_data(&g_bme280_data);
+    return g_bme280_data;
 #endif /* __SENSOR_ENABLE__ */
 }

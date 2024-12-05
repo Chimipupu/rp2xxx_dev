@@ -166,11 +166,19 @@ void rp2xxx_reg_info(void)
 }
 
 /**
+ * @brief U2Fのダウンロード待ちにリセット
+ * 
+ */
+void rp2xxx_u2f_download_wait_reset(void)
+{
+    rp2040.rebootToBootloader();
+}
+
+/**
  * @brief S/Wリセット
  * 
  */
 void rp2xxx_sw_reset(void)
 {
-    rp2040.rebootToBootloader();
-    // rp2040.reboot();
+    rp2040.reboot();
 }
