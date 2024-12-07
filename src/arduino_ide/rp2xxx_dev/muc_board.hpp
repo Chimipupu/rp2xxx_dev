@@ -45,8 +45,8 @@
         #define __SENSOR_ENABLE__
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
-        #define __DEBUG_MONITOR_ENABLE__
         #define __BENCHMARK_TEST__
+        #define __DEBUG_MONITOR_ENABLE__
     #endif /* __MCU_BOARD_PICO__ */
 
     // Pico W
@@ -68,13 +68,14 @@
         #define UART_TX_PIN              12  // UART0 TX
         #define UART_RX_PIN              13  // UART0 RX
         // その他
+        // #define __WIFI_ENABLE__
+        #define __BLUETOOTH_ENABLE__
+        #define __RTC_ENABLE__
         #define __SENSOR_ENABLE__
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
-        #define __NEOPIXEL_ENABLE__
-        #define __BTN_ENABLE__
-        #define __DEBUG_MONITOR_ENABLE__
         #define __BENCHMARK_TEST__
+        #define __DEBUG_MONITOR_ENABLE__
     #endif /* __MCU_BOARD_PICO_W__ */
 
     // VCC-GND RP2040
@@ -96,12 +97,14 @@
         #define UART_TX_PIN              12  // UART0 TX
         #define UART_RX_PIN              13  // UART0 RX
         // その他
+        #define __NEOPIXEL_ENABLE__
+        #define __BTN_ENABLE__
+        #define __RTC_ENABLE__
+        #define __SENSOR_ENABLE__
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
-        #define __BLUETOOTH_ENABLE__
-        // #define __WIFI_ENABLE__
-        #define __DEBUG_MONITOR_ENABLE__
         #define __BENCHMARK_TEST__
+        #define __DEBUG_MONITOR_ENABLE__
     #endif /* __MCU_BOARD_YD_RP2040__ */
 
     // XIAO RP2040
@@ -127,8 +130,8 @@
         // その他
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
-        #define __DEBUG_MONITOR_ENABLE__
         #define __BENCHMARK_TEST__
+        #define __DEBUG_MONITOR_ENABLE__
     #endif /* __MCU_BOARD_XIAO_RP2040__ */
 #endif /* MCU_RP2040 */
 
@@ -153,12 +156,14 @@
         #define UART_TX_PIN              12  // UART0 TX
         #define UART_RX_PIN              13  // UART0 RX
         // その他
+        // #define __NEOPIXEL_ENABLE__
+        // #define __BTN_ENABLE__
         #define __RTC_ENABLE__
         #define __SENSOR_ENABLE__
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
-        #define __DEBUG_MONITOR_ENABLE__
         #define __BENCHMARK_TEST__
+        #define __DEBUG_MONITOR_ENABLE__
     #endif /* __MCU_BOARD_PICO_2__ */
 #endif /* MCU_RP2350 */
 
@@ -230,6 +235,32 @@
     #define PCM_DATA_PIN            31
 #endif /* __MCU_EX_BOARD_PICO_VGA__ */
 
+typedef union {
+    uint32_t DWORD;
+    struct {
+        uint32_t is_wdt:1;
+        uint32_t is_i2c:1;
+        uint32_t is_spi:1;
+        uint32_t is_uart:1;
+        uint32_t is_timer:1;
+        uint32_t is_pio:1;
+        uint32_t is_eeprom:1;
+        uint32_t is_sd:1;
+        uint32_t is_oled:1;
+        uint32_t is_rtc:1;
+        uint32_t is_sensor:1;
+        uint32_t is_wifi:1;
+        uint32_t is_bluetooth:1;
+        uint32_t _Reserved_:19;
+    }BIT;
+} SYSINFO_BIT;
+
+typedef struct
+{
+    SYSINFO_BIT u_sysbit;
+} sysinfo_t;
+
 void mcu_board_gpio_init(void);
 void mcu_board_fs_init(void);
+void mcu_board_get_system_info(sysinfo_t *p_sysinfo);
 #endif /* MUC_BOARDHPP */

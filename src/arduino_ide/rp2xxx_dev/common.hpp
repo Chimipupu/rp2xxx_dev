@@ -26,41 +26,16 @@
 // APP
 #include "muc_board.hpp"
 // #define __WDT_ENABLE__
-// #define __RTC_ENABLE__
-// #define __SENSOR_ENABLE__
-// #define __DEBUG_MONITOR_ENABLE__
-// #define __NEOPIXEL_ENABLE__
-// #define __SD_TF_ENABLE__
-// #define __LCD_ENABLE__
-// #define __IR_ENABLE__
-// #define __PWM_ENABLE__
-// #define __BTN_ENABLE__
-// #define __BLUETOOTH_ENABLE__
-// #define __WIFI_ENABLE__
-// #define __BENCHMARK_TEST__
 
 #ifdef __WDT_ENABLE__
 #include "app_wdt.hpp"
 #endif /* __WDT_ENABLE__ */
 
-typedef enum {
-    FW_INIT = 0x00,
-    RF_OFFLINE = 0x08,
-    FW_IDLE = 0x10,
-    PROC_NOW = 0x16,
-    RF_ONLINE = 0x18,
-    SLEEP_NOW = 0x1A,
-    UART_ERR = 0x20,
-    SPI_ERR = 0x30,
-    I2C_ERR = 0x40,
-    USB_ERR = 0x50,
-    FILESYSTEM_ERR = 0x60,
-    PSRAM_ERR = 0x70,
-    PIO_ERR = 0x80,
-    FW_ERR = 0xFF
-} e_firmware_info;
+#define ON                  0x00    // ON ... Active Low
+#define OFF                 0x01
 
-extern e_firmware_info g_firmware_info;
+#define TRUE                0x01
+#define FALSE               0x00
 
 // 割込みマスク・許可
 #define __DI                taskENTER_CRITICAL
@@ -81,13 +56,29 @@ extern e_firmware_info g_firmware_info;
 
 #define SW_DELAY_MS         delay
 
-#define ON                  0x00    // ON ... Active Low
-#define OFF                 0x01
-
 // GPIO
 #define GPIO_PORT_DIR       pinMode
 #define GPIO_OUTPUT         digitalWrite
 #define GPIO_PWM            analogWrite
+
+typedef enum {
+    FW_INIT = 0x00,
+    RF_OFFLINE = 0x08,
+    FW_IDLE = 0x10,
+    PROC_NOW = 0x16,
+    RF_ONLINE = 0x18,
+    SLEEP_NOW = 0x1A,
+    UART_ERR = 0x20,
+    SPI_ERR = 0x30,
+    I2C_ERR = 0x40,
+    USB_ERR = 0x50,
+    FILESYSTEM_ERR = 0x60,
+    PSRAM_ERR = 0x70,
+    PIO_ERR = 0x80,
+    FW_ERR = 0xFF
+} e_firmware_info;
+
+extern e_firmware_info g_firmware_info;
 
 static inline void NOP(void)
 {

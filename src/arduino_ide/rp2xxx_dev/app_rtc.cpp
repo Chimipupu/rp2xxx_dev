@@ -30,7 +30,7 @@ static void rtc_date_print(rtc_time_date_t *p_tm)
                     p_tm->sec,
                     weekday_buf[p_tm->wday - 1]);
 }
-#endif /* __RTC_ENABLE__ */
+
 
 rtc_time_date_t app_rtc_read(void)
 {
@@ -66,3 +66,4 @@ void app_rtc_read_date_print(void)
     rtc_date_print(&s_tm);
 #endif /* __RTC_ENABLE__ */
 }
+#endif /* __RTC_ENABLE__ */

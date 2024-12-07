@@ -11,6 +11,7 @@
 
 #include "app_btn.hpp"
 
+#ifdef __BTN_ENABLE__
 ButtonState s_buttonState = {false, 0, 0, 0, 0, false, NONE};
 
 /**
@@ -126,3 +127,4 @@ void app_btn_init(void)
     // 割込み(割込みピン、割込みハンドラ、エッジ)
     attachInterrupt(BUTTON_PIN, buttonISR, CHANGE);
 }
+#endif /* __BTN_ENABLE__ */

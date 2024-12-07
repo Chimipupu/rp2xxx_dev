@@ -62,7 +62,7 @@ static void gpio_init(void)
 
 #ifdef __BTN_ENABLE__
     app_btn_init();
-#endif
+#endif /* __BTN_ENABLE__ */
 }
 
 #ifdef __BTN_ENABLE__
@@ -78,7 +78,7 @@ void vTaskCore0Btn(void *p_parameter)
         vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 }
-#endif
+#endif /* __BTN_ENABLE__ */
 
 #ifdef __IR_ENABLE__
 void vTaskCore0IR(void *p_parameter)
@@ -230,7 +230,7 @@ void app_main_init_core0(void)
                 2,                      // 優先度(0～7、7が最優先)
                 &s_xTaskCore0Btn        // タスクハンドル
                 );
-#endif
+#endif /* __BTN_ENABLE__ */
 
 #ifdef __BLUETOOTH_ENABLE__
     xTaskCreate(vTaskCore0BT,           // コールバック関数ポインタ

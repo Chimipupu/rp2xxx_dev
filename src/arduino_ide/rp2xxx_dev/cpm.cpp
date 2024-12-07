@@ -55,6 +55,7 @@ static uint32_t s_idx = 0;
 static void cpm_ansi_txt_color(const char *p_ansi_txt_color);
 static void ascii_art(void);
 static void help(void);
+static void system_info(void);
 static void rst(char *p_cmd);
 static void cls(void);
 static void dir(void);
@@ -95,6 +96,7 @@ static void help(void)
 
     DEBUG_RTOS_PRINTF("Command List:\n");
     DEBUG_RTOS_PRINTF("  HELP   - This Command. Show Command List\n");
+    DEBUG_RTOS_PRINTF("  SSIF   - System Info Command\n");
     DEBUG_RTOS_PRINTF("  RST    - S/W Reset Command (e.g., RST S, RST U)\n");
     DEBUG_RTOS_PRINTF("  CLS    - Display Clear Command\n");
     DEBUG_RTOS_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
@@ -109,6 +111,18 @@ static void help(void)
 #ifdef DEBUG_CMD
     DEBUG_RTOS_PRINTF("  DBG    - Debug Command\n");
 #endif
+}
+
+static void system_info(void)
+{
+    sysinfo_t sysinfo;
+
+    cpm_op_msg();
+    rp2xxx_chip_rev_print();
+    rp2xxx_develop_info_print();
+
+    DEBUG_RTOS_PRINTF("System Info:\n");
+    mcu_board_get_system_info(&sysinfo);
 }
 
 static void rst(char *p_cmd)
@@ -274,6 +288,8 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
 {
     if (strcmp(p_cmd_buf, "HELP") == 0) {
         init_msg();
+    } else if (strcmp(p_cmd_buf, "SSIF") == 0) {
+        system_info();
     } else if (strstr(p_cmd_buf, "RST") == p_cmd_buf) {
         rst(p_cmd_buf);
     } else if (strcmp(p_cmd_buf, "CLS") == 0) {

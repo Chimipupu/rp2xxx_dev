@@ -10,6 +10,7 @@
  */
 
 #include "drv_at24cxx.hpp"
+#ifdef __EEPROM_ENABLE__
 #include <Wire.h>
 
 uint8_t drv_at24cxx_read(uint16_t addr)
@@ -20,11 +21,7 @@ uint8_t drv_at24cxx_read(uint16_t addr)
     Wire.endTransmission();
     Wire.requestFrom(I2C_AT24C32_SLAVE_ADDR, 1);
 
-    if (Wire.available()) {
-        return Wire.read();
-    }else{
-        return 0;
-    }
+    return Wire.read();
 }
 
 void drv_at24cxx_write(uint16_t addr, uint8_t data)
@@ -35,3 +32,4 @@ void drv_at24cxx_write(uint16_t addr, uint8_t data)
     Wire.write(data);
     Wire.endTransmission();
 }
+#endif /* __EEPROM_ENABLE__ */

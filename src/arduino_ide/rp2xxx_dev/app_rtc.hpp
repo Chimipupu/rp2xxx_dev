@@ -13,6 +13,7 @@
 #define APP_RTC_HPP
 
 #include "common.hpp"
+#ifdef __RTC_ENABLE__
 #include "drv_ds3231.hpp"
 
 void app_rtc_init(void);
@@ -20,5 +21,5 @@ rtc_time_date_t app_rtc_read(void);
 void app_rtc_write(rtc_time_date_t *p_tm);
 void app_rtc_date_print(rtc_time_date_t *p_tm);
 void app_rtc_read_date_print(void);
-
+#endif /* __RTC_ENABLE__ */
 #endif /* APP_RTC_HPP */

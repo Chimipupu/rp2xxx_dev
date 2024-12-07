@@ -12,8 +12,9 @@
 #ifndef APP_BTN_HPP
 #define APP_BTN_HPP
 
-#include "Arduino.h"
 #include "common.hpp"
+#ifdef __BTN_ENABLE__
+#include "Arduino.h"
 
 #define CLICK_TIMEOUT            300  // クリック間の最大許容時間 (ms)
 #define RESET_TIMEOUT            800  // 最後のクリックから結果確定までの待ち時間 (ms)
@@ -44,5 +45,6 @@ struct ButtonState
 
 void app_btn_init(void);
 void app_btn_polling(ButtonState btnstate);
+#endif /* __BTN_ENABLE__ */
 
 #endif /* APP_BTN_HPP */

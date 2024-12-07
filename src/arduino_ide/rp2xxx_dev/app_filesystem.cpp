@@ -10,7 +10,10 @@
  */
 
 #include "app_filesystem.hpp"
+
+#ifdef __EEPROM_ENABLE__
 #include "drv_at24cxx.hpp"
+#endif /* __EEPROM_ENABLE__ */
 
 #ifdef __SD_TF_ENABLE__
 #include <SD.h>
@@ -132,6 +135,7 @@ void app_fs_test(void)
     // SD,Flash Test
     fs_test();
 
+#ifdef __EEPROM_ENABLE__
     // EEPROM Test
     if (xSemaphoreTake(xI2CMutex, portMAX_DELAY) == pdTRUE) {
         // ダミーデータ書き込み
@@ -143,6 +147,7 @@ void app_fs_test(void)
         app_fs_eeprom_print(0x0010);
         xSemaphoreGive(xI2CMutex);
     }
+#endif /* __EEPROM_ENABLE__ */
 }
 #endif /* __SD_TF_ENABLE__ */
 
@@ -153,6 +158,7 @@ void app_fs_init(void)
 #endif /* __SD_TF_ENABLE__ */
 }
 
+#ifdef __WIFI_ENABLE__
 void app_fs_wifi_config_read(char *p_ssid, char *p_password)
 {
 #ifdef __SD_TF_ENABLE__
@@ -175,6 +181,7 @@ void app_fs_wifi_config_read(char *p_ssid, char *p_password)
     DEBUG_RTOS_PRINTF("**************************************************************************\n");
 #endif /* __SD_TF_ENABLE__ */
 }
+#endif /* __WIFI_ENABLE__ */
 
 void app_fs_dir_print(void)
 {
@@ -184,10 +191,14 @@ void app_fs_dir_print(void)
 #endif /* __SD_TF_ENABLE__ */
 }
 
+#ifdef __EEPROM_ENABLE__
 void app_fs_eeprom_print(uint16_t size)
 {
+    uint8_t val = 0;
+
     DEBUG_RTOS_PRINTF("EEPROM Dump (%dByte)\n", size);
-    for (uint16_t addr = 0; addr < size; addr++) {
+    for(uint16_t addr = 0; addr < size; addr++)
+    {
         if (addr % COL_SIZE == 0) {
             if (addr != 0) Serial.println();
                 DEBUG_RTOS_PRINTF("0x");
@@ -198,7 +209,8 @@ void app_fs_eeprom_print(uint16_t size)
                 DEBUG_RTOS_PRINTF("%2X", addr);
                 DEBUG_RTOS_PRINTF(": ");
         }
-        uint8_t val = drv_at24cxx_read(addr);
+
+        val = drv_at24cxx_read(addr);
         if (val < 0x10) {
             DEBUG_RTOS_PRINTF("0");
         } else {
@@ -208,3 +220,4 @@ void app_fs_eeprom_print(uint16_t size)
     }
     DEBUG_RTOS_PRINTF("\n");
 }
+#endif /* __EEPROM_ENABLE__ */
