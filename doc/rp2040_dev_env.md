@@ -1,8 +1,12 @@
 # 開発環境
 
-- 📍IDE
-  - 📍[Arduino IDE v2.33🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.3)
-    - [Raspberry Pi Pico/RP2040 by Earle F. Philhower, III🔗](https://github.com/earlephilhower/arduino-pico)
+- 📍統合開発環境 (IDE)
+  - 📍[Arduino IDE v2.3.6🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.6)
+  - 📚ボード
+    - [arduino-pico v4.5.3🔗](https://github.com/earlephilhower/arduino-pico/releases/tag/4.5.3)
+  - 📚外部ライブラリ
+    - [LovyanGFX v1.2.7🔗](https://github.com/lovyan03/LovyanGFX/releases/tag/1.2.7)
+    - [Adafruit_BME280_Library v2.3.0🔗](https://github.com/adafruit/Adafruit_BME280_Library/releases/tag/2.3.0)
 
 - 📍基板
   - RP2040
@@ -12,7 +16,7 @@
 ### VCC GND YD-RP2040
 CPUに ARM Cortex-M0+を2つ搭載のRP2040の開発基板🥳
 
-![yd_rp2040_pin_out](/doc/YD-RP2040/YD-2040-PIN.png)
+![yd_rp2040_pin_out](/doc/RP2040/基板/YD-RP2040/YD-2040-PIN.png)
 
 - YD-RP2040
   - 📍NeoPixel ... GPIO23
@@ -47,7 +51,7 @@ https://github.com/earlephilhower/arduino-pico/releases/download/global/package_
 ### ビルド構成
 
 <div align="center">
-<img width="500" img height="550" img src="/doc/arduino_ide_build_info.png">
+<img width="500" img height="550" img src="/doc/rp2040_arduino_ide_build_info.png">
 </div>
 
 ## VSCode

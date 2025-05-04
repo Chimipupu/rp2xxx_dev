@@ -29,9 +29,13 @@
 
 ## 📍開発環境
 
-- 📍IDE
-  - 📍[Arduino IDE v2.34🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.4)
-  - 📍[arduino-pico v4.3.1🔗](https://github.com/earlephilhower/arduino-pico)
+- 📍統合開発環境 (IDE)
+  - 📍[Arduino IDE v2.3.6🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.6)
+  - 📚ボード
+    - [arduino-pico v4.5.3🔗](https://github.com/earlephilhower/arduino-pico/releases/tag/4.5.3)
+  - 📚外部ライブラリ
+    - [LovyanGFX v1.2.7🔗](https://github.com/lovyan03/LovyanGFX/releases/tag/1.2.7)
+    - [Adafruit_BME280_Library v2.3.0🔗](https://github.com/adafruit/Adafruit_BME280_Library/releases/tag/2.3.0)
 
 - 📍基板
   - 📍RP2040

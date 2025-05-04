@@ -1,18 +1,22 @@
 # 開発環境
 
-- 📍IDE
-  - 📍[Arduino IDE v2.33🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.3)
-    - [Raspberry Pi Pico/RP2040/RP2350 by Earle F. Philhower, III🔗](https://github.com/earlephilhower/arduino-pico)
+- 📍統合開発環境 (IDE)
+  - 📍[Arduino IDE v2.3.6🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.6)
+  - 📚ボード
+    - [arduino-pico v4.5.3🔗](https://github.com/earlephilhower/arduino-pico/releases/tag/4.5.3)
+  - 📚外部ライブラリ
+    - [LovyanGFX v1.2.7🔗](https://github.com/lovyan03/LovyanGFX/releases/tag/1.2.7)
+    - [Adafruit_BME280_Library v2.3.0🔗](https://github.com/adafruit/Adafruit_BME280_Library/releases/tag/2.3.0)
 
 - 📍基板
   - RP2350
-    - [Pimoroni Pico Plus 2🔗](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107)
+    - [Raspberry Pi Pico 2🔗](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
 
 ## 基板
-### Pimoroni Pico Plus 2
+### Raspberry Pi Pico 2
 CPUに ARM Cortex-M33を2つ搭載のRP2350の開発基板🥳
 
-![pin_out](/doc/Pimoroni_Pico_Plus_2/Pimoroni_Pico_Plus_2_Pinout.png)
+![pin_out](/doc/RP2350/基板/Pico2/pico_2_pinout.png)
 
 - Pimoroni Pico Plus 2
   - 📍緑色LED ... GPIO25
@@ -48,7 +52,10 @@ https://github.com/earlephilhower/arduino-pico/releases/download/global/package_
 ```
 
 ### ビルド構成
-![](/doc/arduino_ide_build_info.png)
+
+<div align="center">
+<img width="500" img height="550" img src="/doc/rp2350_arduino_ide_build_info.png">
+</div>
 
 ## VSCode
 ### `Raspberry Pi Pico`をインストール
