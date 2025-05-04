@@ -1,31 +1,4 @@
 # 📍RP2040 & RP2350 評価F/W
-## Ver1.0.4
-- 📍CPU ... [RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
-  - 📍CPU0 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
-  - 📍CPU1 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
-- 📍CPU ... [RP2350🔗](https://www.raspberrypi.com/products/rp2350/)
-  - 📍CPU0 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
-  - 📍CPU1 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
-
-- 📍OS ... [FreeRTOS🔗](https://www.freertos.org/)
-  - 📍CPU0 ... ✅FreeRTOS (搭載済み)
-  - 📍CPU1 ... ✅FreeRTOS (搭載済み)
-
-- 📍I2C
-  - 📍[BME280🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (湿度、温度、気圧センサ)
-  - 📍[AT24C32🔗](https://www.microchip.com/en-us/product/AT24C32) (32Kbit EEPROM)
-  - 📍[DS3231🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (TCXO ±2ppm RTC⏰️)
-
-<div align="center">
-  <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.4.png">
-</div>
-
-<table>
-  <tr>
-    <td><img src="/doc/img/IMG_20241109_031836.jpg"></td>
-    <td><img src="/doc/img/IMG_20241109_031118.jpg"></td>
-  </tr>
-</table>
 
 ## 📍開発環境
 
@@ -38,17 +11,49 @@
     - [Adafruit_BME280_Library v2.3.0🔗](https://github.com/adafruit/Adafruit_BME280_Library/releases/tag/2.3.0)
 
 - 📍基板
+
   - 📍RP2040
     - 📍[Raspberry Pi Pico🔗](https://www.raspberrypi.com/products/raspberry-pi-pico/)
     - 📍[Raspberry Pi Pico W🔗](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html#raspberry-pi-pico-w)
     - 📍[VCC-GND YD-RP2040🔗](https://www.aliexpress.us/item/1005004004120604.html?gatewayAdapt=4itemAdapt)
     - 📍[XIAO RP2040🔗](https://wiki.seeedstudio.com/XIAO-RP2040/)
+
   - 📍RP2350
     - 📍[Raspberry Pi Pico 2🔗](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
+    - 📍[Pimoroni Pico Plus 2🔗](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107/)
 
 - 📍拡張基板
   - 📍[Pimoroni Pico VGA Demo Base🔗](https://shop.pimoroni.com/products/pimoroni-pico-vga-demo-base)
   - 📍[XIAO Expansion Board🔗](https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/)
+
+- 📍CPU ... [RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
+  - 📍CPU0 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
+  - 📍CPU1 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
+- 📍CPU ... [RP2350🔗](https://www.raspberrypi.com/products/rp2350/)
+  - 📍CPU0 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
+  - 📍CPU1 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
+
+- 📍OS ... [FreeRTOS🔗](https://www.freertos.org/)
+  - 📍CPU0 ... 📚FreeRTOS (搭載済み)
+  - 📍CPU1 ... 📚FreeRTOS (搭載済み)
+
+- 📍センサ（I2C接続）
+  - 📍[BME280🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (湿度、温度、気圧センサ)
+  - 📍[AT24C32🔗](https://www.microchip.com/en-us/product/AT24C32) (32Kbit EEPROM)
+  - 📍[DS3231🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (TCXO ±2ppm RTC⏰️)
+
+## Ver1.0.4
+
+<div align="center">
+  <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.4.png">
+</div>
+
+<table>
+  <tr>
+    <td><img src="/doc/img/IMG_20241109_031836.jpg"></td>
+    <td><img src="/doc/img/IMG_20241109_031118.jpg"></td>
+  </tr>
+</table>
 
 ## 📍実装機能
 
