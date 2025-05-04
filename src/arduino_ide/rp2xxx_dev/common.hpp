@@ -51,7 +51,7 @@
 #define core1_main          loop1
 #define DEBUG_PRINT         Serial.print
 #define DEBUG_PRINTLN       Serial.println
-#define DEBUG_RTOS_PRINTF        safeSerialPrintf
+#define DEBUG_RTOS_PRINTF   safeSerialPrintf
 #define DEBUG_PRINT_INIT    Serial.begin
 
 #define SW_DELAY_MS         delay
@@ -93,7 +93,6 @@ static inline void GPIO_TOGGLE(uint8_t port)
     s_port_val = !s_port_val;
 }
 
-
 /***********************************/
 //          FreeRTOS関連
 /***********************************/
@@ -107,9 +106,7 @@ static inline void GPIO_TOGGLE(uint8_t port)
 extern SemaphoreHandle_t xSerialMutex;
 extern SemaphoreHandle_t xI2CMutex;
 
-// FreeRTOS用のprintf
-#define DEBUG_PRINTF_RTOS   safeSerialPrintf
-#ifdef DEBUG_PRINTF_RTOS
+#ifdef DEBUG_RTOS_PRINTF
 static inline void safeSerialPrintf(const char *p_format, ...)
 {
     if (xSemaphoreTake(xSerialMutex, portMAX_DELAY) == pdTRUE) {
@@ -179,7 +176,7 @@ static inline void safeSerialPrintf(const char *p_format, ...)
         Serial.println("Failed to acquire mutex!");
     }
 }
-#endif /* DEBUG_PRINTF_RTOS */
+#endif /* DEBUG_RTOS_PRINTF */
 /***********************************/
 
 #endif /* COMMON_HPP */

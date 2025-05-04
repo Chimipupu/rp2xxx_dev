@@ -30,10 +30,10 @@ static void spi_init(void)
 static void sd_spi_init(void)
 {
     if (!SD.begin(SPI_CS_PIN)) {
-        // DEBUG_PRINTF_RTOS("No SD Card. Plz, Insert SD & Reboot\n");
+        DEBUG_RTOS_PRINTF("No SD Card. Plz, Insert SD & Reboot\n");
     }
 
-    DEBUG_PRINTF_RTOS("File System Init(@SD)\n");
+    DEBUG_RTOS_PRINTF("File System Init(@SD)\n");
 }
 
 #endif /* __SD_TF_ENABLE__ */
@@ -62,36 +62,56 @@ void mcu_board_fs_init(void)
 
 void mcu_board_get_system_info(sysinfo_t *p_sysinfo)
 {
+    DEBUG_RTOS_PRINTF("  LED Pin [%d]\n", OB_LED_PIN);
+    DEBUG_RTOS_PRINTF("  Neopixel Pin [%d]\n", RGBLED_PIN);
+    DEBUG_RTOS_PRINTF("  Button Pin [%d]\n", BUTTON_PIN);
+
 #if defined(__WDT_ENABLE__)
-    DEBUG_RTOS_PRINTF("  WDT  [o]\n");
+    DEBUG_RTOS_PRINTF("  WDT  [Enable]\n");
 #endif
 
-    // DEBUG_RTOS_PRINTF("  I2C [%c]\n", s_sysinfo.u_sysbit.BIT.is_i2c ? 'o' : 'x');
-    // DEBUG_RTOS_PRINTF("  SPI [%c]\n", s_sysinfo.u_sysbit.BIT.is_spi ? 'o' : 'x');
-    // DEBUG_RTOS_PRINTF("  UART [%c]\n", s_sysinfo.u_sysbit.BIT.is_uart ? 'o' : 'x');
-    // DEBUG_RTOS_PRINTF("  Timer [%c]\n", s_sysinfo.u_sysbit.BIT.is_timer ? 'o' : 'x');
-    // DEBUG_RTOS_PRINTF("  PIO [%c]\n", s_sysinfo.u_sysbit.BIT.is_pio ? 'o' : 'x');
+    // DEBUG_RTOS_PRINTF("  SPI 0/1 [0]\n");
+    DEBUG_RTOS_PRINTF("  SPI CS Pin [%d]\n", SPI_CS_PIN);
+    DEBUG_RTOS_PRINTF("  SPI SCK Pin [%d]\n", SPI_SCK_PIN);
+    DEBUG_RTOS_PRINTF("  SPI MISO Pin [%d]\n", SPI_MISO_PIN);
+    DEBUG_RTOS_PRINTF("  SPI MOSI Pin [%d]\n", SPI_MOSI_PIN);
+
+    DEBUG_RTOS_PRINTF("  I2C 0 SDA Pin [%d]\n", I2C_SDA);
+    DEBUG_RTOS_PRINTF("  I2C 0 SCL Pin [%d]\n", I2C_SCL);
+    DEBUG_RTOS_PRINTF("  I2C 1 SDA Pin [%d]\n", I2C_1_SDA);
+    DEBUG_RTOS_PRINTF("  I2C 1 SCL Pin [%d]\n", I2C_1_SCL);
+
+    DEBUG_RTOS_PRINTF("  UART TX Pin [%d]\n", UART_TX_PIN);
+    DEBUG_RTOS_PRINTF("  UART RX Pin [%d]\n", UART_RX_PIN);
 
 #if defined(__SD_TF_ENABLE__)
-    DEBUG_RTOS_PRINTF("  SD(@SPI) [o]\n");
+    DEBUG_RTOS_PRINTF("  SD(@SPI) [Enable]\n");
+#else
+    DEBUG_RTOS_PRINTF("  SD(@SPI) [x]\n");
 #endif
+
 #if defined(__EEPROM_ENABLE__)
-    DEBUG_RTOS_PRINTF("  EEPROM(@I2C) [o]\n");
+    DEBUG_RTOS_PRINTF("  EEPROM(@I2C) [Enable]\n");
 #endif
+
 #if defined(__LCD_ENABLE__)
-    DEBUG_RTOS_PRINTF("  OLED(@I2C) [o]\n");
+    DEBUG_RTOS_PRINTF("  OLED(@I2C) [Enable]\n");
 #endif
+
 #if defined(__RTC_ENABLE__)
-    DEBUG_RTOS_PRINTF("  RTC(@I2C) [o]\n");
+    DEBUG_RTOS_PRINTF("  RTC(@I2C) [Enable]\n");
 #endif
+
 #if defined(__SENSOR_ENABLE__)
-    DEBUG_RTOS_PRINTF("  Sensor(@I2C) [o]\n");
+    DEBUG_RTOS_PRINTF("  Sensor(@I2C) [Enable]\n");
 #endif
+
 #if defined(__WIFI_ENABLE__)
-    DEBUG_RTOS_PRINTF("  WiFi [o]\n");
+    DEBUG_RTOS_PRINTF("  WiFi [Enable]\n");
 #endif
+
 #if defined(__BLUETOOTH_ENABLE__)
-    DEBUG_RTOS_PRINTF("  Bluetooth [o]\n");
+    DEBUG_RTOS_PRINTF("  Bluetooth [Enable]\n");
 #endif
 
     p_sysinfo = &s_sysinfo;

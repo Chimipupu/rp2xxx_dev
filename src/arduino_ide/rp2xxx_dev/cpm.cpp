@@ -11,7 +11,7 @@
 
 #include "cpm.hpp"
 
-const char *p_cpm_version_str = "Ver1.0.4";
+const char *p_cpm_version_str = "Ver1.0.5";
 
 #ifdef MCU_RP2040
     const char *p_mcu_str = "RP2040";
@@ -70,24 +70,24 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx);
 
 static void cpm_ansi_txt_color(const char *p_ansi_txt_color)
 {
-    DEBUG_PRINTF_RTOS("%s", p_ansi_txt_color);
+    DEBUG_RTOS_PRINTF("%s", p_ansi_txt_color);
 }
 
 static void ascii_art(void)
 {
-    DEBUG_PRINTF_RTOS("   @                                     \n");
-    DEBUG_PRINTF_RTOS("   @                                     \n");
-    DEBUG_PRINTF_RTOS("@@@@@@@@     @@@@@        @@@@    @@@@@  \n");
-    DEBUG_PRINTF_RTOS("   @             @       @    @  @     @ \n");
-    DEBUG_PRINTF_RTOS("  @              @  @   @      @ @     @ \n");
-    DEBUG_PRINTF_RTOS("  @ @@@         @   @   @      @  @@     \n");
-    DEBUG_PRINTF_RTOS(" @@@   @     @@@@@@ @   @      @    @@   \n");
-    DEBUG_PRINTF_RTOS(" @      @   @  @   @@@  @      @      @  \n");
-    DEBUG_PRINTF_RTOS("        @  @  @     @ @ @      @ @     @ \n");
-    DEBUG_PRINTF_RTOS("        @  @  @     @    @    @  @     @ \n");
-    DEBUG_PRINTF_RTOS("      @@    @@     @      @@@@    @@@@@  \n");
-    DEBUG_PRINTF_RTOS("   @@@           @@                      \n");
-    DEBUG_PRINTF_RTOS("                                         \n");
+    DEBUG_RTOS_PRINTF("   @                                     \n");
+    DEBUG_RTOS_PRINTF("   @                                     \n");
+    DEBUG_RTOS_PRINTF("@@@@@@@@     @@@@@        @@@@    @@@@@  \n");
+    DEBUG_RTOS_PRINTF("   @             @       @    @  @     @ \n");
+    DEBUG_RTOS_PRINTF("  @              @  @   @      @ @     @ \n");
+    DEBUG_RTOS_PRINTF("  @ @@@         @   @   @      @  @@     \n");
+    DEBUG_RTOS_PRINTF(" @@@   @     @@@@@@ @   @      @    @@   \n");
+    DEBUG_RTOS_PRINTF(" @      @   @  @   @@@  @      @      @  \n");
+    DEBUG_RTOS_PRINTF("        @  @  @     @ @ @      @ @     @ \n");
+    DEBUG_RTOS_PRINTF("        @  @  @     @    @    @  @     @ \n");
+    DEBUG_RTOS_PRINTF("      @@    @@     @      @@@@    @@@@@  \n");
+    DEBUG_RTOS_PRINTF("   @@@           @@                      \n");
+    DEBUG_RTOS_PRINTF("                                         \n");
 }
 
 static void help(void)
@@ -96,8 +96,9 @@ static void help(void)
 
     DEBUG_RTOS_PRINTF("Command List:\n");
     DEBUG_RTOS_PRINTF("  HELP   - This Command. Show Command List\n");
-    DEBUG_RTOS_PRINTF("  SSIF   - System Info Command\n");
-    DEBUG_RTOS_PRINTF("  RST    - S/W Reset Command (e.g., RST S, RST U)\n");
+    // DEBUG_RTOS_PRINTF("  SSCF   - Set System Config Command\n");
+    DEBUG_RTOS_PRINTF("  SSIF   - Screen the System Info Command\n");
+    DEBUG_RTOS_PRINTF("  RST    - S/W or U2F Reset Command (e.g., RST S, RST U)\n");
     DEBUG_RTOS_PRINTF("  CLS    - Display Clear Command\n");
     DEBUG_RTOS_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
     DEBUG_RTOS_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
@@ -118,7 +119,7 @@ static void system_info(void)
     sysinfo_t sysinfo;
 
     cpm_op_msg();
-    rp2xxx_chip_rev_print();
+    // rp2xxx_chip_rev_print();
     rp2xxx_develop_info_print();
 
     DEBUG_RTOS_PRINTF("System Info:\n");
@@ -128,10 +129,10 @@ static void system_info(void)
 static void rst(char *p_cmd)
 {
     if(strstr(p_cmd, "RST S") == p_cmd) {
-        DEBUG_PRINTF_RTOS("S/W Reset!\n");
+        DEBUG_RTOS_PRINTF("S/W Reset!\n");
         rp2xxx_sw_reset();
     } else if(strstr(p_cmd, "RST U") == p_cmd) {
-        DEBUG_PRINTF_RTOS("U2F Download Wait!\n");
+        DEBUG_RTOS_PRINTF("U2F Download Wait!\n");
         rp2xxx_u2f_download_wait_reset();
     } else {
         DEBUG_RTOS_PRINTF("Invalid RST Command\n");
@@ -140,7 +141,7 @@ static void rst(char *p_cmd)
 
 static void cls(void)
 {
-    DEBUG_PRINTF_RTOS("\033[2J\033[H");
+    DEBUG_RTOS_PRINTF("\033[2J\033[H");
 }
 
 static void dir(void)
@@ -199,7 +200,7 @@ static void rtc_cmd_parse_(char *p_cmd)
     if(strstr(p_cmd, "RTC W") == p_cmd) {
         if (sscanf(p_cmd, "RTC W %d/%d/%d/%d/%d:%d:%d",
                 &year_dat, &mon_dat, &mday_dat, &wday_dat,
-                &hour_dat, &min_dat, &sec_dat) == 7) {
+                &hour_dat, &min_dat, &sec_dat) == 7){
             DEBUG_RTOS_PRINTF("cmd args : %d/%d/%d/%d/%d:%d:%d\n",
                                 year_dat, mon_dat, mday_dat, wday_dat,
                                 hour_dat, min_dat, sec_dat);
