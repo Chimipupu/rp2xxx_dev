@@ -15,7 +15,6 @@
 #ifdef __IR_ENABLE__
 #include <IRremote.hpp>
 
-
 static void ir_decode(uint16_t command);
 
 static void ir_decode(uint16_t command)

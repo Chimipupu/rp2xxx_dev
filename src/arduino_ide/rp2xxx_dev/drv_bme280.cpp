@@ -11,7 +11,6 @@
 
 #include "drv_bme280.hpp"
 
-#ifdef __SENSOR_ENABLE__
 #include <Wire.h>
 // #include <SPI.h>
 #include <Adafruit_Sensor.h>
@@ -52,4 +51,3 @@ bme280_data_t drv_bme280_main(void)
     bme280_read_data(&g_bme280_data);
     return g_bme280_data;
 }
-#endif /* __SENSOR_ENABLE__ */

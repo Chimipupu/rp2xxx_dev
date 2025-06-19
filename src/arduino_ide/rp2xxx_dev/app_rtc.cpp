@@ -31,20 +31,15 @@ static void rtc_date_print(rtc_time_date_t *p_tm)
                     weekday_buf[p_tm->wday - 1]);
 }
 
-
 rtc_time_date_t app_rtc_read(void)
 {
-#ifdef __RTC_ENABLE__
     drv_ds3231_get_time_date(&s_tm);
     return s_tm;
-#endif /* __RTC_ENABLE__ */
 }
 
 void app_rtc_write(rtc_time_date_t *p_tm)
 {
-#ifdef __RTC_ENABLE__
     drv_ds3231_set_time_date(p_tm);
-#endif /* __RTC_ENABLE__ */
 }
 
 void app_rtc_init(void)
@@ -54,16 +49,12 @@ void app_rtc_init(void)
 
 void app_rtc_date_print(rtc_time_date_t *p_tm)
 {
-#ifdef __RTC_ENABLE__
     rtc_date_print(p_tm);
-#endif /* __RTC_ENABLE__ */
 }
 
 void app_rtc_read_date_print(void)
 {
-#ifdef __RTC_ENABLE__
     s_tm = app_rtc_read();
     rtc_date_print(&s_tm);
-#endif /* __RTC_ENABLE__ */
 }
 #endif /* __RTC_ENABLE__ */

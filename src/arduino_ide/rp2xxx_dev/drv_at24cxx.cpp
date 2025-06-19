@@ -10,7 +10,6 @@
  */
 
 #include "drv_at24cxx.hpp"
-#ifdef __EEPROM_ENABLE__
 #include <Wire.h>
 
 uint8_t drv_at24cxx_read(uint16_t addr)
@@ -32,4 +31,3 @@ void drv_at24cxx_write(uint16_t addr, uint8_t data)
     Wire.write(data);
     Wire.endTransmission();
 }
-#endif /* __EEPROM_ENABLE__ */
