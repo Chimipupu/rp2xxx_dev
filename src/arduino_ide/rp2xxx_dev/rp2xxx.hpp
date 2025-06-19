@@ -12,8 +12,8 @@
 #ifndef RP2XXX_HPP
 #define RP2XXX_HPP
 
-// #define MCU_RP2040
-#define MCU_RP2350
+#define MCU_RP2040
+// #define MCU_RP2350
 
 #if defined(MCU_RP2040) && !defined(MCU_RP2350)
     #include "rp2040_reg.hpp"

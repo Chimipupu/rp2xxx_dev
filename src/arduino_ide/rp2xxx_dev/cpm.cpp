@@ -100,13 +100,17 @@ static void help(void)
     DEBUG_RTOS_PRINTF("  SSIF   - Screen the System Info Command\n");
     DEBUG_RTOS_PRINTF("  RST    - S/W or U2F Reset Command (e.g., RST S, RST U)\n");
     DEBUG_RTOS_PRINTF("  CLS    - Display Clear Command\n");
+#ifdef __SD_TF_ENABLE__
     DEBUG_RTOS_PRINTF("  DIR    - List directory(SD or SPI Flash)\n");
+#endif /* __SD_TF_ENABLE__ */
     DEBUG_RTOS_PRINTF("  CALC   - Calc add(+), sun(-), mul(*), div(*), mod(%), pow(^)\n");
     DEBUG_RTOS_PRINTF("  PI     - Calculate Pi using Gauss-Legendre method (e.g., PI 3)\n");
     DEBUG_RTOS_PRINTF("  FIB    - Display Fibonacci (e.g., FIB 10)\n");
     DEBUG_RTOS_PRINTF("  PRIME  - Display prime numbers (e.g., PRIME 10)\n");
     DEBUG_RTOS_PRINTF("  MANDEL - Display Mandelbrot (e.g., MANDEL)\n");
+#ifdef __RTC_ENABLE__
     DEBUG_RTOS_PRINTF("  RTC    - RTC Command  (e.g., RTC R, RTC W 24/11/30/7/12:00:00)\n");
+#endif /* __RTC_ENABLE__ */
     DEBUG_RTOS_PRINTF("  TIMER  - Timer Test\n");
     DEBUG_RTOS_PRINTF("  TEST   - Performance Test Command\n");
 #ifdef DEBUG_CMD
@@ -258,7 +262,9 @@ static void dbg_cmd(char *p_cmd)
     DEBUG_RTOS_PRINTF("DEBUG Command\n");
     rp2xxx_reg_info();
 
+#ifdef __SD_TF_ENABLE__
     app_fs_test();
+#endif /* __SD_TF_ENABLE__ */
 
 #ifdef __WIFI_ENABLE__
     memset(&g_ssid[0], 0x00, sizeof(g_ssid));
@@ -278,8 +284,8 @@ static void init_msg(void)
     DEBUG_RTOS_PRINTF("**************************************************************************\n");
     cpm_op_msg();
     rp2xxx_develop_info_print();
-    DEBUG_RTOS_PRINTF("**************************************************************************\n");
-    ascii_art();
+    // DEBUG_RTOS_PRINTF("**************************************************************************\n");
+    // ascii_art();
     DEBUG_RTOS_PRINTF("**************************************************************************\n");
     help();
     DEBUG_RTOS_PRINTF("**************************************************************************\n");
@@ -295,8 +301,10 @@ static void cmd_exec(char *p_cmd_buf, uint32_t idx)
         rst(p_cmd_buf);
     } else if (strcmp(p_cmd_buf, "CLS") == 0) {
         cls();
+#ifdef __SD_TF_ENABLE__
     } else if (strcmp(p_cmd_buf, "DIR") == 0) {
         dir();
+#endif /* __SD_TF_ENABLE__ */
     } else if (strstr(p_cmd_buf, "CALC") == p_cmd_buf) {
         char *p_cmd = p_cmd_buf + CALC_CMD_ARG;
         while(*p_cmd == ' ') {
@@ -339,10 +347,10 @@ void cpm_op_msg(void)
 {
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
     DEBUG_RTOS_PRINTF("Chimi Monitor Program for %s ", p_mcu_str);
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_RED);
+    // cpm_ansi_txt_color(ANSI_TXT_COLOR_RED);
     DEBUG_RTOS_PRINTF("%s\n", p_cpm_version_str);
-    cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
-    DEBUG_RTOS_PRINTF("Copyright(C) 2024, Chimi(");
+    // cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
+    DEBUG_RTOS_PRINTF("Copyright(C) 2025 Chimi(");
     cpm_ansi_txt_color(ANSI_TXT_COLOR_BLUE);
     DEBUG_RTOS_PRINTF("https://github.com/Chimipupu");
     cpm_ansi_txt_color(ANSI_TXT_COLOR_GREEN);
@@ -371,7 +379,7 @@ void cpm_main(void)
             DEBUG_RTOS_PRINTF("\n> ");
             memset(&s_cmd_buf[0], 0x00, sizeof(s_cmd_buf));
             s_idx = 0;
-        } else if (s_idx < MAX_CMD_LEN - 1) {   // バッファオーバーフロー防止
+        } else if (s_idx < MAX_CMD_LEN - 1) {
             s_cmd_buf[s_idx] = val;
             s_idx++;
         }

@@ -15,11 +15,31 @@
 #include "common.hpp"
 #include "rp2xxx.hpp"
 
+// I2C
+#define I2C_SDA                  20   // I2C0 SDA
+#define I2C_SCL                  21   // I2C0 SCL
+#define I2C_1_SDA                18   // I2C1 SDA
+#define I2C_1_SCL                19   // I2C1 SCL
+// SPI
+#define SPI_CS_PIN               9   // SPI0 CS
+#define SPI_SCK_PIN              6   // SPI0 CLK
+#define SPI_MISO_PIN             8   // SPI0 MISO
+#define SPI_MOSI_PIN             7   // SPI0 MOSI
+#define SPI_1_CS_PIN             13  // SPI1 CS
+#define SPI_1_SCK_PIN            10  // SPI1 CLK
+#define SPI_1_MISO_PIN           12  // SPI1 MISO
+#define SPI_1_MOSI_PIN           11  // SPI1 MOSI
+// UART
+#define UART_TX_PIN              0  // UART0 TX
+#define UART_RX_PIN              1  // UART0 RX
+#define UART_1_TX_PIN            4  // UART1 TX
+#define UART_1_RX_PIN            5  // UART1 RX
+
 #ifdef MCU_RP2040
     #define __DEBUG_MONITOR_ENABLE__
-    #define __MCU_BOARD_PICO__
+    // #define __MCU_BOARD_PICO__
     // #define __MCU_BOARD_PICO_W__
-    // #define __MCU_BOARD_YD_RP2040__
+    #define __MCU_BOARD_YD_RP2040__
     // #define __MCU_BOARD_XIAO_RP2040__
 
     #ifdef __MCU_BOARD_PICO__
@@ -27,19 +47,6 @@
         #define OB_LED_PIN               25  // 基板の緑LED
         #define RGBLED_PIN               22  // Neopixel
         #define BUTTON_PIN               28  // ボタン
-        // I2C
-        #define I2C_SDA                  6   // I2C0 SDA
-        #define I2C_SCL                  7   // I2C0 SCL
-        #define I2C_1_SDA                10  // I2C1 SDA
-        #define I2C_1_SCL                11  // I2C1 SCL
-        // SPI
-        #define SPI_CS_PIN               1   // SPI0 CS
-        #define SPI_SCK_PIN              2   // SPI0 CLK
-        #define SPI_MISO_PIN             0   // SPI0 MISO
-        #define SPI_MOSI_PIN             3   // SPI0 MOSI
-        // UART
-        #define UART_TX_PIN              12  // UART0 TX
-        #define UART_RX_PIN              13  // UART0 RX
         // その他
         #define __RTC_ENABLE__
         #define __SENSOR_ENABLE__
@@ -54,19 +61,6 @@
         #define RGBLED_PIN               20  // Neopixel (GPIO 20)
         #define OB_LED_PIN               0   // 緑色LED (GPIO 0)
         #define BUTTON_PIN               19  // ボタン (GPIO 19)
-        // I2C
-        #define I2C_SDA                  6   // I2C0 SDA
-        #define I2C_SCL                  7   // I2C0 SCL
-        #define I2C_1_SDA                10  // I2C1 SDA
-        #define I2C_1_SCL                11  // I2C1 SCL
-        // SPI
-        #define SPI_CS_PIN               1   // SPI0 CS
-        #define SPI_SCK_PIN              2   // SPI0 CLK
-        #define SPI_MISO_PIN             0   // SPI0 MISO
-        #define SPI_MOSI_PIN             3   // SPI0 MOSI
-        // UART
-        #define UART_TX_PIN              12  // UART0 TX
-        #define UART_RX_PIN              13  // UART0 RX
         // その他
         // #define __WIFI_ENABLE__
         #define __BLUETOOTH_ENABLE__
@@ -83,26 +77,13 @@
         #define RGBLED_PIN               23  // Neopixel (GPIO 23)
         #define OB_LED_PIN               25  // 青色LED (GPIO 25)
         #define BUTTON_PIN               24  // ボタン (GPIO 24)
-        // I2C
-        #define I2C_SDA                  6   // I2C0 SDA
-        #define I2C_SCL                  7   // I2C0 SCL
-        #define I2C_1_SDA                10  // I2C1 SDA
-        #define I2C_1_SCL                11  // I2C1 SCL
-        // SPI
-        #define SPI_CS_PIN               1   // SPI0 CS
-        #define SPI_SCK_PIN              2   // SPI0 CLK
-        #define SPI_MISO_PIN             0   // SPI0 MISO
-        #define SPI_MOSI_PIN             3   // SPI0 MOSI
-        // UART
-        #define UART_TX_PIN              12  // UART0 TX
-        #define UART_RX_PIN              13  // UART0 RX
         // その他
         #define __NEOPIXEL_ENABLE__
         #define __BTN_ENABLE__
-        #define __RTC_ENABLE__
-        #define __SENSOR_ENABLE__
-        #define __SD_TF_ENABLE__
-        #define __LCD_ENABLE__
+        // #define __RTC_ENABLE__
+        // #define __SENSOR_ENABLE__
+        // #define __SD_TF_ENABLE__
+        // #define __LCD_ENABLE__
         #define __BENCHMARK_TEST__
         #define __DEBUG_MONITOR_ENABLE__
     #endif /* __MCU_BOARD_YD_RP2040__ */
@@ -114,19 +95,6 @@
         #define OB_LED_GREEN_PIN         16  // 緑色LED  (GPIO 16)
         #define OB_LED_PIN               25  // 青色LED  (GPIO 25)
         #define BUTTON_PIN               27  // ボタン (GPIO 27)
-        // I2C
-        #define I2C_SDA                  6   // I2C0 SDA
-        #define I2C_SCL                  7   // I2C0 SCL
-        #define I2C_1_SDA                10  // I2C1 SDA
-        #define I2C_1_SCL                11  // I2C1 SCL
-        // SPI
-        #define SPI_CS_PIN               1   // SPI0 CS
-        #define SPI_SCK_PIN              2   // SPI0 CLK
-        #define SPI_MISO_PIN             0   // SPI0 MISO
-        #define SPI_MOSI_PIN             3   // SPI0 MOSI
-        // UART
-        #define UART_TX_PIN              12  // UART0 TX
-        #define UART_RX_PIN              13  // UART0 RX
         // その他
         #define __SD_TF_ENABLE__
         #define __LCD_ENABLE__
@@ -142,19 +110,6 @@
         #define OB_LED_PIN               25  // 基板の緑LED
         #define RGBLED_PIN               22  // Neopixel
         #define BUTTON_PIN               28  // ボタン
-        // I2C
-        #define I2C_SDA                  6   // I2C0 SDA
-        #define I2C_SCL                  7   // I2C0 SCL
-        #define I2C_1_SDA                10  // I2C1 SDA
-        #define I2C_1_SCL                11  // I2C1 SCL
-        // SPI
-        #define SPI_CS_PIN               1   // SPI0 CS
-        #define SPI_SCK_PIN              2   // SPI0 CLK
-        #define SPI_MISO_PIN             0   // SPI0 MISO
-        #define SPI_MOSI_PIN             3   // SPI0 MOSI
-        // UART
-        #define UART_TX_PIN              12  // UART0 TX
-        #define UART_RX_PIN              13  // UART0 RX
         // その他
         // #define __NEOPIXEL_ENABLE__
         // #define __BTN_ENABLE__

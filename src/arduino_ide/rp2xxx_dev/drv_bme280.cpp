@@ -29,13 +29,10 @@ static void bme280_read_data(bme280_data_t *p_bme280_data)
     p_bme280_data->pressure = s_bme280.readPressure() / 100.0F;
     p_bme280_data->altitude = s_bme280.readAltitude(PRESSURE_HPA);
 }
-#endif /* __SENSOR_ENABLE__ */
 
 void drv_bme280_init(void)
 {
-#ifdef __SENSOR_ENABLE__
     bool ret = s_bme280.begin(I2C_GYBME280_SLAVE_ADDR, &Wire1);
-#endif /* __SENSOR_ENABLE__ */
 }
 
 void drv_bme280_data_print(void)
@@ -48,13 +45,11 @@ void drv_bme280_data_print(void)
     DEBUG_RTOS_PRINTF("pressure : %.03f hPa\n", g_bme280_data.pressure);
     DEBUG_RTOS_PRINTF("altitude : %.03f m\n", g_bme280_data.altitude);
     DEBUG_RTOS_PRINTF("**************************************************************************\n");
-
 }
 
 bme280_data_t drv_bme280_main(void)
 {
-#ifdef __SENSOR_ENABLE__
     bme280_read_data(&g_bme280_data);
     return g_bme280_data;
-#endif /* __SENSOR_ENABLE__ */
 }
+#endif /* __SENSOR_ENABLE__ */

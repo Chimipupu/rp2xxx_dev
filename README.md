@@ -1,17 +1,45 @@
 # 📍RP2040 & RP2350 評価F/W
 
+## Ver1.0.5
+
+<div align="center">
+  <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.5.png">
+</div>
+
+<!-- <table>
+  <tr>
+    <td><img src="/doc/img/IMG_20241109_031836.jpg"></td>
+    <td><img src="/doc/img/IMG_20241109_031118.jpg"></td>
+  </tr>
+</table> -->
+
 ## 📍開発環境
+
+### 📍S/W
 
 - 📍統合開発環境 (IDE)
   - 📍[Arduino IDE v2.3.6🔗](https://github.com/arduino/arduino-ide/releases/tag/2.3.6)
-  - 📚ボード
+  - 📚ボード定義
     - [arduino-pico v4.5.3🔗](https://github.com/earlephilhower/arduino-pico/releases/tag/4.5.3)
   - 📚外部ライブラリ
     - [LovyanGFX v1.2.7🔗](https://github.com/lovyan03/LovyanGFX/releases/tag/1.2.7)
+    - [Adafruit_NeoPixel v1.15.1🔗](https://github.com/adafruit/Adafruit_NeoPixel/releases/tag/1.15.1)
     - [Adafruit_BME280_Library v2.3.0🔗](https://github.com/adafruit/Adafruit_BME280_Library/releases/tag/2.3.0)
+  - 📚OS ... [FreeRTOS🔗](https://www.freertos.org/)
+
+### H/W
+
+- 📍マイコン
+  - 📍[RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
+    - 📍CPU(デュアルコア)  ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
+    - 📍Flash ... 2 MB or 16 MB
+    - 📍RAM ... 264 KB
+  - 📍[RP2350🔗](https://www.raspberrypi.com/products/rp2350/)
+    - 📍CPU(デュアルコア) ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
+    - 📍Flash ... 2 MB or 16 MB
+    - 📍RAM ... 264 KB
 
 - 📍基板
-
   - 📍RP2040
     - 📍[Raspberry Pi Pico🔗](https://www.raspberrypi.com/products/raspberry-pi-pico/)
     - 📍[Raspberry Pi Pico W🔗](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html#raspberry-pi-pico-w)
@@ -26,34 +54,10 @@
   - 📍[Pimoroni Pico VGA Demo Base🔗](https://shop.pimoroni.com/products/pimoroni-pico-vga-demo-base)
   - 📍[XIAO Expansion Board🔗](https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/)
 
-- 📍CPU ... [RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
-  - 📍CPU0 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
-  - 📍CPU1 ... [ARM Cortex-M0+🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m0-plus)
-- 📍CPU ... [RP2350🔗](https://www.raspberrypi.com/products/rp2350/)
-  - 📍CPU0 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
-  - 📍CPU1 ... [ARM Cortex-M33🔗](https://www.arm.com/ja/products/silicon-ip-cpu/cortex-m/cortex-m33)
-
-- 📍OS ... [FreeRTOS🔗](https://www.freertos.org/)
-  - 📍CPU0 ... 📚FreeRTOS (搭載済み)
-  - 📍CPU1 ... 📚FreeRTOS (搭載済み)
-
-- 📍センサ（I2C接続）
+- 📍センサ（I2C）
   - 📍[BME280🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (湿度、温度、気圧センサ)
   - 📍[AT24C32🔗](https://www.microchip.com/en-us/product/AT24C32) (32Kbit EEPROM)
   - 📍[DS3231🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (TCXO ±2ppm RTC⏰️)
-
-## Ver1.0.4
-
-<div align="center">
-  <img width="500" src="/doc/img/chimi_os_opmsg_ver1.0.4.png">
-</div>
-
-<table>
-  <tr>
-    <td><img src="/doc/img/IMG_20241109_031836.jpg"></td>
-    <td><img src="/doc/img/IMG_20241109_031118.jpg"></td>
-  </tr>
-</table>
 
 ## 📍実装機能
 

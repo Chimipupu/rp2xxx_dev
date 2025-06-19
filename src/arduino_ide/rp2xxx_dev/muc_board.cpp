@@ -85,6 +85,7 @@ void mcu_board_get_system_info(sysinfo_t *p_sysinfo)
     DEBUG_RTOS_PRINTF("  UART RX Pin [%d]\n", UART_RX_PIN);
 
 #if defined(__SD_TF_ENABLE__)
+    p_sysinfo = &s_sysinfo;
     DEBUG_RTOS_PRINTF("  SD(@SPI) [Enable]\n");
 #else
     DEBUG_RTOS_PRINTF("  SD(@SPI) [x]\n");
@@ -113,6 +114,4 @@ void mcu_board_get_system_info(sysinfo_t *p_sysinfo)
 #if defined(__BLUETOOTH_ENABLE__)
     DEBUG_RTOS_PRINTF("  Bluetooth [Enable]\n");
 #endif
-
-    p_sysinfo = &s_sysinfo;
 }
