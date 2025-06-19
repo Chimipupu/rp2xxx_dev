@@ -16,6 +16,7 @@
 #include "app_util.hpp"
 #include "muc_board.hpp"
 #include "app_wdt.hpp"
+#include "common.hpp"
 
 #ifdef __RTC_ENABLE__
 #include "app_rtc.hpp"
@@ -74,7 +75,7 @@ void vTaskCore0Btn(void *p_parameter)
     while (1)
     {
         app_btn_polling(btnstate);
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 }
@@ -89,7 +90,7 @@ void vTaskCore0IR(void *p_parameter)
     while (1)
     {
         app_ir_main();
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         // vTaskDelay(USEC_TO_TICKS(300));
     }
 }
@@ -103,7 +104,7 @@ void vTaskCore0BT(void *p_parameter)
     while (1)
     {
         app_bluetooth_main();
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         vTaskDelay(300 / portTICK_PERIOD_MS);
     }
 }
@@ -118,7 +119,7 @@ void vTaskCore0RTC(void *p_parameter)
     while (1)
     {
         // s_time_date = app_rtc_read();
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         vTaskDelay(USEC_TO_TICKS(1000));
     }
 }
@@ -157,7 +158,7 @@ void vTaskCore0Main(void *p_parameter)
         }
 #endif
 
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         vTaskDelay(100 / portTICK_PERIOD_MS);
         // vTaskSuspend(NULL);#endif
     }
@@ -168,7 +169,7 @@ void app_main_init_core0(void)
 #ifdef __WDT_ENABLE__
     // WDT 初期化
     app_wdt_init();
-    WDT_TOGGLE;
+    WDT_TOGGLE();
 #endif /* __WDT_ENABLE__ */
 
     // GPIO 初期化
@@ -182,7 +183,7 @@ void app_main_init_core0(void)
 #ifdef __NEOPIXEL_ENABLE__
     // NeoPixel 初期化
     app_neopixel_init();
-    app_neopixel_ctrl(16, 0, 0, 0, true, false); // 赤
+    app_neopixel_ctrl(0, 0, 0, 0, true, false); // 消灯
 #endif /* __NEOPIXEL_ENABLE__ */
 
 #if 1
@@ -201,11 +202,11 @@ void app_main_init_core0(void)
 #endif /* __MCU_BOARD_PICO_W__ */
     DEBUG_PRINT_INIT(DEBUG_UART_BAUDRATE);
     while (!Serial) {
-        WDT_TOGGLE;
+        WDT_TOGGLE();
     }
 
     s_cpu_core = rp2xxx_get_cpu_core_num();
-    WDT_TOGGLE;
+    WDT_TOGGLE();
     // DEBUG_RTOS_PRINTF("[Core%X] ... Init End\n", s_cpu_core);
 
 #ifdef __IR_ENABLE__
@@ -253,7 +254,7 @@ void app_main_init_core0(void)
                 );
 #endif /* __RTC_ENABLE__ */
 
-#if 0
+#if 1
     xTaskCreate(vTaskCore0Main,         // コールバック関数ポインタ
                 "vTaskCore0Main",       // タスク名
                 2048,                   // スタック
@@ -267,6 +268,6 @@ void app_main_init_core0(void)
 void app_main_core0(void)
 {
     // DEBUG_RTOS_PRINTF("[Core0]Core0 Loop Task\n");
-    WDT_TOGGLE;
+    WDT_TOGGLE();
     vTaskSuspend(NULL);
 }

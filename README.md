@@ -50,9 +50,9 @@
     - 📍[Raspberry Pi Pico 2🔗](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
     - 📍[Pimoroni Pico Plus 2🔗](https://shop.pimoroni.com/products/pimoroni-pico-plus-2?variant=42092668289107/)
 
-- 📍拡張基板
+<!-- - 📍拡張基板
   - 📍[Pimoroni Pico VGA Demo Base🔗](https://shop.pimoroni.com/products/pimoroni-pico-vga-demo-base)
-  - 📍[XIAO Expansion Board🔗](https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/)
+  - 📍[XIAO Expansion Board🔗](https://wiki.seeedstudio.com/Seeeduino-XIAO-Expansion-Board/) -->
 
 - 📍センサ（I2C）
   - 📍[BME280🔗](https://www.bosch-sensortec.com/products/environmental-sensors/humidity-sensors-bme280/) (湿度、温度、気圧センサ)

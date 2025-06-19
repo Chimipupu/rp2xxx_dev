@@ -27,7 +27,6 @@ static inline void WDT_TOGGLE(void)
 #endif /* __WDT_ENABLE__ */
 }
 
-
 void app_wdt_init(void);
 
 #endif /* APP_WDT_HPP */

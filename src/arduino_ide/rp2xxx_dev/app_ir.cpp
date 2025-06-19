@@ -14,13 +14,12 @@
 
 #ifdef __IR_ENABLE__
 #include <IRremote.hpp>
-#endif /* __IR_ENABLE__ */
+
 
 static void ir_decode(uint16_t command);
 
 static void ir_decode(uint16_t command)
 {
-#ifdef __IR_ENABLE__
     switch (command)
     {
         case IR_RX_BTN_COMMAND_0:
@@ -77,23 +76,18 @@ static void ir_decode(uint16_t command)
         default:
             break;
     }
-#endif /* __IR_ENABLE__ */
 }
 
 void app_ir_init(void)
 {
-#ifdef __IR_ENABLE__
     // IrReceiver.begin(IR_RX_PIN);
     IrReceiver.begin(IR_RX_PIN, DISABLE_LED_FEEDBACK);
-#endif /* __IR_ENABLE__ */
 }
 
 void app_ir_main(void)
 {
-#ifdef __IR_ENABLE__
     if (IrReceiver.decode()) {
         ir_decode(IrReceiver.decodedIRData.command);
     }
-#endif /* __IR_ENABLE__ */
 }
-
+#endif /* __IR_ENABLE__ */

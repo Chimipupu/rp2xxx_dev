@@ -8,10 +8,10 @@
  * @copyright Copyright (c) 2024 ちみ/Chimi(https://github.com/Chimipupu)
  * 
  */
-
 #include "app_timer.hpp"
 #include "app_neopixel.hpp"
 #include "muc_board.hpp"
+#include "common.hpp"
 
 static repeating_timer s_rs_timer_0;
 static repeating_timer s_rs_timer_1;
@@ -28,7 +28,7 @@ static repeating_timer s_rs_timer_3;
 bool TIMER_ALARM_0_ISR(repeating_timer_t *p_rt)
 {
     // TODO:タイマーアラーム0割込みの処理実装
-    NOP;
+    NOP();
     return true;
 }
 
@@ -74,7 +74,7 @@ bool TIMER_ALARM_2_ISR(repeating_timer_t *p_rt)
 bool TIMER_ALARM_3_ISR(repeating_timer_t *p_rt)
 {
     // TODO:タイマーアラーム3割込みの処理実装
-    NOP;
+    NOP();
     return true;
 }
 

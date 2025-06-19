@@ -16,22 +16,27 @@
 #include "app_sensor.hpp"
 #include "app_wdt.hpp"
 #include "cpm.hpp"
+#include "common.hpp"
+
+static uint8_t s_cpu_core = 0;
 
 #ifdef __WIFI_ENABLE__
 char g_ssid[16] = {0};
 char g_password[32] = {0};
-#endif
+#endif /* __WIFI_ENABLE__ */
 
-static uint8_t s_cpu_core = 0;
-static xTaskHandle s_xTaskCore1oled;
 static xTaskHandle s_xTaskCore1monitor;
 static xTaskHandle s_xTaskCore1Main;
+#ifdef __SENSOR_ENABLE__
 static xTaskHandle s_xTaskCore1Sensor;
+extern sensor_app_data_t g_sensor_dat;
+#endif /* __SENSOR_ENABLE__ */
+#ifdef __LCD_ENABLE__
+static xTaskHandle s_xTaskCore1oled;
+static oled_app_data_t s_oled_dat;
+#endif /* __LCD_ENABLE__ */
 
 #ifdef __LCD_ENABLE__
-extern sensor_app_data_t g_sensor_dat;
-static oled_app_data_t s_oled_dat;
-
 void vTaskCore1oled(void *p_parameter)
 {
     bool is_oled_test = false;
@@ -55,13 +60,15 @@ void vTaskCore1oled(void *p_parameter)
             }
             xSemaphoreGive(xI2CMutex);
         }
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 #endif /* __LCD_ENABLE__ */
 
 #ifdef __SENSOR_ENABLE__
+static xTaskHandle s_xTaskCore1Sensor;
+
 void vTaskCore1Sensor(void *p_parameter)
 {
     app_sensor_init();
@@ -70,11 +77,11 @@ void vTaskCore1Sensor(void *p_parameter)
     while (1)
     {
         if (xSemaphoreTake(xI2CMutex, portMAX_DELAY) == pdTRUE) {
-            WDT_TOGGLE;
+            WDT_TOGGLE();
             app_sensor_main();
             xSemaphoreGive(xI2CMutex);
         }
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         vTaskDelay(2000 / portTICK_PERIOD_MS);
     }
 }
@@ -84,7 +91,7 @@ void vTaskCore1Sensor(void *p_parameter)
 void vTaskCore1monitor(void *p_parameter)
 {
     while (!Serial) {
-        WDT_TOGGLE;
+        WDT_TOGGLE();
     }
     cpm_init();
     // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore1monitor\n", s_cpu_core);
@@ -92,13 +99,12 @@ void vTaskCore1monitor(void *p_parameter)
     while (1)
     {
         cpm_main();
-        WDT_TOGGLE;
+        WDT_TOGGLE();
         vTaskDelay(30 / portTICK_PERIOD_MS);
     }
 }
 #endif /* __DEBUG_MONITOR_ENABLE__ */
 
-#if 0
 void vTaskCore1Main(void *p_parameter)
 {
     // DEBUG_RTOS_PRINTF("[Core%X] vTaskCore1Main\n", s_cpu_core);
@@ -106,17 +112,16 @@ void vTaskCore1Main(void *p_parameter)
     while (1)
     {
         // TODO: Core1メイン処理
-        NOP;
-        WDT_TOGGLE;
+        NOP();
+        WDT_TOGGLE();
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
-#endif
 
 void app_main_init_core1(void)
 {
     s_cpu_core = rp2xxx_get_cpu_core_num();
-    WDT_TOGGLE;
+    WDT_TOGGLE();
     // DEBUG_RTOS_PRINTF("[Core%X] ... Init\n", s_cpu_core);
 
     // ファイルシステム(SD/SPIFS/FATFS)
@@ -162,7 +167,7 @@ void app_main_init_core1(void)
                 );
 #endif /* __DEBUG_MONITOR_ENABLE__ */
 
-#if 0
+#if 1
     xTaskCreate(vTaskCore1Main,         // コールバック関数ポインタ
                 "vTaskCore1Main",       // タスク名
                 2048,                   // スタック
@@ -176,6 +181,6 @@ void app_main_init_core1(void)
 void app_main_core1(void)
 {
     // DEBUG_RTOS_PRINTF("[Core1]Core1 Loop Task\n");
-    WDT_TOGGLE;
+    WDT_TOGGLE();
     vTaskSuspend(NULL);
 }
