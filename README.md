@@ -15,6 +15,11 @@
 
 ## 📍開発環境
 
+### 📍デバッガ
+
+- 📍[Debugprobe on pico](https://www.raspberrypi.com/documentation/microcontrollers/debug-probe.html)
+  - 📍F/W ... [v2.2.2](https://github.com/raspberrypi/debugprobe/releases/tag/debugprobe-v2.2.2)
+
 ### 📍S/W
 
 - 📍統合開発環境 (IDE)
@@ -27,7 +32,7 @@
     - [Adafruit_BME280_Library v2.3.0🔗](https://github.com/adafruit/Adafruit_BME280_Library/releases/tag/2.3.0)
   - 📚OS ... [FreeRTOS🔗](https://www.freertos.org/)
 
-### H/W
+### 📍H/W
 
 - 📍マイコン
   - 📍[RP2040🔗](https://www.raspberrypi.com/products/rp2040/)
